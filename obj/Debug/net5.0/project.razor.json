@@ -111,6 +111,39 @@
         }
       },
       {
+        "HashCode": -981859692,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.Order",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Order"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.Order"
+        }
+      },
+      {
+        "HashCode": 1604470202,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.Order",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorApp.Pages.Order"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.Order",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": -847566880,
         "Kind": "Components.Component",
         "Name": "BlazorApp.Pages.Bill",
@@ -305,39 +338,6 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorApp.Pages.Call_Waiter",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": -981859692,
-        "Kind": "Components.Component",
-        "Name": "BlazorApp.Pages.Order",
-        "AssemblyName": "BlazorApp",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "Order"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Pages.Order"
-        }
-      },
-      {
-        "HashCode": 1604470202,
-        "Kind": "Components.Component",
-        "Name": "BlazorApp.Pages.Order",
-        "AssemblyName": "BlazorApp",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorApp.Pages.Order"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Pages.Order",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
