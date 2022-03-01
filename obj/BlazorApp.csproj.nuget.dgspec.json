@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Desktop\\CPSC 481\\BlazorApp\\BlazorApp.csproj": {}
+    "C:\\Desktop\\Calgary Hacks\\SpeeDine\\BlazorApp.csproj": {}
   },
   "projects": {
-    "C:\\Desktop\\CPSC 481\\BlazorApp\\BlazorApp.csproj": {
+    "C:\\Desktop\\Calgary Hacks\\SpeeDine\\BlazorApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Desktop\\CPSC 481\\BlazorApp\\BlazorApp.csproj",
+        "projectUniqueName": "C:\\Desktop\\Calgary Hacks\\SpeeDine\\BlazorApp.csproj",
         "projectName": "BlazorApp",
-        "projectPath": "C:\\Desktop\\CPSC 481\\BlazorApp\\BlazorApp.csproj",
+        "projectPath": "C:\\Desktop\\Calgary Hacks\\SpeeDine\\BlazorApp.csproj",
         "packagesPath": "C:\\Users\\18253\\.nuget\\packages\\",
-        "outputPath": "C:\\Desktop\\CPSC 481\\BlazorApp\\obj\\",
+        "outputPath": "C:\\Desktop\\Calgary Hacks\\SpeeDine\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

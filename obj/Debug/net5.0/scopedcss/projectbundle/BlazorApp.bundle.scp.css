@@ -1,20 +1,25 @@
-#head-navbar {
+@import '';
+
+/* _content/BlazorApp/Shared/MainLayout.razor.rz.scp.css */
+
+/* _content/BlazorApp/Shared/NavMenu.razor.rz.scp.css */
+#head-navbar[b-7cxxmz0cwl] {
     width: 100%;
     white-space: nowrap;
     display: inline-block;
     overflow: hidden;
   }
-  .nav>li {
+  .nav>li[b-7cxxmz0cwl] {
     display: inline-block;
     width:initial;
     float:left;
     white-space: nowrap;
   }
-  .nav { 
+  .nav[b-7cxxmz0cwl] { 
     display: inline-block;
     font-size: 13px;
   }
   
   @media screen and (max-width:768px)
   {
-    .nav.navbar-nav.pull-right { float:none !important; }
+    .nav.navbar-nav.pull-right[b-7cxxmz0cwl] { float:none !important; }

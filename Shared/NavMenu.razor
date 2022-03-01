@@ -1,37 +1,52 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">BlazorApp</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+
+<nav class="navbar navbar-inverse navbar-fixed-top navbar-collapse" id="head-navbar">
+  <ul class="nav navbar-nav">
+    <li><a class="menu-link" href="menu">Menu</a>
+    </li>
+    <li><a class="cart-link" href="cart">Cart</a>
+    </li>
+    <li><a class="order-link" href="order">Order</a>
+    </li>
+    <li><a class="bill-link" href="bill">Bill</a>
+    </li>
+    <li><a class="callWaiter-link" href="callWaiter">Call Waiter</a>
+    </li>
+    <li><a class="help-link" href="help">Help</a>
+    </li>
+  </ul>
+  
+  <ul class="nav navbar-nav pull-right">
+    @* <li><a href="#">DE</a>
+    </li>
+    <li><a href="#">IT</a>
+    </li> *@
+  </ul>
+</nav>
+
+
+@* <ul class = "items" flex-grow-1>
+        <li>
+            <NavLink class = "nav-link" href = "menu">
+                Menu
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+        <li>
+            <NavLink class = "nav-link" href = "cart">
+                Cart
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+        <NavLink class = "nav-link" href = "order">
+            Order
+        </NavLink>
+        <NavLink class = "nav-link" href = "bill">
+            Bill
+        </NavLink>
+        <NavLink class = "nav-link" href = "callWaiter">
+            Call Waiter
+        </NavLink>
+        <NavLink class = "nav-link" href = "help">
+            Help
+        </NavLink>
+    </ul>    *@
