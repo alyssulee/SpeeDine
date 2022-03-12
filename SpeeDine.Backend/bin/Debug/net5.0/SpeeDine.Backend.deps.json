@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "SpeeDine.Backend/1.0.0": {
+        "runtime": {
+          "SpeeDine.Backend.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SpeeDine.Backend/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

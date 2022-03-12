@@ -1,0 +1,22 @@
+@page "/menu"
+@inject MenuRepository MenuRepository 
+
+<br/><br/><br/>
+<h1> This is the menu page </h1>
+<ul>
+    @foreach(var menuItem in menuRepo.Menu)
+    {
+        <li>@menuItem.Name</li>
+    }
+</ul>
+
+@code 
+{
+    MenuRepository menuRepo = new MenuRepository();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+}

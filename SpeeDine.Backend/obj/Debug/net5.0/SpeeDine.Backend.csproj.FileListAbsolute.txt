@@ -1,0 +1,11 @@
+C:\Git\SpeeDine\SpeeDine.Backend\bin\Debug\net5.0\SpeeDine.Backend.deps.json
+C:\Git\SpeeDine\SpeeDine.Backend\bin\Debug\net5.0\SpeeDine.Backend.dll
+C:\Git\SpeeDine\SpeeDine.Backend\bin\Debug\net5.0\ref\SpeeDine.Backend.dll
+C:\Git\SpeeDine\SpeeDine.Backend\bin\Debug\net5.0\SpeeDine.Backend.pdb
+C:\Git\SpeeDine\SpeeDine.Backend\obj\Debug\net5.0\SpeeDine.Backend.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\SpeeDine\SpeeDine.Backend\obj\Debug\net5.0\SpeeDine.Backend.AssemblyInfoInputs.cache
+C:\Git\SpeeDine\SpeeDine.Backend\obj\Debug\net5.0\SpeeDine.Backend.AssemblyInfo.cs
+C:\Git\SpeeDine\SpeeDine.Backend\obj\Debug\net5.0\SpeeDine.Backend.csproj.CoreCompileInputs.cache
+C:\Git\SpeeDine\SpeeDine.Backend\obj\Debug\net5.0\SpeeDine.Backend.dll
+C:\Git\SpeeDine\SpeeDine.Backend\obj\Debug\net5.0\ref\SpeeDine.Backend.dll
+C:\Git\SpeeDine\SpeeDine.Backend\obj\Debug\net5.0\SpeeDine.Backend.pdb
