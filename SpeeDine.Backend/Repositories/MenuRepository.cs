@@ -64,7 +64,7 @@ namespace SpeeDine.Backend.Repositories
            return Menu.FirstOrDefault(item => item.Id == id);
         }
 
-        public List<MenuItem> GetFilteredMenu(MenuCategory category)
+        public List<MenuItem> GetMenuByCategory(MenuCategory category)
         {
             var filtered = new List<MenuItem>();
             foreach(var item in Menu)

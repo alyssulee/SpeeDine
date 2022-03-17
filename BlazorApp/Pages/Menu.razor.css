@@ -79,6 +79,7 @@ ul {
     margin: 1rem;
     background: #F4A0A0;
     border-radius: 2rem;
+    cursor: pointer;
 }
     input[type="radio"]:checked + .category {
     background: #de6f6f;

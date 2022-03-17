@@ -10,8 +10,8 @@
             @foreach(var category in categories)
             {
                 <input type="radio" id="@category" name="categories" value="@category" 
-                    style="display: none;" checked="@(currentFilter == category)" 
-                    @onchange="@(() => { currentFilter = category; FilterMenu();})">
+                    style="display: none;" checked="@(selectedCategory == category)" 
+                    @onchange="@(() => { selectedCategory = category; FilterMenu();})">
                 <label class='category' for="@category">@category</label><br>
             }
         </div>
@@ -50,20 +50,19 @@
     MenuRepository menuRepo = new MenuRepository();
 
     //Attributes
-    MenuCategory currentFilter;
+    MenuCategory selectedCategory;
     List<MenuItem> displayMenuList = new List<MenuItem>();
 
     protected override void OnInitialized()
     {
-        currentFilter = MenuCategory.Popular;
+        selectedCategory = MenuCategory.Popular;
         FilterMenu();
         base.OnInitialized();
     }
 
     private void FilterMenu()
     {
-        Console.WriteLine(currentFilter);
-        displayMenuList = menuRepo.GetFilteredMenu(currentFilter);
+        displayMenuList = menuRepo.GetMenuByCategory(selectedCategory);
     }
 
     private void OpenFoodDetailsPage()
