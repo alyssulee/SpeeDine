@@ -17,6 +17,7 @@ namespace SpeeDine.Backend.Repositories
 
         private void PopulateMenuRepo()
         {
+            Menu.Clear();
             // Dinner
             Menu.Add(new MenuItem(1, "Bacon Cheddar Burger", "Cured bacon, tomatoes, onion, lettuce, pickles, mayonnaise and mustard, on a toasted brioche bun", 21.75,
                 "https://simply-delicious-food.com/wp-content/uploads/2015/07/Bacon-and-cheese-burgers-3-500x375.jpg",

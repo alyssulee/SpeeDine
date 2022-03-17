@@ -1,41 +1,47 @@
 @page "/menu"
 @inject MenuRepository MenuRepository 
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
-<br/><br/><br/>
 @*Categories*@
 <div class='category-bar'>
+    <button class='left-arrow'> &lsaquo;</button>
+    <div class='scroll-categories'>
+        <div class='categories'>
+            @foreach(var category in categories)
+            {
+                <a href="/menu" class='category' category-type='@category'>
+                    @category
+                </a>
+            }
+        </div>
+    </div>
+    <button class='right-arrow'>&rsaquo;</button>
+</div>
+
+<div class='menu'>
+    <h1>Menu</h1>
+
+    @*Menu List*@
     <ul>
-        @foreach(var category in categories)
+        @foreach(var menuItem in menuRepo.Menu)
         {
-            <div class='category'>
-                @category
-            </div>
+            <li class='menu-item'>
+                <div class='menu-item-container'>
+                    <img src=@menuItem.ImgLink>
+                    <div style='padding: 0.5rem; flex-grow: 1;'>
+                         <div class='row'>
+                            <p style="font-weight:bold; margin-right:auto">@menuItem.Name</p>
+                            <p style="margin-left:auto">$@menuItem.Price</p>
+                        </div>
+                        <div class='row'>
+                            <p>@menuItem.Description</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
         }
     </ul>
 </div>
-
-<h1>Menu</h1>
-
-@*Menu List*@
-<ul>
-    @foreach(var menuItem in menuRepo.Menu)
-    {
-        <li class='menu-item'>
-            <div class='menu-item-container'>
-                <img src=@menuItem.ImgLink>
-                <div style='padding: 0.5rem; flex-grow: 1;'>
-                     <div class='row'>
-                        <p style="font-weight:bold; margin-right:auto">@menuItem.Name</p>
-                        <p style="margin-left:auto">@menuItem.Price</p>
-                    </div>
-                    <div class='row'>
-                        <p>@menuItem.Description</p>
-                    </div>
-                </div>
-            </div>
-        </li>
-    }
-</ul>
 
 @code 
 {
@@ -51,6 +57,11 @@
     }
 
     private void FilterMenu()
+    {
+
+    }
+
+    private void OpenFoodDetailsPage()
     {
         
     }

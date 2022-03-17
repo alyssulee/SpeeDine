@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\FoodDetails.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Pages\FoodDetails.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SpeeDine.Backend\SpeeDine.Backend.csproj" />
   </ItemGroup>
 

@@ -33,6 +33,8 @@ namespace BlazorApp
 
             // Add dependencies
             services.AddTransient<MenuRepository>();
+            //services.AddScoped<MenuRepository>();
+
             //services.AddTransient<MenuItem>();
 
         }
