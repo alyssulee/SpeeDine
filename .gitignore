@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+BlazorApp/bin/
+BlazorApp/obj/
+SpeeDine.Backend/bin/
+SpeeDine.Backend/obj/

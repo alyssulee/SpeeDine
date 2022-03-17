@@ -2,21 +2,57 @@
 @inject MenuRepository MenuRepository 
 
 <br/><br/><br/>
-<h1> This is the menu page </h1>
+@*Categories*@
+<div class='category-bar'>
+    <ul>
+        @foreach(var category in categories)
+        {
+            <div class='category'>
+                @category
+            </div>
+        }
+    </ul>
+</div>
+
+<h1>Menu</h1>
+
+@*Menu List*@
 <ul>
     @foreach(var menuItem in menuRepo.Menu)
     {
-        <li>@menuItem.Name</li>
+        <li class='menu-item'>
+            <div class='menu-item-container'>
+                <img src=@menuItem.ImgLink>
+                <div style='padding: 0.5rem; flex-grow: 1;'>
+                     <div class='row'>
+                        <p style="font-weight:bold; margin-right:auto">@menuItem.Name</p>
+                        <p style="margin-left:auto">@menuItem.Price</p>
+                    </div>
+                    <div class='row'>
+                        <p>@menuItem.Description</p>
+                    </div>
+                </div>
+            </div>
+        </li>
     }
 </ul>
 
 @code 
 {
+    List<string> categories = Enum.GetValues(typeof(MenuCategory))
+    .Cast<MenuCategory>()
+    .Select(v => v.ToString())
+    .ToList();
     MenuRepository menuRepo = new MenuRepository();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
+    }
+
+    private void FilterMenu()
+    {
+        
     }
 
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{049DA1AC-61DD-405A-A602-5EB3A29427E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeeDine.Backend", "SpeeDine.Backend\SpeeDine.Backend.csproj", "{7D41DE35-47D0-41DE-B25E-827D828693D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeeDine.Backend", "SpeeDine.Backend\SpeeDine.Backend.csproj", "{7D41DE35-47D0-41DE-B25E-827D828693D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

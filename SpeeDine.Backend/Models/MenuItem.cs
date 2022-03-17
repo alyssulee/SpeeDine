@@ -23,7 +23,7 @@ namespace SpeeDine.Backend.Models
         KetoFriendly
     }
 
-    public record MenuItem (int Id, string Name, string Description, double Price, List<MenuCategory> Categories, List<MenuTags> ?Tags, List<MenuSide>? Sides);
+    public record MenuItem (int Id, string Name, string Description, double Price, string ImgLink, List<MenuCategory> Categories, List<MenuTags> ?Tags, List<MenuSide>? Sides);
     public record MenuSide (string Name, double ExtraCost);
 
    

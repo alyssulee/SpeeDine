@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #FFFAEA;
 }
 
 a, .btn-link {
@@ -16,6 +17,7 @@ a, .btn-link {
 
 .content {
     padding-top: 1.1rem;
+    background: #FFFAEA;
 }
 
 .valid.modified:not([type=checkbox]) {
