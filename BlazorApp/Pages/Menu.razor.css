@@ -80,8 +80,8 @@ ul {
     background: #F4A0A0;
     border-radius: 2rem;
 }
-    .category:active {
-        background: #de6f6f !important;
-    }
+    input[type="radio"]:checked + .category {
+    background: #de6f6f;
+}
 
 

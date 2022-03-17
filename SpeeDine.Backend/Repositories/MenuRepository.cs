@@ -21,7 +21,7 @@ namespace SpeeDine.Backend.Repositories
             // Dinner
             Menu.Add(new MenuItem(1, "Bacon Cheddar Burger", "Cured bacon, tomatoes, onion, lettuce, pickles, mayonnaise and mustard, on a toasted brioche bun", 21.75,
                 "https://simply-delicious-food.com/wp-content/uploads/2015/07/Bacon-and-cheese-burgers-3-500x375.jpg",
-                new List<MenuCategory> { MenuCategory.Dinner }, 
+                new List<MenuCategory> { MenuCategory.Dinner, MenuCategory.Popular }, 
                 new List<MenuTags> { MenuTags.PeanutFree }, 
                 new List<MenuSide>
                 {
@@ -62,6 +62,17 @@ namespace SpeeDine.Backend.Repositories
         public MenuItem? GetItemByID(int id)
         {
            return Menu.FirstOrDefault(item => item.Id == id);
+        }
+
+        public List<MenuItem> GetFilteredMenu(MenuCategory category)
+        {
+            var filtered = new List<MenuItem>();
+            foreach(var item in Menu)
+            {
+                if(item.Categories.Contains(category))
+                    filtered.Add(item);
+            }
+            return filtered;
         }
     }
 }

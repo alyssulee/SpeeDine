@@ -9,9 +9,10 @@
         <div class='categories'>
             @foreach(var category in categories)
             {
-                <a href="/menu" class='category' category-type='@category'>
-                    @category
-                </a>
+                <input type="radio" id="@category" name="categories" value="@category" 
+                    style="display: none;" checked="@(currentFilter == category)" 
+                    @onchange="@(() => { currentFilter = category; FilterMenu();})">
+                <label class='category' for="@category">@category</label><br>
             }
         </div>
     </div>
@@ -23,7 +24,7 @@
 
     @*Menu List*@
     <ul>
-        @foreach(var menuItem in menuRepo.Menu)
+        @foreach(var menuItem in displayMenuList)
         {
             <li class='menu-item'>
                 <div class='menu-item-container'>
@@ -45,20 +46,24 @@
 
 @code 
 {
-    List<string> categories = Enum.GetValues(typeof(MenuCategory))
-    .Cast<MenuCategory>()
-    .Select(v => v.ToString())
-    .ToList();
+    List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
     MenuRepository menuRepo = new MenuRepository();
+
+    //Attributes
+    MenuCategory currentFilter;
+    List<MenuItem> displayMenuList = new List<MenuItem>();
 
     protected override void OnInitialized()
     {
+        currentFilter = MenuCategory.Popular;
+        FilterMenu();
         base.OnInitialized();
     }
 
     private void FilterMenu()
     {
-
+        Console.WriteLine(currentFilter);
+        displayMenuList = menuRepo.GetFilteredMenu(currentFilter);
     }
 
     private void OpenFoodDetailsPage()
