@@ -1,5 +1,19 @@
-﻿@page "/details"
+﻿@page "/details/{FoodID}"
+@inject MenuRepository MenuRepo 
+
+
+<h1>@FoodItem.Name</h1>
+
 @code 
 {
+    [Parameter]
+    public string FoodID { get; set; }
+
+    public MenuItem FoodItem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        FoodItem = MenuRepo.GetItemByID(Int32.Parse(FoodID));
+    }
 
 }

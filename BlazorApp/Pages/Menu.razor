@@ -1,11 +1,13 @@
 @page "/menu"
-@inject MenuRepository MenuRepository 
-@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+
+@inject IJSRuntime JsRuntime
+@inject MenuRepository MenuRepo 
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
 
 @*Categories*@
 <div class='category-bar'>
-    <button class='left-arrow'> &lsaquo;</button>
-    <div class='scroll-categories'>
+    <button class='left-arrow' >&lsaquo;</button>
+    <div class='scroll-categories' id='scroll-categories'>
         <div class='categories'>
             @foreach(var category in categories)
             {
@@ -20,13 +22,13 @@
 </div>
 
 <div class='menu'>
-    <h1>Menu</h1>
+    <h1>@selectedCategory</h1>
 
     @*Menu List*@
     <ul>
         @foreach(var menuItem in displayMenuList)
         {
-            <li class='menu-item'>
+            <li class='menu-item' @onclick="@(() => { OpenFoodDetailsPage(menuItem);})">
                 <div class='menu-item-container'>
                     <img src=@menuItem.ImgLink>
                     <div style='padding: 0.5rem; flex-grow: 1;'>
@@ -46,12 +48,13 @@
 
 @code 
 {
+    #region Attributes
     List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
-    MenuRepository menuRepo = new MenuRepository();
 
-    //Attributes
-    MenuCategory selectedCategory;
-    List<MenuItem> displayMenuList = new List<MenuItem>();
+    // GUI Bindings
+    public MenuCategory selectedCategory { get; set; }
+    public List<MenuItem> displayMenuList = new List<MenuItem>();
+    #endregion
 
     protected override void OnInitialized()
     {
@@ -62,12 +65,11 @@
 
     private void FilterMenu()
     {
-        displayMenuList = menuRepo.GetMenuByCategory(selectedCategory);
+        displayMenuList = MenuRepo.GetMenuByCategory(selectedCategory);
     }
 
-    private void OpenFoodDetailsPage()
+    private void OpenFoodDetailsPage(MenuItem menuItem)
     {
-        
+        NavigationManager.NavigateTo($"details/{menuItem.Id}");
     }
-
 }

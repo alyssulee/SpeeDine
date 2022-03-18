@@ -10,8 +10,12 @@
     padding: 0;
 }
 
+.navbar-inverse{
+    border: none;
+}
+
 .navbar-nav {
-     margin: 0;
+    margin: 0;
 }
 
 ul {

@@ -20,7 +20,7 @@ namespace SpeeDine.Backend.Repositories
             Menu.Clear();
             // Dinner
             Menu.Add(new MenuItem(1, "Bacon Cheddar Burger", "Cured bacon, tomatoes, onion, lettuce, pickles, mayonnaise and mustard, on a toasted brioche bun", 21.75,
-                "https://simply-delicious-food.com/wp-content/uploads/2015/07/Bacon-and-cheese-burgers-3-500x375.jpg",
+                "https://simply-delicious-food.com/wp-content/uploads/2015/07/Bacon-and-cheese-burgers-3.jpg",
                 new List<MenuCategory> { MenuCategory.Dinner, MenuCategory.Popular }, 
                 new List<MenuTags> { MenuTags.PeanutFree }, 
                 new List<MenuSide>
@@ -49,7 +49,7 @@ namespace SpeeDine.Backend.Repositories
              new List<MenuTags> { MenuTags.PeanutFree }, null));
             Menu.Add(new MenuItem(4, "Street Chicken Tacos", "Flour tortillas, white cheddar, cabbage, jalapeño crema, slow roasted achiote chicken, cilantro, fresh cut salsa", 15.75,
                 "https://d35y74nlubkiek.cloudfront.net/b84218d1-b6c2-4be3-8ee7-9d4abb7a4278",
-              new List<MenuCategory> { MenuCategory.Dinner },
+              new List<MenuCategory> { MenuCategory.Dinner, MenuCategory.Popular },
               new List<MenuTags> { MenuTags.PeanutFree },
               new List<MenuSide>
               {

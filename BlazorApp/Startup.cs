@@ -32,13 +32,10 @@ namespace BlazorApp
             services.AddSingleton<WeatherForecastService>();
 
             // Add dependencies
-            services.AddTransient<MenuRepository>();
-            //services.AddScoped<MenuRepository>();
-
-            //services.AddTransient<MenuItem>();
+            services.AddSingleton<MenuRepository>();
 
         }
-
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

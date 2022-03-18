@@ -1,5 +1,9 @@
 ﻿
 /** Menu */
+h1
+{
+    margin-top: 0;
+}
 
 .menu
 {
@@ -22,6 +26,9 @@ ul {
     background: #FCE5CD;
     margin: 1rem 0;
     border-radius: .5rem;
+    -webkit-box-shadow: 0 6px 3px -4px #00000020;
+    box-shadow: 0 6px 3px -4px #00000020;
+    min-height: 15vh;
 }
 
 .menu-item-container {
@@ -57,7 +64,8 @@ ul {
 }
 
 .scroll-categories {
-    overflow: auto;
+    overflow-y: hidden;
+    overflow-x: scroll;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar
@@ -76,7 +84,7 @@ ul {
 
 .category {
     padding: 0.5rem 1rem;
-    margin: 1rem;
+    margin: 1rem .5rem;
     background: #F4A0A0;
     border-radius: 2rem;
     cursor: pointer;
@@ -86,3 +94,25 @@ ul {
 }
 
 
+@media screen and (min-width:768px)
+{
+    ::-webkit-scrollbar {
+        height: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #FFFAEA;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 1rem;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+}
