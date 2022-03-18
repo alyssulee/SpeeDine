@@ -1,40 +1,42 @@
-﻿<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+﻿@inject NavigationManager NavigationManager
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 
 
-<nav class="navbar navbar-inverse navbar-fixed-top navbar-collapse" id="head-navbar">
+<nav class="navbar navbar-fixed-top navbar-collapse" id="head-navbar">
   <ul class="nav navbar-nav">
     <li>
-        <a class="menu-link" href="menu" style="color: black;">
+        <a class="nav-item @GetActive("menu")" href="menu">
              <span class="iconify" data-icon="carbon:notebook" data-width="30" data-height="30"></span>
             Menu
         </a>
     </li>
     <li>
-        <a class="cart-link" href="cart" style="color: black;">
+        <a class="nav-item @GetActive("cart")" href="cart">
             <span class="iconify" data-icon="ant-design:shopping-cart-outline" data-width="30" data-height="30"></span>
             Cart
         </a>
     </li>
     <li>
-        <a class="order-link" href="order" style="color: black;">
+        <a class="nav-item @GetActive("order")" href="order">
             <span class="iconify" data-icon="emojione-monotone:fork-and-knife-with-plate" data-width="30" data-height="30"></span>
             Order
         </a>
     </li>
     <li>
-        <a class="bill-link" href="bill" style="color: black;">
+        <a class="nav-item @GetActive("bill")" href="bill" >
             <span class="iconify" data-icon="uil:bill" data-width="30" data-height="30"></span>
             Bill
         </a>
     </li>
     <li>
-        <a class="callWaiter-link" href="callWaiter" style="color: black;">
+        <a class="nav-item @GetActive("callWaiter")" href="callWaiter" >
             <span class="iconify" data-icon="charm:person" data-width="30" data-height="30"></span>
             Call Waiter
         </a>
     </li>
     <li>
-        <a class="help-link" href="help" style="color: black;">
+        <a class="nav-item @GetActive("help")" href="help" >
              <span class="iconify" data-icon="bx:help-circle" data-width="30" data-height="30"></span>
             Help
         </a>
@@ -48,3 +50,22 @@
     </li> *@
   </ul>
 </nav>
+
+@code 
+{
+    protected override void OnInitialized()
+    {
+        NavigationManager.LocationChanged += (s, e) => StateHasChanged();
+    }
+
+    bool IsActive(string href, NavLinkMatch navLinkMatch = NavLinkMatch.Prefix)
+    {
+        var relativePath = NavigationManager.ToBaseRelativePath(NavigationManager.Uri).ToLower();
+        return navLinkMatch == NavLinkMatch.All ? relativePath == href.ToLower() : relativePath.StartsWith(href.ToLower());
+    }
+
+    string GetActive(string href, NavLinkMatch navLinkMatch = NavLinkMatch.Prefix)
+    {
+        return IsActive(href, navLinkMatch) ? "active" : "";
+    }
+}
