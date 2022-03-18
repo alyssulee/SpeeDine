@@ -13,7 +13,7 @@
             {
                 <input type="radio" id="@category" name="categories" value="@category" 
                     style="display: none;" checked="@(selectedCategory == category)" 
-                    @onchange="@(() => { selectedCategory = category; FilterMenu();})">
+                    @onchange="@(() => { selectedCategory = category; UpdateMenuCategory();})">
                 <label class='category' for="@category">@category</label><br>
             }
         </div>
@@ -21,7 +21,12 @@
     <button class='right-arrow'>&rsaquo;</button>
 </div>
 
+@*Menu*@
 <div class='menu'>
+    @*Filter*@
+    <div>
+        <button class='filter-button'>Filter</button>
+    </div>
     <h1>@selectedCategory</h1>
 
     @*Menu List*@
@@ -59,11 +64,11 @@
     protected override void OnInitialized()
     {
         selectedCategory = MenuCategory.Popular;
-        FilterMenu();
+        UpdateMenuCategory();
         base.OnInitialized();
     }
 
-    private void FilterMenu()
+    private void UpdateMenuCategory()
     {
         displayMenuList = MenuRepo.GetMenuByCategory(selectedCategory);
     }
