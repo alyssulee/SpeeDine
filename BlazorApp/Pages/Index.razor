@@ -1,7 +1,25 @@
 @page "/"
-<h1>Hello, world!</h1>
+@layout Clear
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
 
-Welcome to your new app.
+<div class='welcome-screen' @onclick="@(() => { continueToMenu();})">
+    <h1>Welcome to</h1>
+    
+    <img src="/images/Bizo.gif" asp-append-version="true"/>
+    <h2>This device is</h2>
+    <h3>Device</h3>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    <p class="pulse">Tap anywhere to continue</p>
+    <footer class="footer">
+        Powered by SpeeDine 
+    </footer>
+</div>
 
+
+@code 
+{
+    private void continueToMenu()
+    {
+        NavigationManager.NavigateTo("/menu", true);
+    }
+}
