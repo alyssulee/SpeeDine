@@ -4,7 +4,7 @@ h1 {
     font-size: 4rem;
     line-height: 61px;
     text-align: center;
-    margin-top: 10vh;
+    margin-top: 20vh;
 }
 h2 {
     font-style: normal;
@@ -29,8 +29,12 @@ p {
     font-weight: 400;
     font-size: 1.5rem;
     line-height: 22px;
-    text-align: center;
-    margin-top: 32px;
+    position:absolute;
+    bottom: 0;
+    height: auto;
+    margin-bottom:150px;
+    width:100%;
+    text-align:center;
 }
 
 body {
