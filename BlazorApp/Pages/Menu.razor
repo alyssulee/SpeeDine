@@ -2,7 +2,8 @@
 
 @inject IJSRuntime JsRuntime
 @inject MenuRepository MenuRepo 
-@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
+@inject User User 
+@inject NavigationManager NavigationManager
 
 @*Categories*@
 <div class='category-bar'>
@@ -25,8 +26,21 @@
 <div class='menu'>
     @*Filter*@
     <div>
-        <button class='filter-button'>Filter</button>
+        @*Filter button*@
+        <button class='filter-button' @onclick=ShowFilterPopup>Filter</button>
+        @*Filter popup*@
+        @if(showFilterPopup)
+        {
+            <div class='filter-popup'>
+                @foreach(var filter in filters)
+                {
+                    <input type="checkbox" id="@filter" name="@filter" value="@filter">
+                    <label class='filter' for="@filter">@filter</label><br>
+                }
+            </div> 
+        }
     </div>
+
     <h1>@selectedCategory</h1>
 
     @*Menu List*@
@@ -44,6 +58,13 @@
                         <div class='row'>
                             <p>@menuItem.Description</p>
                         </div>
+
+                        <button class='pin-button @GetPinnedClass(menuItem)' 
+                            @onclick:preventDefault="true"
+                            @onclick:stopPropagation="true"
+                            @onclick="@(() => TogglePinButton(menuItem))">
+                            <span class="iconify pin-icon" data-icon="bi:pin-angle-fill" data-width="30" data-height="30"></span>
+                        </button>
                     </div>
                 </div>
             </li>
@@ -55,26 +76,65 @@
 {
     #region Attributes
     List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+    List<MenuTags> filters = Enum.GetValues(typeof(MenuTags)).Cast<MenuTags>().ToList();
+    #endregion
 
-    // GUI Bindings
+    #region GUI_Bindings
     public MenuCategory selectedCategory { get; set; }
+    public List<MenuTags> selectedFilters = new List<MenuTags>();
+
+    public bool showFilterPopup { get; set; }
     public List<MenuItem> displayMenuList = new List<MenuItem>();
     #endregion
 
     protected override void OnInitialized()
     {
         selectedCategory = MenuCategory.Popular;
+        showFilterPopup = false;
         UpdateMenuCategory();
         base.OnInitialized();
-    }
-
-    private void UpdateMenuCategory()
-    {
-        displayMenuList = MenuRepo.GetMenuByCategory(selectedCategory);
     }
 
     private void OpenFoodDetailsPage(MenuItem menuItem)
     {
         NavigationManager.NavigateTo($"menu/details/{menuItem.Id}");
     }
+
+    #region Categories/Filtering
+    private void UpdateMenuCategory()
+    {
+        if(selectedCategory == MenuCategory.Pinned)
+        {
+            displayMenuList = User.PinnedItems;
+        }
+        else
+        {
+            displayMenuList = MenuRepo.GetMenuByCategory(selectedCategory);
+        }
+    }
+
+    private void ShowFilterPopup()
+    {
+        showFilterPopup = !showFilterPopup;
+    }
+    #endregion
+
+    #region Pinning 
+    private string GetPinnedClass(MenuItem item)
+    {
+        return User.PinnedItems.Contains(item) ? "pinned" : "";
+    }
+
+    private void TogglePinButton(MenuItem item)
+    {
+        if(User.PinnedItems.Contains(item))
+        {
+            User.PinnedItems.Remove(item);   
+        }
+        else
+        {
+            User.PinnedItems.Add(item);   
+        }
+    }
+    #endregion
 }

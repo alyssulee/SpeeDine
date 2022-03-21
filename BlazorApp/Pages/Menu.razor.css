@@ -45,6 +45,28 @@ ul {
     margin-right: 0.5rem;
 }
 
+button {
+    background: transparent;
+    border: none;
+}
+
+button:focus {
+    border:none;
+    outline: none;
+}
+
+.pin-button {
+    background: transparent;
+    border: none;
+    opacity: 50%;
+    float: right;
+}
+
+.pinned {
+    opacity: 100%;
+    color: #de6f6f;
+}
+
 /** Categories */
 .category-bar {
     position: fixed;
@@ -94,9 +116,17 @@ ul {
 }
 
 
-@media screen and (min-width:768px)
+/*filter*/
+.filter-popup
 {
-    ::-webkit-scrollbar {
+    background: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    position: fixed;
+}
+
+@media screen and (min-width:768px) {
+    :: -webkit-scrollbar {
         height: 5px;
     }
 

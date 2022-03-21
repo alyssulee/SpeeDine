@@ -13,6 +13,7 @@ namespace SpeeDine.Backend.Models
         public List<OrderItem> Orders { get; set; }
         public List<OrderItem> Cart { get; set; }
         public List<OrderItem> Bill { get; set; }
+        public List<MenuItem> PinnedItems { get; set; }
 
         public User(int id, string name)
         {
@@ -21,6 +22,7 @@ namespace SpeeDine.Backend.Models
             Orders = new List<OrderItem>();     // Placed Orders
             Cart = new List<OrderItem>();       // Items in Cart
             Bill = new List<OrderItem>();       // Items being added to the bill
+            PinnedItems = new List<MenuItem>(); // Pinned menu
         }
 
         private double CalculateCost(List<OrderItem> itemList)

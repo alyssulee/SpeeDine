@@ -33,9 +33,9 @@ namespace BlazorApp
 
             // Add dependencies
             services.AddSingleton<MenuRepository>();
-
+            services.AddSingleton<User>(new User(1, "Guest 1") );
         }
-        
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
