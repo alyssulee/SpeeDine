@@ -25,16 +25,22 @@
 @*Menu*@
 <div class='menu'>
     @*Filter*@
-    <div>
+    <div class='filter-container'>
         @*Filter button*@
-        <button class='filter-button' @onclick=ShowFilterPopup>Filter</button>
+        <button class='filter-button' @onclick=ShowFilterPopup>
+            Filter
+            @if(selectedFilters.Any()) { <span class='filter-number'>@selectedFilters.Count()</span> }
+            <span class="iconify" data-icon="mdi:filter"  data-width="40" data-height="40">></span>
+        </button>
         @*Filter popup*@
         @if(showFilterPopup)
         {
             <div class='filter-popup'>
                 @foreach(var filter in filters)
                 {
-                    <input type="checkbox" id="@filter" name="@filter" value="@filter">
+                    <input type="checkbox" id="@filter" name="@filter" value="@filter" 
+                    checked="@IsFilterChecked(filter)" 
+                    @onchange="@(() => { ToggleCheckedFilter(filter); UpdateMenuCategory();})">
                     <label class='filter' for="@filter">@filter</label><br>
                 }
             </div> 
@@ -48,6 +54,7 @@
         @foreach(var menuItem in displayMenuList)
         {
             <li class='menu-item' @onclick="@(() => { OpenFoodDetailsPage(menuItem);})">
+                <a class='menu-item-link'>
                 <div class='menu-item-container'>
                     <img src=@menuItem.ImgLink>
                     <div style='padding: 0.5rem; flex-grow: 1;'>
@@ -67,6 +74,7 @@
                         </button>
                     </div>
                 </div>
+                </a>
             </li>
         }
     </ul>
@@ -76,12 +84,12 @@
 {
     #region Attributes
     List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
-    List<MenuTags> filters = Enum.GetValues(typeof(MenuTags)).Cast<MenuTags>().ToList();
+    List<MenuTag> filters = Enum.GetValues(typeof(MenuTag)).Cast<MenuTag>().ToList();
     #endregion
 
     #region GUI_Bindings
     public MenuCategory selectedCategory { get; set; }
-    public List<MenuTags> selectedFilters = new List<MenuTags>();
+    public List<MenuTag> selectedFilters = new List<MenuTag>();
 
     public bool showFilterPopup { get; set; }
     public List<MenuItem> displayMenuList = new List<MenuItem>();
@@ -103,6 +111,7 @@
     #region Categories/Filtering
     private void UpdateMenuCategory()
     {
+        // Filter by Category
         if(selectedCategory == MenuCategory.Pinned)
         {
             displayMenuList = User.PinnedItems;
@@ -111,12 +120,37 @@
         {
             displayMenuList = MenuRepo.GetMenuByCategory(selectedCategory);
         }
+
+        // Filter by Tags
+        if(selectedFilters.Any())
+        {
+             displayMenuList = displayMenuList.Where(menuItem => selectedFilters.Any(filter => menuItem.Tags.Contains(filter))).ToList();
+        }
+       
     }
 
     private void ShowFilterPopup()
     {
         showFilterPopup = !showFilterPopup;
     }
+
+    private bool IsFilterChecked(MenuTag filter)
+    {
+        return selectedFilters.Contains(filter);
+    }
+
+    private void ToggleCheckedFilter(MenuTag filter)
+    {
+        if(IsFilterChecked(filter))
+        {
+            selectedFilters.Remove(filter);
+        }
+        else
+        {
+            selectedFilters.Add(filter);
+        }
+    }
+
     #endregion
 
     #region Pinning 
