@@ -124,7 +124,7 @@
         // Filter by Tags
         if(selectedFilters.Any())
         {
-             displayMenuList = displayMenuList.Where(menuItem => selectedFilters.Any(filter => menuItem.Tags.Contains(filter))).ToList();
+             displayMenuList = displayMenuList.Where(menuItem => selectedFilters.All(menuItem.Tags.Contains)).ToList();
         }
        
     }

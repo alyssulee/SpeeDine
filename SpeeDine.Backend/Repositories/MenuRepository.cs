@@ -46,7 +46,7 @@ namespace SpeeDine.Backend.Repositories
             Menu.Add(new MenuItem(3, "Grilled Chicken Breast", "Topped with forrester wild mushroom mix, fine herbs, roast potato, fresh vegetables", 18.25,
                "https://media.istockphoto.com/photos/gourmet-dijon-chicken-breast-with-thyme-and-potatoes-picture-id1203256503?s=612x612",
              new List<MenuCategory> { MenuCategory.Dinner },
-             new List<MenuTag> { MenuTag.PeanutFree }, null));
+             new List<MenuTag> { MenuTag.PeanutFree, MenuTag.GlutenFree }, null));
             Menu.Add(new MenuItem(4, "Street Chicken Tacos", "Flour tortillas, white cheddar, cabbage, jalapeño crema, slow roasted achiote chicken, cilantro, fresh cut salsa", 15.75,
                 "https://d35y74nlubkiek.cloudfront.net/b84218d1-b6c2-4be3-8ee7-9d4abb7a4278",
               new List<MenuCategory> { MenuCategory.Dinner, MenuCategory.Popular },
