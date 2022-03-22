@@ -1,13 +1,32 @@
-﻿@page "/menu/details/{FoodID}"
+﻿@page "/menu/{SelectedCategory}/details/{FoodID}"
 @inject MenuRepository MenuRepo 
+@inject NavigationManager NavigationManager
 
 
-<h1>@FoodItem.Name</h1>
+<button @onclick=NavigateToMenu>
+    <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
+    Back to Menu
+</button>
+
+<div class='content'>
+    <img src="@FoodItem.ImgLink">
+    <div>
+        <h1>@FoodItem.Name</h1>
+        <p>@FoodItem.Price</p>
+    </div>
+
+    <p>@FoodItem.Description</p>
+</div>
+
+<button class='fixed-bottom'>Add to Cart</button>
+
 
 @code 
 {
     [Parameter]
     public string FoodID { get; set; }
+    [Parameter]
+    public string SelectedCategory { get; set; }
 
     public MenuItem FoodItem { get; set; }
 
@@ -16,4 +35,8 @@
         FoodItem = MenuRepo.GetItemByID(Int32.Parse(FoodID));
     }
 
+    private void NavigateToMenu()
+    {
+        NavigationManager.NavigateTo($"menu/{SelectedCategory}");
+    }
 }

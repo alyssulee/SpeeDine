@@ -5,6 +5,10 @@ html, body {
     background: #FFFAEA;
 }
 
+p {
+    font-size: 16px;
+}
+
 a, .btn-link {
     color: #0366d6;
 }
