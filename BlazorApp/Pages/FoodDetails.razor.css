@@ -13,6 +13,19 @@ button:focus {
     outline: none;
 }
 
+.red-button {
+    transition: all .2s ease;
+    background: #F4A0A0;
+}
+    .red-button:active {
+        transform: scale(0.92);
+        background: #de6f6f;
+    }
+    .red-button:disabled {
+        filter: brightness(0.8);
+        /*opacity: 0.;*/
+    }
+
 .fixed-bottom {
     background: #FFFAEA;
     width: 100%;
@@ -88,11 +101,11 @@ h3 {
 }
 
 #increase {
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 #decrease {
-    line-height: 0.5;
+    line-height: 0;
 }
 
 input[type="number"] {

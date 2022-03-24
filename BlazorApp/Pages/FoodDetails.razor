@@ -60,18 +60,18 @@
         @*Quantity *@
         <h4>Quantity</h4>
          <div class='quantity-container'>
-            <button class="quantity-button" id="decrease" 
+            <button class="quantity-button red-button" id="decrease" 
                 disabled=@IsDecreaseButtonDisabled()
                 @onclick="DecreaseQuantity" value="Decrease Value">–</button>
             <input type="number" id="quantity-number" value="@SelectedQuantity" />
-            <button class="quantity-button" id="increase" 
+            <button class="quantity-button red-button" id="increase" 
             @onclick="IncreaseQuantity" value="Increase Value">+</button>
         </div>
         <br />
 
         @*Cart Button*@
         <div class='fixed-bottom'>
-            <button class='cart-button' @onclick=AddToCart>
+            <button class='cart-button red-button' @onclick=AddToCart>
                 Add to Cart
                 <span class="iconify" data-icon="ant-design:shopping-cart-outline" data-width="30" data-height="30"></span>
             </button>
@@ -103,12 +103,13 @@
         }
     }
 
-    private void AddToCart()
+    private async Task AddToCart()
     {
         OrderItem orderItem = new OrderItem(FoodItem, SelectedQuantity, OrderStatus.PendingOrder, SelectedSide, SpecialInstructions);
         User.Cart.Add(orderItem);
         Console.WriteLine($"AddToCart {orderItem}");
-        NavigateToMenu.Invoke();
+        await ToggleTransition();
+        NavigateToMenu();        
     }
 
     private bool IsDecreaseButtonDisabled()
@@ -127,5 +128,10 @@
     private void IncreaseQuantity()
     {
         SelectedQuantity++;
+    }
+
+    public async Task ToggleTransition()
+    {
+        await Task.Delay(300);
     }
 }
