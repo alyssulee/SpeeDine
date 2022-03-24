@@ -8,6 +8,7 @@ h1
 .menu
 {
     padding-top: 5rem;
+    height: 100%;
 }
 
 ul {
@@ -91,6 +92,7 @@ button:focus {
     background: #FFFAEA;
     margin-top: -1.1rem;
     height: 5rem;
+    z-index: 104;
 }
 
 .left-arrow, .right-arrow {
@@ -183,70 +185,46 @@ input[type="radio"]:active + .category {
     position: absolute;
     width: 95%;
     height: 100%;
-    display: hidden;
-    
+    display: hidden;   
 }
-/* Base for label styling */
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
-    position: absolute;
+
+
+/*Food details Popup*/
+.slide-up-popup {
+    background: #00000080;
+    position: fixed;
+    bottom: 0;
     left: 0;
-    opacity: 0.01;
+    right: 0;
+    height: 100%;
+    z-index: 200;
 }
 
-    [type="checkbox"]:not(:checked) + label,
-    [type="checkbox"]:checked + label {
-        position: relative;
-        padding-left: 2.3em;
-        font-size: 1.1em;
-        line-height: 1.8;
-        cursor: pointer;
+.food-details-popup {
+    overflow-y: auto;
+    height: 90%;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    padding: 1rem;
+    background: #FFFAEA;
+    z-index: 202;
+    border-radius: 1rem 1rem 0 0;
+
+    animation: .5s slide-up;
+    margin-top: 0%;
+}
+
+
+@keyframes slide-up {
+    from {
+        height: 0%;
     }
 
-    /* checkbox aspect */
-    [type="checkbox"]:not(:checked) + label:before,
-    [type="checkbox"]:checked + label:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 1.4em;
-        height: 1.4em;
-        border: 1px solid #aaa;
-        background: #FFF;
-        border-radius: .2em;
-        box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
-        -webkit-transition: all .275s;
-        transition: all .275s;
+    to {
+        height: 90%;
     }
-
-    /* checked mark aspect */
-    [type="checkbox"]:not(:checked) + label:after,
-    [type="checkbox"]:checked + label:after {
-        content: '✓';
-        position: absolute;
-        top: .525em;
-        left: .18em;
-        font-size: 1.375em;
-        color: #de6f6f;
-        line-height: 0;
-        -webkit-transition: all .2s;
-        transition: all .2s;
-    }
-
-    /* checked mark aspect changes */
-    [type="checkbox"]:not(:checked) + label:after {
-        opacity: 0;
-        -webkit-transform: scale(0) rotate(45deg);
-        transform: scale(0) rotate(45deg);
-    }
-
-    [type="checkbox"]:checked + label:after {
-        opacity: 1;
-        -webkit-transform: scale(1) rotate(0);
-        transform: scale(1) rotate(0);
-    }
-
+}
 
 @media screen and (min-width:768px) {
     :: -webkit-scrollbar {

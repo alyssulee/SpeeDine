@@ -10,7 +10,7 @@
     <button class='left-arrow' >&lsaquo;</button>
     <div class='scroll-categories' id='scroll-categories'>
         <div class='categories'>
-            @foreach(var category in categories)
+            @foreach(var category in Categories)
             {
                 <input type="radio" id="@category" name="categories" value="@category" 
                     style="display: none;" checked="@(SelectedCategory == category)" 
@@ -27,16 +27,16 @@
     @*Filter*@
     <div class='filter-container'>
         @*Filter button*@
-        <button class='filter-button' @onclick=ShowFilterPopup>
+        <button class='filter-button' @onclick=ToggleFilterPopup>
             Filter
-            @if(selectedFilters.Any()) { <span class='filter-number'>@selectedFilters.Count()</span> }
+            @if(SelectedFilters.Any()) { <span class='filter-number'>@SelectedFilters.Count()</span> }
             <span class="iconify" data-icon="mdi:filter"  data-width="40" data-height="40">></span>
         </button>
         @*Filter popup*@
-        @if(showFilterPopup)
+        @if(ShowFilterPopup)
         {
             <div class='filter-popup'>
-                @foreach(var filter in filters)
+                @foreach(var filter in Filters)
                 {
                     <input type="checkbox" id="@filter" name="@filter" value="@filter" 
                     checked="@IsFilterChecked(filter)" 
@@ -46,16 +46,16 @@
             </div> 
         }
     </div>
-    @if (showFilterPopup)
+    @if (ShowFilterPopup)
     {
-        <div class='outside-filter-popup' @onclick=ShowFilterPopup></div>
+        <div class='outside-filter-popup' @onclick=ToggleFilterPopup></div>
     }
 
     <h1>@SelectedCategory</h1>
 
     @*Menu List*@
     <ul>
-        @foreach(var menuItem in displayMenuList)
+        @foreach(var menuItem in DisplayMenuList)
         {
             <li class='menu-item'>
                 <button class='menu-item-container' @onclick="@(() => { OpenFoodDetailsPage(menuItem);})">
@@ -79,34 +79,59 @@
             </li>
         }
     </ul>
+
+    @if(ShowFoodDetails)
+    {
+        <div class='food-details-popup'>
+            <FoodDetails FoodItem=@SelectedMenuItem NavigateToMenu=@CloseFoodDetailsPage/>
+        </div>
+        <div class='slide-up-popup' @onclick="@(() => {ShowFoodDetails=false;})"></div>
+    }
+
 </div>
 
 @code 
 {
-    List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
-    List<MenuTag> filters = Enum.GetValues(typeof(MenuTag)).Cast<MenuTag>().ToList();
+    List<MenuCategory> Categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+    List<MenuTag> Filters = Enum.GetValues(typeof(MenuTag)).Cast<MenuTag>().ToList();
 
     /* GUI_Bindings */ 
     [Parameter]
     public string SelectedCategoryString { get; set; }
     public MenuCategory SelectedCategory { get; set; }
 
-    public List<MenuTag> selectedFilters = new List<MenuTag>();
-    public bool showFilterPopup { get; set; }
-    public List<MenuItem> displayMenuList = new List<MenuItem>();
+    public List<MenuTag> SelectedFilters = new List<MenuTag>();
+    public bool ShowFilterPopup { get; set; }
+
+    public List<MenuItem> DisplayMenuList = new List<MenuItem>();
+    public MenuItem SelectedMenuItem { get; set; }
+
+    public bool ShowFoodDetails {  get;  set; }
 
     protected override void OnInitialized()
     {
         SelectedCategory = (MenuCategory)Enum.Parse(typeof(MenuCategory), SelectedCategoryString);
-        showFilterPopup = false;
+        ShowFilterPopup = false;
+        ShowFoodDetails = false;
         UpdateMenuCategory();
         base.OnInitialized();
     }
 
-    private async void OpenFoodDetailsPage(MenuItem menuItem)
+    /* Food Details */
+    private void OpenFoodDetailsPage(MenuItem menuItem)
     {
-        await ToggleTransition();
-        NavigationManager.NavigateTo($"menu/{SelectedCategory}/details/{menuItem.Id}");
+        ShowFoodDetails = true;
+        Console.WriteLine("Open food details");
+        SelectedMenuItem = menuItem;
+        //await ToggleTransition();
+
+        //NavigationManager.NavigateTo($"menu/{SelectedCategory}/details/{menuItem.Id}");
+    }
+
+    private void CloseFoodDetailsPage()
+    {
+        ShowFoodDetails=false;
+        StateHasChanged();
     }
 
     /* Categories/Filtering */ 
@@ -115,39 +140,39 @@
         // Filter by Category
         if(SelectedCategory == MenuCategory.Pinned)
         {
-            displayMenuList = User.PinnedItems;
+            DisplayMenuList = User.PinnedItems;
         }
         else
         {
-            displayMenuList = MenuRepo.GetMenuByCategory(SelectedCategory);
+            DisplayMenuList = MenuRepo.GetMenuByCategory(SelectedCategory);
         }
 
         // Filter by Tags
-        if(selectedFilters.Any())
+        if(SelectedFilters.Any())
         {
-             displayMenuList = displayMenuList.Where(menuItem => selectedFilters.All(menuItem.Tags.Contains)).ToList();
+             DisplayMenuList = DisplayMenuList.Where(menuItem => SelectedFilters.All(menuItem.Tags.Contains)).ToList();
         }
     }
 
-    private void ShowFilterPopup()
+    private void ToggleFilterPopup()
     {
-        showFilterPopup = !showFilterPopup;
+        ShowFilterPopup = !ShowFilterPopup;
     }
 
     private bool IsFilterChecked(MenuTag filter)
     {
-        return selectedFilters.Contains(filter);
+        return SelectedFilters.Contains(filter);
     }
 
     private void ToggleCheckedFilter(MenuTag filter)
     {
         if(IsFilterChecked(filter))
         {
-            selectedFilters.Remove(filter);
+            SelectedFilters.Remove(filter);
         }
         else
         {
-            selectedFilters.Add(filter);
+            SelectedFilters.Add(filter);
         }
     }
 

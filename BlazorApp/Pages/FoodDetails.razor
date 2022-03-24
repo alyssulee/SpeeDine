@@ -1,42 +1,131 @@
-﻿@page "/menu/{SelectedCategory}/details/{FoodID}"
+﻿@*@page "/menu/{SelectedCategory}/details/{FoodID}"*@
 @inject MenuRepository MenuRepo 
 @inject NavigationManager NavigationManager
-
+@inject User User
 
 <button @onclick=NavigateToMenu>
     <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
     Back to Menu
 </button>
 
-<div class='content'>
-    <img src="@FoodItem.ImgLink">
-    <div>
-        <h1>@FoodItem.Name</h1>
-        <p>@FoodItem.Price</p>
+<div class='food-details-comp'>
+    <div class='content'>
+        <div class='header'>
+            <h3 class='font-weight-bold'>@FoodItem.Name</h3>
+            <h4 class='font-weight-bold'>$@FoodItem.Price</h4>
+        </div>
+
+        <p>@FoodItem.Description</p>
+        <br/>
+
+        @*Sides *@
+        @if(FoodItem.Sides != null && FoodItem.Sides.Any())
+        {
+            <div class='sides'>
+                <div class='d-flex p-2 align-items-center'>
+                    <h4>Sides</h4>
+                    <span class='subtitle'>(Choose one)</span>
+                    <span class='mandatory-star'>*</span>
+                </div>
+                @foreach(var side in FoodItem.Sides)
+                {
+                    <div class='radio-button'>   
+                        <input type="radio" id="@side" name="sides" value="@side" 
+                            checked="@(SelectedSide == side)"
+                            @onchange="@(() => { SelectedSide = side; })">
+                        <label class='d-flex justify-content-between' for="@side">
+                            <span>@side.Name</span>
+                            @if(side.ExtraCost != 0)
+                            {
+                                <span class='subtitle font-weight-normal'> + $@string.Format("{0:N2}", side.ExtraCost)</span>
+                            }
+                        </label>
+                    </div>
+                }
+            </div>
+            <br/>
+        }
+
+        @*Special Instructions *@
+        <div class='instructions'>
+            <h4>Special Instructions</h4>
+
+            <textarea id="instructions-field" name="instructions-field" 
+            cols="40" rows="5" 
+            @bind="@SpecialInstructions"
+            placeholder="Please enter any special instructions (Optional)"></textarea>
+        </div>
+        <br />
+
+        @*Quantity *@
+        <h4>Quantity</h4>
+         <div class='quantity-container'>
+            <button class="quantity-button" id="decrease" 
+                disabled=@IsDecreaseButtonDisabled()
+                @onclick="DecreaseQuantity" value="Decrease Value">–</button>
+            <input type="number" id="quantity-number" value="@SelectedQuantity" />
+            <button class="quantity-button" id="increase" 
+            @onclick="IncreaseQuantity" value="Increase Value">+</button>
+        </div>
+        <br />
+
+        @*Cart Button*@
+        <div class='fixed-bottom'>
+            <button class='cart-button' @onclick=AddToCart>
+                Add to Cart
+                <span class="iconify" data-icon="ant-design:shopping-cart-outline" data-width="30" data-height="30"></span>
+            </button>
+        </div>
     </div>
 
-    <p>@FoodItem.Description</p>
-</div>
 
-<button class='fixed-bottom'>Add to Cart</button>
+</div>
 
 
 @code 
 {
-    [Parameter]
-    public string FoodID { get; set; }
-    [Parameter]
-    public string SelectedCategory { get; set; }
 
+    [Parameter]
     public MenuItem FoodItem { get; set; }
+    [Parameter]
+    public Action NavigateToMenu { get; set; }
+
+    public MenuSide SelectedSide { get; set; }
+    public int SelectedQuantity { get; set; }
+    public string SpecialInstructions { get; set; }
 
     protected override void OnInitialized()
     {
-        FoodItem = MenuRepo.GetItemByID(Int32.Parse(FoodID));
+        SelectedQuantity = 1;
+        if(FoodItem.Sides != null && FoodItem.Sides.Any())
+        {
+            SelectedSide = FoodItem.Sides.ElementAt(0);
+        }
     }
 
-    private void NavigateToMenu()
+    private void AddToCart()
     {
-        NavigationManager.NavigateTo($"menu/{SelectedCategory}");
+        OrderItem orderItem = new OrderItem(FoodItem, SelectedQuantity, OrderStatus.PendingOrder, SelectedSide, SpecialInstructions);
+        User.Cart.Add(orderItem);
+        Console.WriteLine($"AddToCart {orderItem}");
+        NavigateToMenu.Invoke();
+    }
+
+    private bool IsDecreaseButtonDisabled()
+    {
+        return SelectedQuantity <= 1;
+    }
+
+    private void DecreaseQuantity()
+    {
+        if(SelectedQuantity > 1)
+        {
+            SelectedQuantity--;
+        }
+    }
+
+    private void IncreaseQuantity()
+    {
+        SelectedQuantity++;
     }
 }
