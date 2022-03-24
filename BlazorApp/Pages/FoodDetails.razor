@@ -2,6 +2,8 @@
 @inject MenuRepository MenuRepo 
 @inject NavigationManager NavigationManager
 @inject User User
+@inject IToastService ToastService
+
 
 <button @onclick=NavigateToMenu>
     <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
@@ -16,7 +18,6 @@
         </div>
 
         <p>@FoodItem.Description</p>
-        <br/>
 
         @*Sides *@
         @if(FoodItem.Sides != null && FoodItem.Sides.Any())
@@ -43,7 +44,6 @@
                     </div>
                 }
             </div>
-            <br/>
         }
 
         @*Special Instructions *@
@@ -55,7 +55,6 @@
             @bind="@SpecialInstructions"
             placeholder="Please enter any special instructions (Optional)"></textarea>
         </div>
-        <br />
 
         @*Quantity *@
         <h4>Quantity</h4>
@@ -72,8 +71,11 @@
         @*Cart Button*@
         <div class='fixed-bottom'>
             <button class='cart-button red-button' @onclick=AddToCart>
-                Add to Cart
-                <span class="iconify" data-icon="ant-design:shopping-cart-outline" data-width="30" data-height="30"></span>
+                <span class="iconify align-self-center cart-icon" data-icon="ant-design:shopping-cart-outline" data-width="30" data-height="30"></span>
+                <span class='button-title'>Add to Cart</span>
+                <br />
+                <span>( $@string.Format("{0:N2}", CalculateCost()) )</span>
+
             </button>
         </div>
     </div>
@@ -109,7 +111,8 @@
         User.Cart.Add(orderItem);
         Console.WriteLine($"AddToCart {orderItem}");
         await ToggleTransition();
-        NavigateToMenu();        
+        NavigateToMenu();
+        ToastService.ShowInfo($"Added {FoodItem.Name} to Cart");
     }
 
     private bool IsDecreaseButtonDisabled()
@@ -128,6 +131,12 @@
     private void IncreaseQuantity()
     {
         SelectedQuantity++;
+    }
+
+    private double CalculateCost()
+    {
+        if(SelectedSide != null)    return FoodItem.Price + SelectedSide.ExtraCost;
+        return FoodItem.Price;
     }
 
     public async Task ToggleTransition()

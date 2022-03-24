@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using BlazorApp.Data;
 using SpeeDine.Backend.Repositories;
 using SpeeDine.Backend.Models;
+using Blazored.Toast;
 
 namespace BlazorApp
 {
@@ -30,10 +31,13 @@ namespace BlazorApp
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddBlazoredToast();
 
             // Add dependencies
             services.AddSingleton<MenuRepository>();
             services.AddSingleton<User>(new User(1, "Guest 1") );
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

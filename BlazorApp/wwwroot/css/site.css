@@ -9,6 +9,31 @@ p {
     font-size: 16px;
 }
 
+/* Overriding toast styling*/
+.blazored-toast {
+    border-radius: 1rem !important;
+    z-index: 999 !important;
+    width: 95vw !important;
+    margin: 1rem !important;
+}
+
+.blazored-toast-container {
+    z-index: 999 !important;
+}
+
+.blazored-toast-info {
+    background: rgba(0,0,0,0.8) !important;
+}
+
+.blazored-toast-heading {
+    color: transparent !important;
+    line-height: 0px !important;
+}
+
+.blazored-toast-message {
+    font-size: 14px !important;
+    text-align: center;
+}
 /* Checkboxes Styling */
 /* Base for label styling */
 [type="checkbox"]:not(:checked),

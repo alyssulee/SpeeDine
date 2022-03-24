@@ -4,6 +4,7 @@
 @inject MenuRepository MenuRepo 
 @inject User User 
 @inject NavigationManager NavigationManager
+@inject IToastService ToastService
 
 @*Categories*@
 <div class='category-bar'>
@@ -188,7 +189,8 @@
         }
         else
         {
-            User.PinnedItems.Add(item);   
+            User.PinnedItems.Add(item);
+            ToastService.ShowInfo($"Added {item.Name} to Pinned");
         }
     }
 
