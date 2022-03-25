@@ -6,15 +6,15 @@ namespace SpeeDine.Backend.Models
     {
         Pinned,
         Popular,
-        Appetizer,
         Dinner,
+        Appetizer,
         Lunch,
         Dessert,
         Kids,
         Drinks
     }
 
-    public enum MenuTags
+    public enum MenuTag
     {
         Vegetarian,
         Vegan,
@@ -23,7 +23,7 @@ namespace SpeeDine.Backend.Models
         KetoFriendly
     }
 
-    public record MenuItem (int Id, string Name, string Description, double Price, string ImgLink, List<MenuCategory> Categories, List<MenuTags> ?Tags, List<MenuSide>? Sides);
+    public record MenuItem (int Id, string Name, string Description, double Price, string ImgLink, List<MenuCategory> Categories, List<MenuTag> ?Tags, List<MenuSide>? Sides);
     public record MenuSide (string Name, double ExtraCost);
 
    

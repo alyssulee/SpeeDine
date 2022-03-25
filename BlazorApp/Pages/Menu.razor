@@ -1,19 +1,21 @@
-@page "/menu"
+@page "/menu/{SelectedCategoryString}"
 
 @inject IJSRuntime JsRuntime
 @inject MenuRepository MenuRepo 
-@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
+@inject User User 
+@inject NavigationManager NavigationManager
+@inject IToastService ToastService
 
 @*Categories*@
 <div class='category-bar'>
     <button class='left-arrow' >&lsaquo;</button>
     <div class='scroll-categories' id='scroll-categories'>
         <div class='categories'>
-            @foreach(var category in categories)
+            @foreach(var category in Categories)
             {
                 <input type="radio" id="@category" name="categories" value="@category" 
-                    style="display: none;" checked="@(selectedCategory == category)" 
-                    @onchange="@(() => { selectedCategory = category; FilterMenu();})">
+                    style="display: none;" checked="@(SelectedCategory == category)" 
+                    @onchange="@(() => { SelectedCategory = category; UpdateMenuCategory();})">
                 <label class='category' for="@category">@category</label><br>
             }
         </div>
@@ -21,55 +23,209 @@
     <button class='right-arrow'>&rsaquo;</button>
 </div>
 
+@*Menu*@
 <div class='menu'>
-    <h1>@selectedCategory</h1>
+    @*Filter*@
+    <div class='filter-container'>
+        @*Filter button*@
+        <button class='filter-button' @onclick=ToggleFilterPopup>
+            Filter
+            @if(SelectedFilters.Any()) { <span class='filter-number'>@SelectedFilters.Count()</span> }
+            <span class="iconify" data-icon="mdi:filter"  data-width="40" data-height="40">></span>
+        </button>
+        @*Filter popup*@
+        @if(ShowFilterPopup)
+        {
+            <div class='filter-popup'>
+                @foreach(var filter in Filters)
+                {
+                    <input type="checkbox" id="@filter" name="@filter" value="@filter" 
+                    checked="@IsFilterChecked(filter)" 
+                    @onchange="@(() => { ToggleCheckedFilter(filter); UpdateMenuCategory();})">
+                    <label class='filter' for="@filter">@filter</label><br>
+                }
+            </div> 
+        }
+    </div>
+    @if (ShowFilterPopup)
+    {
+        <div class='outside-filter-popup' @onclick=ToggleFilterPopup></div>
+    }
+
+    <h1>@SelectedCategory</h1>
 
     @*Menu List*@
-    <ul>
-        @foreach(var menuItem in displayMenuList)
+    @if(DisplayMenuList.Any())
+    {
+        <ul>
+        @foreach(var menuItem in DisplayMenuList)
         {
-            <li class='menu-item' @onclick="@(() => { OpenFoodDetailsPage(menuItem);})">
-                <div class='menu-item-container'>
+            <li class='menu-item'>
+                <button class='menu-item-container' @onclick="@(() => { OpenFoodDetailsPage(menuItem);})">
                     <img src=@menuItem.ImgLink>
-                    <div style='padding: 0.5rem; flex-grow: 1;'>
+                    <div class='menu-item-details'>
                          <div class='row'>
-                            <p style="font-weight:bold; margin-right:auto">@menuItem.Name</p>
-                            <p style="margin-left:auto">$@menuItem.Price</p>
+                            <p style="font-weight:bold; margin-right:auto; font-size:18px;">
+                                @menuItem.Name
+                            </p>
+                            <p style="font-weight:bold; margin-left:auto">$@menuItem.Price</p>
                         </div>
                         <div class='row'>
-                            <p>@menuItem.Description</p>
+                            <p style='font-size: 14px; margin-bottom: 5px;'>@menuItem.Description</p>
                         </div>
                     </div>
-                </div>
+                </button>
+                <button class='pin-button @GetPinnedClass(menuItem)' 
+                    @onclick:preventDefault="true"
+                    @onclick:stopPropagation="true"
+                    @onclick="@(() => TogglePinButton(menuItem))">
+                    <span class="iconify pin-icon" data-icon="bi:pin-angle-fill" data-width="30" data-height="30"></span>
+                </button>
             </li>
         }
-    </ul>
+        </ul>
+    }
+    else
+    {
+        @*Empty Pages*@
+        @if(SelectedCategory == MenuCategory.Pinned)
+        {
+            <div class='empty'>
+                <span class="iconify" data-icon="ic:baseline-pin-off" 
+                data-width="150" data-height="150"></span>
+                <br><br>
+                <span>Looks like you haven't pinned any items.</span>
+                <br><br>
+                <span>Pin items from the menu by clicking the </span>
+                <span class="iconify pin-icon" style='margin-bottom: 1rem; margin-left: 0.5rem; margin-right: 1rem;' 
+                data-icon="bi:pin-angle-fill" data-width="30" data-height="30"></span>
+                <span> on the bottom-right of the dish!</span>
+            </div>
+        }
+        else
+        {
+            <div class='empty centered'>
+                <span>Sorry, there are no menu items that match this criteria.</span>
+            </div>
+        }
+    }
+    
+    @*Food Details Popup*@
+    @if(ShowFoodDetails)
+    {
+        <div class='food-details-popup'>
+            <FoodDetails FoodItem=@SelectedMenuItem NavigateToMenu=@CloseFoodDetailsPage/>
+        </div>
+        <div class='black-overlay-popup' @onclick="@(() => {ShowFoodDetails=false;})"></div>
+    }
+
 </div>
 
 @code 
 {
-    #region Attributes
-    List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+    List<MenuCategory> Categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+    List<MenuTag> Filters = Enum.GetValues(typeof(MenuTag)).Cast<MenuTag>().ToList();
 
-    // GUI Bindings
-    public MenuCategory selectedCategory { get; set; }
-    public List<MenuItem> displayMenuList = new List<MenuItem>();
-    #endregion
+    /* GUI_Bindings */ 
+    [Parameter]
+    public string SelectedCategoryString { get; set; }
+    public MenuCategory SelectedCategory { get; set; }
+
+    public List<MenuTag> SelectedFilters = new List<MenuTag>();
+    public bool ShowFilterPopup { get; set; }
+
+    public List<MenuItem> DisplayMenuList = new List<MenuItem>();
+    public MenuItem SelectedMenuItem { get; set; }
+
+    public bool ShowFoodDetails {  get;  set; }
 
     protected override void OnInitialized()
     {
-        selectedCategory = MenuCategory.Popular;
-        FilterMenu();
+        SelectedCategory = (MenuCategory)Enum.Parse(typeof(MenuCategory), SelectedCategoryString);
+        ShowFilterPopup = false;
+        ShowFoodDetails = false;
+        UpdateMenuCategory();
         base.OnInitialized();
     }
 
-    private void FilterMenu()
-    {
-        displayMenuList = MenuRepo.GetMenuByCategory(selectedCategory);
-    }
-
+    /* Food Details */
     private void OpenFoodDetailsPage(MenuItem menuItem)
     {
-        NavigationManager.NavigateTo($"menu/details/{menuItem.Id}");
+        ShowFoodDetails = true;
+        Console.WriteLine("Open food details");
+        SelectedMenuItem = menuItem;
+    }
+
+    private void CloseFoodDetailsPage()
+    {
+        ShowFoodDetails=false;
+        StateHasChanged();
+    }
+
+    /* Categories/Filtering */ 
+    private void UpdateMenuCategory()
+    {
+        // Filter by Category
+        if(SelectedCategory == MenuCategory.Pinned)
+        {
+            DisplayMenuList = User.PinnedItems;
+        }
+        else
+        {
+            DisplayMenuList = MenuRepo.GetMenuByCategory(SelectedCategory);
+        }
+
+        // Filter by Tags
+        if(SelectedFilters.Any())
+        {
+             DisplayMenuList = DisplayMenuList.Where(menuItem => SelectedFilters.All(menuItem.Tags.Contains)).ToList();
+        }
+    }
+
+    private void ToggleFilterPopup()
+    {
+        ShowFilterPopup = !ShowFilterPopup;
+    }
+
+    private bool IsFilterChecked(MenuTag filter)
+    {
+        return SelectedFilters.Contains(filter);
+    }
+
+    private void ToggleCheckedFilter(MenuTag filter)
+    {
+        if(IsFilterChecked(filter))
+        {
+            SelectedFilters.Remove(filter);
+        }
+        else
+        {
+            SelectedFilters.Add(filter);
+        }
+    }
+
+
+    /* Pinning */  
+    private string GetPinnedClass(MenuItem item)
+    {
+        return User.PinnedItems.Contains(item) ? "pinned" : "";
+    }
+
+    private void TogglePinButton(MenuItem item)
+    {
+        if(User.PinnedItems.Contains(item))
+        {
+            User.PinnedItems.Remove(item);   
+        }
+        else
+        {
+            User.PinnedItems.Add(item);
+            ToastService.ShowInfo($"Added {item.Name} to Pinned");
+        }
+    }
+
+    public async Task ToggleTransition()
+    {
+        await Task.Delay(300);
     }
 }

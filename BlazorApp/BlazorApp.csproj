@@ -6,5 +6,8 @@
   <ItemGroup>
     <ProjectReference Include="..\SpeeDine.Backend\SpeeDine.Backend.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Blazored.Toast" Version="3.2.2" />
+  </ItemGroup>
 
 </Project>

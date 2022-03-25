@@ -1,9 +1,101 @@
-@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: #FFFAEA;
 }
+
+p {
+    font-size: 16px;
+}
+
+/* Overriding toast styling*/
+.blazored-toast {
+    border-radius: 1rem !important;
+    z-index: 999 !important;
+    width: 95vw !important;
+    margin: 1rem !important;
+}
+
+.blazored-toast-container {
+    z-index: 999 !important;
+}
+
+.blazored-toast-info {
+    background: rgba(0,0,0,0.8) !important;
+}
+
+.blazored-toast-heading {
+    color: transparent !important;
+    line-height: 0px !important;
+}
+
+.blazored-toast-message {
+    font-size: 14px !important;
+    text-align: center;
+}
+/* Checkboxes Styling */
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    position: absolute;
+    left: 0;
+    opacity: 0.01;
+}
+
+    [type="checkbox"]:not(:checked) + label,
+    [type="checkbox"]:checked + label {
+        position: relative;
+        padding-left: 2.5em;
+        font-size: 16px;
+        line-height: 2;
+        cursor: pointer;
+    }
+
+        /* checkbox aspect */
+        [type="checkbox"]:not(:checked) + label:before,
+        [type="checkbox"]:checked + label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.2em;
+            width: 1.6em;
+            height: 1.6em;
+            border: 1px solid #aaa;
+            background: #FFF;
+            border-radius: .2em;
+            box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
+            -webkit-transition: all .275s;
+            transition: all .275s;
+        }
+
+        /* checked mark aspect */
+        [type="checkbox"]:not(:checked) + label:after,
+        [type="checkbox"]:checked + label:after {
+            content: '✓';
+            position: absolute;
+            top: .8em;
+            left: .25em;
+            font-size: 1.375em;
+            color: #de6f6f;
+            line-height: 0;
+            -webkit-transition: all .2s;
+            transition: all .2s;
+        }
+
+        /* checked mark aspect changes */
+        [type="checkbox"]:not(:checked) + label:after {
+            opacity: 0;
+            -webkit-transform: scale(0) rotate(45deg);
+            transform: scale(0) rotate(45deg);
+        }
+
+        [type="checkbox"]:checked + label:after {
+            opacity: 1;
+            -webkit-transform: scale(1) rotate(0);
+            transform: scale(1) rotate(0);
+        }
+
 
 a, .btn-link {
     color: #0366d6;

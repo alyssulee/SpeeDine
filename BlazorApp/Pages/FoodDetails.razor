@@ -1,19 +1,147 @@
-﻿@page "/menu/details/{FoodID}"
+﻿@*@page "/menu/{SelectedCategory}/details/{FoodID}"*@
 @inject MenuRepository MenuRepo 
+@inject NavigationManager NavigationManager
+@inject User User
+@inject IToastService ToastService
 
 
-<h1>@FoodItem.Name</h1>
+<button @onclick=NavigateToMenu>
+    <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
+    Back to Menu
+</button>
+
+<div class='food-details-comp'>
+    <div class='content'>
+        <img src=@FoodItem.ImgLink>
+        <div class='header'>
+            <h3 class='font-weight-bold'>@FoodItem.Name</h3>
+            <h4 class='font-weight-bold'>$@FoodItem.Price</h4>
+        </div>
+
+        <p>@FoodItem.Description</p>
+
+        @*Sides *@
+        @if(FoodItem.Sides != null && FoodItem.Sides.Any())
+        {
+            <div class='sides'>
+                <div class='d-flex p-2 align-items-center'>
+                    <h4>Sides</h4>
+                    <span class='subtitle'>(Choose one)</span>
+                    <span class='mandatory-star'>*</span>
+                </div>
+                @foreach(var side in FoodItem.Sides)
+                {
+                    <div class='radio-button'>   
+                        <input type="radio" id="@side" name="sides" value="@side" 
+                            checked="@(SelectedSide == side)"
+                            @onchange="@(() => { SelectedSide = side; })">
+                        <label class='d-flex justify-content-between' for="@side">
+                            <span>@side.Name</span>
+                            @if(side.ExtraCost != 0)
+                            {
+                                <span class='subtitle font-weight-normal'> + $@string.Format("{0:N2}", side.ExtraCost)</span>
+                            }
+                        </label>
+                    </div>
+                }
+            </div>
+        }
+
+        @*Special Instructions *@
+        <div class='instructions'>
+            <h4>Special Instructions</h4>
+
+            <textarea id="instructions-field" name="instructions-field" 
+            cols="40" rows="3" 
+            @bind="@SpecialInstructions"
+            placeholder="Please enter any special instructions (Optional)"></textarea>
+        </div>
+
+        @*Quantity *@
+        <h4>Quantity</h4>
+         <div class='quantity-container'>
+            <button class="quantity-button red-button" id="decrease" 
+                disabled=@IsDecreaseButtonDisabled()
+                @onclick="DecreaseQuantity" value="Decrease Value">–</button>
+            <input type="number" id="quantity-number" value="@SelectedQuantity" />
+            <button class="quantity-button red-button" id="increase" 
+            @onclick="IncreaseQuantity" value="Increase Value">+</button>
+        </div>
+        <br />
+
+        @*Cart Button*@
+        <div class='fixed-bottom'>
+            <button class='cart-button red-button' @onclick=AddToCart>
+                <span class="iconify align-self-center cart-icon" data-icon="ant-design:shopping-cart-outline" data-width="30" data-height="30"></span>
+                <span class='button-title'>Add to Cart</span>
+                <br />
+                <span>( $@string.Format("{0:N2}", CalculateCost()) )</span>
+
+            </button>
+        </div>
+    </div>
+
+
+</div>
+
 
 @code 
 {
-    [Parameter]
-    public string FoodID { get; set; }
 
+    [Parameter]
     public MenuItem FoodItem { get; set; }
+    [Parameter]
+    public Action NavigateToMenu { get; set; }
+
+    public MenuSide SelectedSide { get; set; }
+    public int SelectedQuantity { get; set; }
+    public string SpecialInstructions { get; set; }
 
     protected override void OnInitialized()
     {
-        FoodItem = MenuRepo.GetItemByID(Int32.Parse(FoodID));
+        SelectedQuantity = 1;
+        if(FoodItem.Sides != null && FoodItem.Sides.Any())
+        {
+            SelectedSide = FoodItem.Sides.ElementAt(0);
+        }
     }
 
+    private async Task AddToCart()
+    {
+        OrderItem orderItem = new OrderItem(FoodItem, SelectedQuantity, OrderStatus.PendingOrder, SelectedSide, SpecialInstructions);
+        User.Cart.Add(orderItem);
+        Console.WriteLine($"AddToCart {orderItem}");
+        await ToggleTransition();
+        NavigateToMenu();
+        ToastService.ShowInfo($"Added {FoodItem.Name} to Cart");
+    }
+
+    private bool IsDecreaseButtonDisabled()
+    {
+        return SelectedQuantity <= 1;
+    }
+
+    private void DecreaseQuantity()
+    {
+        if(SelectedQuantity > 1)
+        {
+            SelectedQuantity--;
+        }
+    }
+
+    private void IncreaseQuantity()
+    {
+        SelectedQuantity++;
+    }
+
+    private double CalculateCost()
+    {
+        if(SelectedSide != null)    return FoodItem.Price + SelectedSide.ExtraCost;
+        return FoodItem.Price;
+    }
+
+    public async Task ToggleTransition()
+    {
+        await Task.Delay(300);
+    }
 }
