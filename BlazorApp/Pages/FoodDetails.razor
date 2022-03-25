@@ -12,6 +12,7 @@
 
 <div class='food-details-comp'>
     <div class='content'>
+        <img src=@FoodItem.ImgLink>
         <div class='header'>
             <h3 class='font-weight-bold'>@FoodItem.Name</h3>
             <h4 class='font-weight-bold'>$@FoodItem.Price</h4>
@@ -51,7 +52,7 @@
             <h4>Special Instructions</h4>
 
             <textarea id="instructions-field" name="instructions-field" 
-            cols="40" rows="5" 
+            cols="40" rows="3" 
             @bind="@SpecialInstructions"
             placeholder="Please enter any special instructions (Optional)"></textarea>
         </div>

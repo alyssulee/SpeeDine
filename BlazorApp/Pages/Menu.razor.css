@@ -40,6 +40,7 @@ ul {
     align-items: center;
     text-align: left;
     transition: all 0.2s ease;
+    padding: 0.5rem;
 }
     .menu-item-container:active {
         background: inherit;
@@ -51,12 +52,21 @@ ul {
     }
 
 .menu-item img {
-    width: 40%;
-    height: auto;
-    border-radius: .5rem;
+    width: 35vw;
+    height: 20vh;
+    border-radius: 0.5rem;
     margin: 0 auto;
-    margin-right: 0.5rem;
+    align-self: flex-start;
+    object-fit: cover;
 }
+
+.menu-item-details {
+    padding: 0.5rem;
+    flex-grow: 1;
+    align-self: baseline;
+}
+
+
 
 button {
     background: transparent;
@@ -68,18 +78,35 @@ button:focus {
     outline: none;
 }
 
+/* Pinned */
 .pin-button {
     background: transparent;
     border: none;
     opacity: 50%;
-    margin-left: auto;
     z-index: 5;
-    margin-top: -0.5rem;
+    margin-top: -1rem;
+    align-self: end;
+    padding: 0.5rem 1rem;
+    padding-top: 0;
 }
 
 .pinned {
     opacity: 100%;
     color: #de6f6f;
+}
+
+.empty {
+    text-align: center;
+    color: #575757;
+}
+
+    .empty.centered {
+        position: absolute;
+        top: 40vh;
+    }
+
+.empty span {
+    font-size: 30px;
 }
 
 /** Categories */
@@ -127,6 +154,7 @@ button:focus {
     border-radius: 2rem;
     cursor: pointer;
     transition: all .2s ease;
+    font-size: 16px;
 }
 input[type="radio"]:checked + .category {
     background: #de6f6f;
@@ -169,7 +197,7 @@ input[type="radio"]:active + .category {
 
 .filter-popup {
     background: white;
-    padding: 1.5rem 4rem 1rem 1.5rem;
+    padding: 1.5rem;
     border-radius: 1rem;
     position: absolute;
     right: 0;
@@ -178,7 +206,8 @@ input[type="radio"]:active + .category {
     clear: both;
     margin: 1rem;
     z-index: 102;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 70vw;
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 }
 
 .outside-filter-popup{
@@ -190,7 +219,7 @@ input[type="radio"]:active + .category {
 
 
 /*Food details Popup*/
-.slide-up-popup {
+.black-overlay-popup {
     background: #00000080;
     position: fixed;
     bottom: 0;
@@ -211,7 +240,7 @@ input[type="radio"]:active + .category {
     z-index: 202;
     border-radius: 1rem 1rem 0 0;
 
-    animation: .5s slide-up;
+    animation: .7s slide-up;
     margin-top: 0%;
 }
 

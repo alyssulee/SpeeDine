@@ -1,11 +1,19 @@
 ﻿img {
-    width: 100%;
     border-radius: 0.5rem;
+    height: 33vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    object-fit: cover;
 }
 
 button {
     background: transparent;
     border: none;
+}
+
+h4 {
+    font-weight: bold;
 }
 
 button:focus {
@@ -82,6 +90,11 @@ h3 {
     font-size: 2rem;
 }
 
+.instructions 
+{
+    margin: 1.5rem 0;
+}
+
 #instructions-field {
     border-radius: 0.5rem;
     min-height: 2rem;
@@ -96,6 +109,7 @@ h3 {
     align-items: center;
     overflow: hidden;
     justify-content: center;
+    padding: 0.5rem;
 }
 
 .quantity-button {
@@ -113,7 +127,7 @@ h3 {
 }
 
 #increase {
-    line-height: 1.6;
+    line-height: 1.4;
 }
 
 #decrease {
@@ -125,6 +139,8 @@ input[type="number"] {
     display: inline-block;
     text-align: center;
     appearance: textfield;
+    font-size: 16px;
+    font-weight: bold;
 }
 
     input[type="number"] ::-webkit-outer-spin-button,
@@ -145,10 +161,13 @@ input[type="number"] {
     [type="radio"]:not(:checked) + label,
     [type="radio"]:checked + label {
         position: relative;
-        padding-left: 2.3em;
+        padding-left: 3em;
+        padding-right: 1em;
         font-size: 1.1em;
         line-height: 1.8;
         cursor: pointer;
+        border-radius: 1rem;
+        font-weight: normal;
     }
 
         /* checkbox aspect */
@@ -156,8 +175,8 @@ input[type="number"] {
         [type="radio"]:checked + label:before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
+            left: 0.2em;
+            top: 0.2em;
             width: 1.4em;
             height: 1.4em;
             border: 1px solid #aaa;
@@ -176,8 +195,8 @@ input[type="number"] {
             border-radius: 50%;
             content: '';
             position: absolute;
-            top: 0.2em;
-            left: 0.2em;
+            top: 0.37em;
+            left: 0.37em;
             font-size: 1.375em;
             color: #de6f6f;
             line-height: 0;
@@ -185,6 +204,11 @@ input[type="number"] {
             transition: all .2s;
             background: #de6f6f;
         }
+
+    [type="radio"]:checked + label {
+        background: #de6f6f50;
+        font-weight: bold;
+    }
 
         /* checked mark aspect changes */
         [type="radio"]:not(:checked) + label:after {

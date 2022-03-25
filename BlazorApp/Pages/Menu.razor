@@ -55,19 +55,23 @@
     <h1>@SelectedCategory</h1>
 
     @*Menu List*@
-    <ul>
+    @if(DisplayMenuList.Any())
+    {
+        <ul>
         @foreach(var menuItem in DisplayMenuList)
         {
             <li class='menu-item'>
                 <button class='menu-item-container' @onclick="@(() => { OpenFoodDetailsPage(menuItem);})">
                     <img src=@menuItem.ImgLink>
-                    <div style='padding: 0.5rem; flex-grow: 1;'>
+                    <div class='menu-item-details'>
                          <div class='row'>
-                            <p style="font-weight:bold; margin-right:auto">@menuItem.Name</p>
-                            <p style="margin-left:auto">$@menuItem.Price</p>
+                            <p style="font-weight:bold; margin-right:auto; font-size:18px;">
+                                @menuItem.Name
+                            </p>
+                            <p style="font-weight:bold; margin-left:auto">$@menuItem.Price</p>
                         </div>
                         <div class='row'>
-                            <p>@menuItem.Description</p>
+                            <p style='font-size: 14px; margin-bottom: 5px;'>@menuItem.Description</p>
                         </div>
                     </div>
                 </button>
@@ -79,14 +83,40 @@
                 </button>
             </li>
         }
-    </ul>
-
+        </ul>
+    }
+    else
+    {
+        @*Empty Pages*@
+        @if(SelectedCategory == MenuCategory.Pinned)
+        {
+            <div class='empty'>
+                <span class="iconify" data-icon="ic:baseline-pin-off" 
+                data-width="150" data-height="150"></span>
+                <br><br>
+                <span>Looks like you haven't pinned any items.</span>
+                <br><br>
+                <span>Pin items from the menu by clicking the </span>
+                <span class="iconify pin-icon" style='margin-bottom: 1rem; margin-left: 0.5rem; margin-right: 1rem;' 
+                data-icon="bi:pin-angle-fill" data-width="30" data-height="30"></span>
+                <span> on the bottom-right of the dish!</span>
+            </div>
+        }
+        else
+        {
+            <div class='empty centered'>
+                <span>Sorry, there are no menu items that match this criteria.</span>
+            </div>
+        }
+    }
+    
+    @*Food Details Popup*@
     @if(ShowFoodDetails)
     {
         <div class='food-details-popup'>
             <FoodDetails FoodItem=@SelectedMenuItem NavigateToMenu=@CloseFoodDetailsPage/>
         </div>
-        <div class='slide-up-popup' @onclick="@(() => {ShowFoodDetails=false;})"></div>
+        <div class='black-overlay-popup' @onclick="@(() => {ShowFoodDetails=false;})"></div>
     }
 
 </div>

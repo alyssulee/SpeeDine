@@ -6,8 +6,8 @@ namespace SpeeDine.Backend.Models
     {
         Pinned,
         Popular,
-        Appetizer,
         Dinner,
+        Appetizer,
         Lunch,
         Dessert,
         Kids,
