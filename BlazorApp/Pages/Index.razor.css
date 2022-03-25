@@ -1,0 +1,84 @@
+h1 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 4rem;
+    line-height: 61px;
+    text-align: center;
+    margin-top: 20vh;
+}
+h2 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 46px;
+    text-align: center;
+    margin-top: 32px;
+}
+h3 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 46px;
+    text-align: center;
+    color: #5C65CF;
+}
+
+p {
+    font-family: 'Prociono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 22px;
+    position:absolute;
+    bottom: 0;
+    height: auto;
+    margin-bottom:150px;
+    width:100%;
+    text-align:center;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+
+.content {
+    flex: 1 0 auto; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+    padding: 20px;
+}
+
+.footer {
+    padding: 20px;
+    width: 100vw;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.pulse {
+    -webkit-animation: pulsate 3s ease-out;
+    -webkit-animation-iteration-count: infinite;
+    opacity: 0.5;
+}
+
+@-webkit-keyframes pulsate {
+    0% {
+        opacity: 0.1;
+    }
+
+    50% {
+        opacity: 1.0;
+    }
+
+    100% {
+        opacity: 0.1;
+    }
+}
