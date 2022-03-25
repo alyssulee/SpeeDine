@@ -1,6 +1,83 @@
 @page "/cart"
-<h1> This is the cart page </h1>
 
-@code {
-    
+@inject IJSRuntime JsRuntime
+@inject MenuRepository MenuRepo 
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
+
+<div class='menu'>
+    <h1>Cart</h1>
+
+    <!-- Have to program this so that it iterates for each person -->
+    <h2>YOU (Guest 1)</h2>
+
+    @*Cart List*@
+    <ul>
+            @foreach(var menuItem in displayMenuList)
+            {
+                <li class='menu-item'>
+                    <div class='menu-item-container'>
+                        <img src=@menuItem.ImgLink>
+                        <div style='padding: 0.5rem; flex-grow: 1;'>
+                             <div class='row'>
+                                <p style="font-weight:bold; margin-right:auto">@menuItem.Name</p>
+                                <p style="margin-left:auto">$@menuItem.Price</p>
+                            </div>
+                            <div class='row'>
+                                <p>@menuItem.Description</p>
+                            </div>
+                             <div class='quantity-container'>
+                                <button class="quantity-button red-button" @onclick="decrement">-</button>
+                                <input type="number" id="quantity-number" value="@numItems" />
+                                <button class="quantity-button red-button" @onclick="increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <img class="pin-button" @onclick="@(() => { OpenFoodDetailsPage(menuItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
+                    </div>
+                </li>
+            }
+    </ul>
+</div>
+
+@code 
+{
+    #region Attributes
+    List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+
+    // GUI Bindings
+    public MenuCategory selectedCategory { get; set; }
+    public List<MenuItem> displayMenuList = new List<MenuItem>();
+    private int numItems;
+
+    #endregion
+
+    protected override void OnInitialized()
+    {
+        selectedCategory = MenuCategory.Popular;
+        FilterMenu();
+        base.OnInitialized();
+    }
+
+    private void FilterMenu()
+    {
+        displayMenuList = MenuRepo.GetMenuByCategory(selectedCategory);
+    }
+
+    private void OpenFoodDetailsPage(MenuItem menuItem)
+    {
+        NavigationManager.NavigateTo($"menu/details/{menuItem.Id}");
+    }
+
+    private void increment()
+    {
+        numItems = 0;
+        numItems++;
+    }
+
+    private void decrement()
+    {
+        numItems = 0;
+        numItems--;
+    }
 }
