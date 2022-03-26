@@ -1,5 +1,4 @@
-﻿@*@page "/menu/{SelectedCategory}/details/{FoodID}"*@
-@inject MenuRepository MenuRepo 
+﻿@inject MenuRepository MenuRepo 
 @inject NavigationManager NavigationManager
 @inject User User
 @inject IToastService ToastService
@@ -92,6 +91,8 @@
     public MenuItem FoodItem { get; set; }
     [Parameter]
     public Action NavigateToMenu { get; set; }
+    [Parameter]
+    public string NavigatedFromPage { get;  set; }
 
     public MenuSide SelectedSide { get; set; }
     public int SelectedQuantity { get; set; }

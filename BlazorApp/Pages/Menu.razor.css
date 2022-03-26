@@ -8,6 +8,7 @@ h1
 .menu
 {
     padding-top: 5rem;
+    padding-bottom: 10rem;
     height: 100%;
 }
 
@@ -180,6 +181,12 @@ input[type="radio"]:active + .category {
     /*position: fixed;*/
 }
 
+.clear-all-button {
+    float: right;
+    font-weight: bold;
+    color: #de6f6f;
+}
+
 .filter-number {
     height: 2rem;
     width: 2rem;
@@ -254,6 +261,68 @@ input[type="radio"]:active + .category {
         height: 90%;
     }
 }
+
+
+/*Cart Accordion*/
+.cart-accordion {
+    background: #FFFAEA;
+    width: 100%;
+    -webkit-box-shadow: rgb(14 30 37 / 22%) 0px 2px 4px 0px, rgb(14 30 37 / 22%) 0px 2px 16px 0px;
+    box-shadow: rgb(14 30 37 / 22%) 0px 2px 4px 0px, rgb(14 30 37 / 22%) 0px 2px 16px 0px;
+    padding: 0;
+    z-index: 100;
+    border-radius: 1rem 1rem 0 0;
+    transition: all 1s ease;
+}
+
+.caret-icon {
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+}
+
+.accordion-button {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background: #FEF6DD;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.accordion-list {
+    padding: 0.5rem 1rem;
+    transition: max-height 0.3s ease;
+    max-height: 0;
+    margin: 0;
+    padding: 0;
+    padding: 0rem 1rem;
+    background: #FEF6DD;
+}
+
+    .accordion-list::before {
+        content: '';
+        display: block;
+        height: 1rem;
+    }
+
+    .accordion-list::after {
+        content: '';
+        display: block;
+        height: 1rem;
+    }
+
+.show {
+    max-height: 10rem;
+}
+
+.cart-item {
+    border: 1px solid #c4bebb;
+    padding: 0.5rem;
+    background: #FFFAEA;
+    border-radius: 1rem;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
 
 @media screen and (min-width:768px) {
     :: -webkit-scrollbar {

@@ -29,7 +29,7 @@
     <div class='filter-container'>
         @*Filter button*@
         <button class='filter-button' @onclick=ToggleFilterPopup>
-            Filter
+            Dietary
             @if(SelectedFilters.Any()) { <span class='filter-number'>@SelectedFilters.Count()</span> }
             <span class="iconify" data-icon="mdi:filter"  data-width="40" data-height="40">></span>
         </button>
@@ -37,6 +37,10 @@
         @if(ShowFilterPopup)
         {
             <div class='filter-popup'>
+                <button class='clear-all-button' @onclick=@ClearSelectedFilters>
+                    Clear All
+                </button>
+                <br/>
                 @foreach(var filter in Filters)
                 {
                     <input type="checkbox" id="@filter" name="@filter" value="@filter" 
@@ -93,9 +97,9 @@
             <div class='empty'>
                 <span class="iconify" data-icon="ic:baseline-pin-off" 
                 data-width="150" data-height="150"></span>
-                <br><br>
+                <br/><br/>
                 <span>Looks like you haven't pinned any items.</span>
-                <br><br>
+                <br/><br/>
                 <span>Pin items from the menu by clicking the </span>
                 <span class="iconify pin-icon" style='margin-bottom: 1rem; margin-left: 0.5rem; margin-right: 1rem;' 
                 data-icon="bi:pin-angle-fill" data-width="30" data-height="30"></span>
@@ -105,16 +109,63 @@
         else
         {
             <div class='empty centered'>
-                <span>Sorry, there are no menu items that match this criteria.</span>
+                <span>Sorry, there are no menu items that match.</span>
             </div>
         }
     }
+
+    @*Cart Accordion*@
+    <div class='cart-accordion fixed-bottom'>
+        <button class='accordion-button' @onclick=ToggleCartAccordion>
+            <span class="iconify align-self-center cart-icon" 
+            data-icon="ant-design:shopping-cart-outline" data-width="30" data-height="30"></span>
+            <span class='align-self-center'>Cart</span>
+            <span class='align-self-center'>(@User.Cart.Count())</span>
+            @if(ShowCartAccordion)
+            {
+                <span><span class="iconify caret-icon"
+                    data-icon="clarity:caret-line" 
+                    data-width="25" data-height="25"
+                    data-rotate="0deg"></span></span>
+            }
+            else
+            {
+                <span><span class="iconify caret-icon"
+                    data-icon="clarity:caret-line" 
+                    data-width="25" data-height="25"
+                    data-rotate="180deg"></span></span>
+            }
+        </button>
+        @*@if(ShowCartAccordion)*@
+        @*{*@
+            @if(User.Cart.Any())
+            {
+                <ul class='accordion-list @(ShowCartAccordion ? "show" : "")'>
+                @foreach(var item in User.Cart)
+                {
+                    <li class='cart-item'>
+                        @item.MenuItem.Name
+                    </li>    
+                }
+                </ul>
+            }
+            else
+            {
+                <p class='accordion-list @(ShowCartAccordion ? "show" : "")'>
+                    Your cart is empty. Try adding items from the menu!
+                </p>               
+            }
+        @*}*@
+    </div>
+   
     
     @*Food Details Popup*@
     @if(ShowFoodDetails)
     {
         <div class='food-details-popup'>
-            <FoodDetails FoodItem=@SelectedMenuItem NavigateToMenu=@CloseFoodDetailsPage/>
+            <FoodDetails FoodItem=@SelectedMenuItem 
+                        NavigateToMenu=@CloseFoodDetailsPage           
+                        NavigatedFromPage="Menu"/>
         </div>
         <div class='black-overlay-popup' @onclick="@(() => {ShowFoodDetails=false;})"></div>
     }
@@ -130,20 +181,23 @@
     [Parameter]
     public string SelectedCategoryString { get; set; }
     public MenuCategory SelectedCategory { get; set; }
-
-    public List<MenuTag> SelectedFilters = new List<MenuTag>();
-    public bool ShowFilterPopup { get; set; }
-
-    public List<MenuItem> DisplayMenuList = new List<MenuItem>();
     public MenuItem SelectedMenuItem { get; set; }
 
+    public List<MenuTag> SelectedFilters = new List<MenuTag>();
+    public List<MenuItem> DisplayMenuList = new List<MenuItem>();
+
+    public bool ShowFilterPopup { get; set; }
     public bool ShowFoodDetails {  get;  set; }
+    public bool ShowCartAccordion {  get;  set; }
 
     protected override void OnInitialized()
     {
         SelectedCategory = (MenuCategory)Enum.Parse(typeof(MenuCategory), SelectedCategoryString);
+
         ShowFilterPopup = false;
         ShowFoodDetails = false;
+        ShowCartAccordion = false;
+
         UpdateMenuCategory();
         base.OnInitialized();
     }
@@ -162,6 +216,12 @@
         StateHasChanged();
     }
 
+    /* Cart Accordion */
+    private void ToggleCartAccordion()
+    {
+        ShowCartAccordion = !ShowCartAccordion;
+    }
+
     /* Categories/Filtering */ 
     private void UpdateMenuCategory()
     {
@@ -178,8 +238,14 @@
         // Filter by Tags
         if(SelectedFilters.Any())
         {
-             DisplayMenuList = DisplayMenuList.Where(menuItem => SelectedFilters.All(menuItem.Tags.Contains)).ToList();
+            DisplayMenuList = DisplayMenuList.Where(menuItem => SelectedFilters.All(menuItem.Tags.Contains)).ToList();
         }
+    }
+
+    private void ClearSelectedFilters()
+    {
+        SelectedFilters.Clear();
+        UpdateMenuCategory();
     }
 
     private void ToggleFilterPopup()
