@@ -4,9 +4,9 @@
 @inject IToastService ToastService
 
 
-<button @onclick=NavigateToMenu>
+<button @onclick=NavigateBack>
     <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
-    Back to Menu
+    Back to @FromPage
 </button>
 
 <div class='food-details-comp'>
@@ -70,9 +70,11 @@
 
         @*Cart Button*@
         <div class='fixed-bottom'>
-            <button class='cart-button red-button' @onclick=AddToCart>
-                <span class="iconify align-self-center cart-icon" data-icon="ant-design:shopping-cart-outline" data-width="30" data-height="30"></span>
-                <span class='button-title'>Add to Cart</span>
+            <button class='cart-button red-button' @onclick=@(Update ? UpdateCart : AddToCart)>
+                <span class="iconify align-self-center cart-icon" 
+                data-icon="ant-design:shopping-cart-outline" 
+                data-width="30" data-height="30"></span>
+                <span class='button-title'>@(Update ? "Update" : "Add to Cart")</span>
                 <br />
                 <span>( $@string.Format("{0:N2}", CalculateCost()) )</span>
 
@@ -86,25 +88,51 @@
 
 @code 
 {
-
     [Parameter]
     public MenuItem FoodItem { get; set; }
     [Parameter]
-    public Action NavigateToMenu { get; set; }
+    public OrderItem CartItem { get; set; }
+
     [Parameter]
-    public string NavigatedFromPage { get;  set; }
+    public Action NavigateBack { get; set; }
+    [Parameter]
+    public string FromPage { get; set; }
+
+    [Parameter]
+    public bool Update{ get;  set; }
+
 
     public MenuSide SelectedSide { get; set; }
     public int SelectedQuantity { get; set; }
     public string SpecialInstructions { get; set; }
 
     protected override void OnInitialized()
-    {
-        SelectedQuantity = 1;
-        if(FoodItem.Sides != null && FoodItem.Sides.Any())
+    {   
+        if(Update)
         {
-            SelectedSide = FoodItem.Sides.ElementAt(0);
+            FoodItem = CartItem.MenuItem;
+            SelectedSide = CartItem.Side;
+            SelectedQuantity = CartItem.Quantity;
+            SpecialInstructions = CartItem.SpecialInstructions;
         }
+        else
+        {
+            SelectedQuantity = 1;
+            if(FoodItem.Sides != null && FoodItem.Sides.Any())
+            {
+                SelectedSide = FoodItem.Sides.ElementAt(0);
+            } 
+        }
+    }
+
+    private async Task UpdateCart()
+    {
+        int index = User.Cart.FindIndex(item => item == CartItem);
+        OrderItem newOrderItem = new OrderItem(FoodItem, SelectedQuantity, OrderStatus.PendingOrder, SelectedSide, SpecialInstructions);
+        User.Cart[index] = newOrderItem;
+        await ToggleTransition();
+        NavigateBack();
+        ToastService.ShowInfo($"Updated {FoodItem.Name}");
     }
 
     private async Task AddToCart()
@@ -113,7 +141,7 @@
         User.Cart.Add(orderItem);
         Console.WriteLine($"AddToCart {orderItem}");
         await ToggleTransition();
-        NavigateToMenu();
+        NavigateBack();
         ToastService.ShowInfo($"Added {FoodItem.Name} to Cart");
     }
 

@@ -29,7 +29,7 @@
     <div class='filter-container'>
         @*Filter button*@
         <button class='filter-button' @onclick=ToggleFilterPopup>
-            Dietary
+            Sort By Diet 
             @if(SelectedFilters.Any()) { <span class='filter-number'>@SelectedFilters.Count()</span> }
             <span class="iconify" data-icon="mdi:filter"  data-width="40" data-height="40">></span>
         </button>
@@ -40,7 +40,6 @@
                 <button class='clear-all-button' @onclick=@ClearSelectedFilters>
                     Clear All
                 </button>
-                <br/>
                 @foreach(var filter in Filters)
                 {
                     <input type="checkbox" id="@filter" name="@filter" value="@filter" 
@@ -164,8 +163,9 @@
     {
         <div class='food-details-popup'>
             <FoodDetails FoodItem=@SelectedMenuItem 
-                        NavigateToMenu=@CloseFoodDetailsPage           
-                        NavigatedFromPage="Menu"/>
+                        NavigateBack=@CloseFoodDetailsPage           
+                        Update="false"
+                        FromPage='Menu'/>
         </div>
         <div class='black-overlay-popup' @onclick="@(() => {ShowFoodDetails=false;})"></div>
     }
