@@ -45,7 +45,7 @@
                     <input type="checkbox" id="@filter" name="@filter" value="@filter" 
                     checked="@IsFilterChecked(filter)" 
                     @onchange="@(() => { ToggleCheckedFilter(filter); UpdateMenuCategory();})">
-                    <label class='filter' for="@filter">@filter</label><br>
+                    <label class='filter' for="@filter">@filter.AsDisplayString()</label><br>
                 }
             </div> 
         }
