@@ -1,6 +1,61 @@
-@page "/order"
-<h1> This is the order page </h1>
+@page "/order" 
 
-@code {
+@inject MenuRepository MenuRepo  
+
+<div class='Orders-screen'> 
+
+    <h1>Orders</h1> 
+
+    <h2>YOU (Guest 1)</h2>
     
-}
+            @foreach(var cartItem in CartScreen)
+            {
+                <div class='cartitem'>
+                    <div class='cart-display'>
+                        <img src=@cartItem.ImgLink>
+                        <div style='padding: 1rem; flex-grow: 2;'>
+                              <div class='priceset'>
+                              <p style="margin-left:auto">$@cartItem.Price</p>
+                                 </div>
+                             <div class='itemselected'>
+                                <p style="font-weight:bold; margin-right:auto">@cartItem.Name</p>
+                                <p3> Delivered </p3>
+                              
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+            }
+                <div class='CalculateSubtotal'>
+                     <p4>Subtotal</p4>
+                </div> 
+</div>
+
+  <div class='Orders-screen'>
+        <h3> Ready to Pay?</h3>
+         </div> 
+
+@code 
+{
+
+   List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+
+    public MenuCategory selectedCategory { get; set; }
+    public List<MenuItem> CartScreen = new List<MenuItem>();
+
+
+    protected override void OnInitialized()
+    {
+        selectedCategory = MenuCategory.Dinner;
+        Showorder();
+
+    }
+
+    private void Showorder()
+    {
+        CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
+    }
+
+ }
