@@ -1,0 +1,97 @@
+h1 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 4rem;
+    text-align: center;
+}
+
+h2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 46px;
+    text-align: left;
+    margin-top: 32px;
+}
+
+p3 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 20px;
+    color: #00FF00;
+    margin: 0;
+    flex-wrap: nowrap;
+}
+
+p4 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 20px;
+    margin: 0;
+    flex-wrap: nowrap;
+}
+
+h3 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+    line-height: 20px;
+}
+
+
+
+.category {
+    padding: 0.5rem 1rem;
+    margin: 1rem .5rem;
+    background: #F4A0A0;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+
+.cartitem img {
+    width: 30%;
+    height: auto;
+    border-radius: 2 rem;
+    margin: 0 auto;
+    margin-right: 2 rem;
+    margin-right: 2 rem;
+}
+
+.cart-display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.cartitem {
+    background: #F5DC6E;
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    height: 30%;
+    border-radius: 0rem;
+    -webkit-box-shadow: 0 6px 3px -4px #00000020;
+    box-shadow: 0 6px 3px -4px #00000020;
+    min-height: 15vh;
+}
+
+.priceset {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: right;
+    line-height: 20px;
+}
+.CalculateSubtotal {
+    background: #e0c02f;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 2rem;
+    height: 20%;
+    border-radius: 0rem;
+}
