@@ -71,7 +71,7 @@
                             <p style="font-weight:bold; margin-right:auto; font-size:18px;">
                                 @menuItem.Name
                             </p>
-                            <p style="font-weight:bold; margin-left:auto">$@menuItem.Price</p>
+                            <p style="font-weight:bold; margin-left:auto">$@string.Format("{0:N2}", menuItem.Price)</p>
                         </div>
                         <div class='row'>
                             <p style='font-size: 14px; margin-bottom: 5px;'>@menuItem.Description</p>
@@ -82,7 +82,7 @@
                     @onclick:preventDefault="true"
                     @onclick:stopPropagation="true"
                     @onclick="@(() => TogglePinButton(menuItem))">
-                    <span class="iconify pin-icon" data-icon="bi:pin-angle-fill" data-width="30" data-height="30"></span>
+                    <span class="iconify pin-icon" data-icon="bi:pin-angle-fill" data-width="35" data-height="35"></span>
                 </button>
             </li>
         }

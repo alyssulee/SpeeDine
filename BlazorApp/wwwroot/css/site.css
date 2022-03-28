@@ -48,7 +48,7 @@ p {
         position: relative;
         padding-left: 2.5em;
         font-size: 16px;
-        line-height: 2;
+        line-height: 2.75;
         cursor: pointer;
     }
 
@@ -59,8 +59,8 @@ p {
             position: absolute;
             left: 0;
             top: 0.2em;
-            width: 1.6em;
-            height: 1.6em;
+            width: 2em;
+            height: 2em;
             border: 1px solid #aaa;
             background: #FFF;
             border-radius: .2em;
@@ -74,8 +74,8 @@ p {
         [type="checkbox"]:checked + label:after {
             content: '✓';
             position: absolute;
-            top: .8em;
-            left: .25em;
+            top: 1em;
+            left: 0.4em;
             font-size: 1.375em;
             color: #de6f6f;
             line-height: 0;

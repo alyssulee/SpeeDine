@@ -116,12 +116,11 @@ h3 {
     background: #F4A0A0;
     color: inherit;
     font-weight: bold;
-    font-size: inherit;
     border: none;
     display: inline-block;
-    min-width: 3rem;
-    height: 3rem;
-    border-radius: 100%;
+    min-width: 6rem;
+    height: 4rem;
+    border-radius: 1rem;
     margin: 0rem 2rem;
     font-size: 2rem;
 }
@@ -163,10 +162,12 @@ input[type="number"] {
         position: relative;
         padding-left: 3em;
         padding-right: 1em;
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
         font-size: 1.1em;
-        line-height: 1.8;
+        line-height: 2.3;
         cursor: pointer;
-        border-radius: 1rem;
+        border-radius: 2rem;
         font-weight: normal;
     }
 
@@ -175,10 +176,10 @@ input[type="number"] {
         [type="radio"]:checked + label:before {
             content: '';
             position: absolute;
-            left: 0.2em;
-            top: 0.2em;
-            width: 1.4em;
-            height: 1.4em;
+            left: 0.5em;
+            top: 0.5em;
+            width: 2em;
+            height: 2em;
             border: 1px solid #aaa;
             background: #FFF;
             border-radius: 50%;
@@ -190,13 +191,13 @@ input[type="number"] {
         /* checked mark aspect */
         [type="radio"]:not(:checked) + label:after,
         [type="radio"]:checked + label:after {
-            width: 0.6em;
-            height: 0.6em;
+            width: 0.8em;
+            height: 0.8em;
             border-radius: 50%;
             content: '';
             position: absolute;
-            top: 0.37em;
-            left: 0.37em;
+            top: 0.7em;
+            left: 0.7em;
             font-size: 1.375em;
             color: #de6f6f;
             line-height: 0;

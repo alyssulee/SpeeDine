@@ -185,6 +185,7 @@ input[type="radio"]:active + .category {
     float: right;
     font-weight: bold;
     color: #de6f6f;
+    font-size: 16px;
 }
 
 .filter-number {
@@ -213,7 +214,7 @@ input[type="radio"]:active + .category {
     clear: both;
     margin: 1rem;
     z-index: 102;
-    width: 70vw;
+    width: 75vw;
     box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 }
 
@@ -246,7 +247,7 @@ input[type="radio"]:active + .category {
     background: #FFFAEA;
     z-index: 202;
     border-radius: 1rem 1rem 0 0;
-
+    width: 100vw;
     animation: .7s slide-up;
     margin-top: 0%;
 }

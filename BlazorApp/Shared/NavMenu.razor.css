@@ -39,11 +39,12 @@ ul {
     padding: .5rem;
     color: black;
     background: transparent !important;
+    font-size: 14px;
 }
 
 .active {
     background: transparent;
-    border-bottom: 5px solid #F4A0A0;
+    border-bottom: 5px solid #de6f6f;
 }
 
 @media screen and (max-width:768px)
