@@ -1,5 +1,7 @@
 ﻿@page "/review"
 @layout Clear
+@inject NavigationManager NavigationManager
+
 
 <div class='body'> 
     <h1>Thank you for visiting</h1>
@@ -40,17 +42,21 @@
     </div>  
 
         @*Submit*@
-    @*<div class='fixed-bottom'>*@
-        <button class='submit'>Submit</button>
-    @*</div>*@
+    <button class='submit' @onclick=SubmitReview>Submit</button>
 </div>
 
 
 @code {
 
-    public void SubmitReview()
+    public async Task SubmitReview()
     {
-        
+        await ToggleTransition();
+        NavigationManager.NavigateTo("/thanks", true);
+    }
+
+    public async Task ToggleTransition()
+    {
+        await Task.Delay(300);
     }
 
 }
