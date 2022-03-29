@@ -1,0 +1,56 @@
+﻿@page "/review"
+@layout Clear
+
+<div class='body'> 
+    <h1>Thank you for visiting</h1>
+    <img src="/images/Bizo.gif" asp-append-version="true"/>
+
+    @*Rating*@
+    <div>
+        <h4>How was your dining experience?</h4>
+        <div class='rating-container'>
+              <div class='radio-button'>   
+                    <input type="radio" name="rating" id='Happy'>
+                    <label class='d-flex justify-content-between' for="Happy">
+                        <span class="iconify" data-icon="akar-icons:face-happy"></span>
+                    </label>
+              </div>
+               <div class='radio-button'>   
+                    <input type="radio" name="rating" id='Neutral'>
+                    <label class='d-flex justify-content-between' for="Neutral">
+                        <span class="iconify" data-icon="akar-icons:face-neutral"></span>
+                    </label>
+              </div>
+               <div class='radio-button'>   
+                    <input type="radio" name="rating" id='Sad'>
+                    <label class='d-flex justify-content-between' for="Sad">
+                        <span class="iconify" data-icon="akar-icons:face-sad"></span>
+                    </label>
+              </div>
+        </div>
+    </div>
+    
+
+    @*Leave a Review*@
+    <div>
+        <h4>Let us know how we can improve!</h4>
+        <textarea id="review-field" name="review-field" 
+                cols="40" rows="3" 
+                placeholder="Please take a moment to leave a review (Optional)"></textarea>
+    </div>  
+
+        @*Submit*@
+    @*<div class='fixed-bottom'>*@
+        <button class='submit'>Submit</button>
+    @*</div>*@
+</div>
+
+
+@code {
+
+    public void SubmitReview()
+    {
+        
+    }
+
+}

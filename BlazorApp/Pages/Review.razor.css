@@ -1,0 +1,85 @@
+﻿h1 {
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100vh;
+    overflow: auto;
+    padding: 1rem;
+    padding-top: 2rem,
+    /*padding-bottom: 5rem;*/
+}
+
+.rating-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+label {
+    color: #575757;
+}
+
+input[type="radio"]:checked + label {
+    color: #de6f6f;
+}
+
+.iconify {
+    width: 20vw;
+    height: 20vw;
+}
+
+#review-field {
+    border-radius: 0.5rem;
+    min-height: 2rem;
+    width: 100%;
+    padding: .5rem;
+    font-size: 16px;
+}
+
+button:focus {
+    border: none;
+    outline: none;
+}
+
+.submit {
+    border: none;
+    outline: none;
+    transition: all .2s ease;
+    background: #95D48B;
+    min-height: 3rem;
+    margin: 0.5rem 0;
+    border-radius: 2rem;
+    width: 100%;
+}
+
+    .submit:active {
+        transform: scale(0.92);
+        background: #198536;
+    }
+
+.fixed-bottom {
+    background: #FFFAEA;
+    width: 100%;
+    -webkit-box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 22%) 0px 2px 16px 0px;
+    box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 22%) 0px 2px 16px 0px;
+    padding: .5rem 1rem;
+}
