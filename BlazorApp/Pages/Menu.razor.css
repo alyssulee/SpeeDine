@@ -313,15 +313,16 @@ input[type="radio"]:active + .category {
 
 .show {
     max-height: 10rem;
+    overflow: auto;
 }
 
 .cart-item {
-    border: 1px solid #c4bebb;
-    padding: 0.5rem;
-    background: #FFFAEA;
-    border-radius: 1rem;
+/*    border: 1px solid #c4bebb;
+*/    padding: 0.5rem;
+    /*background: #FFFAEA;*/
+    /*border-radius: 1rem;*/
     margin-bottom: 5px;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 
