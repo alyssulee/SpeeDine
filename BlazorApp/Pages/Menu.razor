@@ -15,6 +15,11 @@
             {
                 <input type="radio" id="@category" name="categories" value="@category" 
                     style="display: none;" checked="@(SelectedCategory == category)" 
+                    onclick=" window.scrollTo({
+                      top: top,
+                      left: 0,
+                      behavior: 'smooth'
+                    });"
                     @onchange="@(() => { SelectedCategory = category; UpdateMenuCategory();})">
                 <label class='category' for="@category">@category</label><br>
             }
@@ -24,7 +29,7 @@
 </div>
 
 @*Menu*@
-<div class='menu'>
+<div class='menu' id='menu'>
     @*Filter*@
     <div class='filter-container'>
         @*Filter button*@
@@ -55,7 +60,8 @@
         <div class='outside-filter-popup' @onclick=ToggleFilterPopup></div>
     }
 
-    <h1>@SelectedCategory</h1>
+
+    <h1 id='menu-header'>@SelectedCategory</h1>
 
     @*Menu List*@
     @if(DisplayMenuList.Any())

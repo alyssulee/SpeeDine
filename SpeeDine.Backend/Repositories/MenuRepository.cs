@@ -86,7 +86,21 @@ namespace SpeeDine.Backend.Repositories
                     new MenuSide("Caesar Salad", 2.50),
                     new MenuSide("Chowder", 2.50),
               }));
-            
+
+
+            Menu.Add(new MenuItem(IdCounter++, "BBQ Ribs", "BBQ sauce on a half rack of ribs and your choice of side", 21.75,
+                "https://media-cdn.tripadvisor.com/media/photo-s/1a/62/ea/93/baked-pork-ribs-american.jpg",
+              new List<MenuCategory> { MenuCategory.Dinner },
+              new List<MenuTag> { MenuTag.PeanutFree, MenuTag.KetoFriendly, MenuTag.GlutenFree },
+              new List<MenuSide>
+              {
+                    new MenuSide("Fries", 0),
+                    new MenuSide("Mashed Potatoes", 0),
+                    new MenuSide("Baked Potato", 0),
+                    new MenuSide("Caesar Salad", 2.50),
+                    new MenuSide("Chowder", 2.50),
+              }));
+
             Menu.Add(new MenuItem(IdCounter++, "Grilled Chicken Breast", "Topped with forrester wild mushroom mix, fine herbs, roast potato, fresh vegetables", 18.25,
                "https://media.istockphoto.com/photos/gourmet-dijon-chicken-breast-with-thyme-and-potatoes-picture-id1203256503?s=612x612",
              new List<MenuCategory> { MenuCategory.Dinner },
@@ -106,13 +120,20 @@ namespace SpeeDine.Backend.Repositories
             Menu.Add(new MenuItem(IdCounter++, "Oven Roasted Salmon", "Feta, caper and dill aioli or blackened with confit garlic butter served with jasmine rice and seasonal vegetables", 28.75, "https://d35y74nlubkiek.cloudfront.net/39ec36b9-1d3d-4b9e-8001-f1aa7403e304",
              new List<MenuCategory> { MenuCategory.Dinner, MenuCategory.Popular },
              new List<MenuTag> { MenuTag.PeanutFree, MenuTag.GlutenFree, MenuTag.KetoFriendly }, null));
+            
+            Menu.Add(new MenuItem(IdCounter++, "Pistachio Crusted Salmon", "garlic mashed potato, roasted brussels sprouts, maple butter", 28.75, "https://aubreyskitchen.com/wp-content/uploads/2020/06/pistachio-crusted-salmon-featured.jpg",
+            new List<MenuCategory> { MenuCategory.Dinner, MenuCategory.Popular },
+            new List<MenuTag> { MenuTag.GlutenFree, MenuTag.KetoFriendly }, null));
 
             Menu.Add(new MenuItem(IdCounter++, "Ahi Tuna Poke Bowl", "Jasmine rice, soy marinated ahi tuna, avocado, cucumber, radish, mango, macadamia nuts", 18.00,
                 "https://d35y74nlubkiek.cloudfront.net/0bc51a9e-3ef9-4fad-b5b9-fa02e3cc777e",
               new List<MenuCategory> { MenuCategory.Dinner, MenuCategory.Lunch, MenuCategory.Popular },
               new List<MenuTag> { MenuTag.PeanutFree, MenuTag.GlutenFree, MenuTag.KetoFriendly }, null));
 
-
+            Menu.Add(new MenuItem(IdCounter++, "Garlic Prawn Spaghettini", "Chili and clam sauce, herbs, garlic bread", 20.00,
+                "https://d35y74nlubkiek.cloudfront.net/aad94be7-21e6-4dbc-89e0-67203e093d68",
+              new List<MenuCategory> { MenuCategory.Dinner, MenuCategory.Popular },
+              new List<MenuTag> { MenuTag.PeanutFree}, null));
         }
 
         public void AddAppetizerMenu()
@@ -211,16 +232,60 @@ namespace SpeeDine.Backend.Repositories
                             new MenuSide("Fries", 0),
                             new MenuSide("Veggies", 0),
             }));
+
+            Menu.Add(new MenuItem(IdCounter++, "Grilled Cheese", "American cheese on toasted bread", 8.75,
+            "https://highlights0.azureedge.net/sites/default/files/public/grilled-cheese_istock-508897546_lauripatterson.jpg",
+          new List<MenuCategory> { MenuCategory.Kids },
+          new List<MenuTag> { MenuTag.PeanutFree },
+          new List<MenuSide>
+          {
+                new MenuSide("Fries", 0),
+                new MenuSide("Veggies", 0),
+          }));
+
+            Menu.Add(new MenuItem(IdCounter++, "Mac & Cheese", "Classic macaroni noodles with a creamy cheese sauce topped with toasted breadcrumbs.", 8.75,
+           "http://somethingedible.com/images/uploads/recipes/SomethingEdible-Stove_Top_One_Pot_Macaroni_and_Cheese.jpg",
+         new List<MenuCategory> { MenuCategory.Kids },
+         new List<MenuTag> { MenuTag.PeanutFree },
+         new List<MenuSide>
+         {
+                new MenuSide("Fries", 0),
+                new MenuSide("Veggies", 0),
+         }));
         }
 
         public void AddDessertMenu()
         {
-
+            Menu.Add(new MenuItem(IdCounter++, "NYC Cheesecake", "Graham cracker crust, fresh berries, whipped chantilly cream", 11.75, "https://d35y74nlubkiek.cloudfront.net/3a9eaab0-369a-4c63-90fa-e440345e7a24",
+                      new List<MenuCategory> { MenuCategory.Dessert },
+                      new List<MenuTag> { MenuTag.PeanutFree }, null));
+            Menu.Add(new MenuItem(IdCounter++, "Sticky Toffee Chocolate Pudding", "Warm pudding cake, chocolate and toffee sauces, vanilla ice cream, maple crumble", 10.75, "https://d35y74nlubkiek.cloudfront.net/8e600ee8-0b11-4b5a-bac1-e131ca15a409",
+                new List<MenuCategory> { MenuCategory.Dessert },
+                new List<MenuTag> { MenuTag.PeanutFree }, null));
         }
 
         public void AddDrinksMenu()
         {
+            Menu.Add(new MenuItem(IdCounter++, "Coke", "A can of coke with ice", 2.00, "https://www.krqe.com/wp-content/uploads/sites/12/2021/07/Coke-Zero-Sugar-Table-Top.jpg?w=1280",
+           new List<MenuCategory> { MenuCategory.Drinks },
+           new List<MenuTag> { MenuTag.PeanutFree }, null));
 
+            Menu.Add(new MenuItem(IdCounter++, "Moscow Mule", "Smirnoff vodka, ginger and fresh lime", 11.75, "https://d35y74nlubkiek.cloudfront.net/d7818dcf-39a8-4656-a42c-2f727f12ccd8",
+               new List<MenuCategory> { MenuCategory.Drinks },
+               new List<MenuTag> { MenuTag.PeanutFree }, null));
+          
+            Menu.Add(new MenuItem(IdCounter++, "White Negroni", "Tanqueray gin, St Germain Elderflower, Dolin dry vermouth, Yellow Chartruese, and Lemon oil - 2.5oz", 14.25, "	https://d35y74nlubkiek.cloudfront.net/e5882808-6e47-4530-83f4-5c678ce9ff9e",
+             new List<MenuCategory> { MenuCategory.Drinks },
+             new List<MenuTag> { MenuTag.PeanutFree }, null));
+
+            Menu.Add(new MenuItem(IdCounter++, "Margarita", "olmeca, cointreau, agave, lemon, lime", 10.25, "https://www.thespruceeats.com/thmb/FjeGodPqSKCTiodzzURclGz9Jag=/3200x2136/filters:fill(auto,1)/fresh-margarita-cocktail-recipe-759317-step-05-dae71772c4304cf7911489a1c7d219ab.jpg",
+            new List<MenuCategory> { MenuCategory.Drinks },
+            new List<MenuTag> { MenuTag.PeanutFree }, null));
+
+            Menu.Add(new MenuItem(IdCounter++, "Mojito", "havana club, lemon, lime, mint, soda", 10.25,
+                "https://cookieandkate.com/images/2020/08/best-mojito-recipe-2.jpg",
+           new List<MenuCategory> { MenuCategory.Drinks },
+           new List<MenuTag> { MenuTag.PeanutFree }, null));
         }
 
         #endregion

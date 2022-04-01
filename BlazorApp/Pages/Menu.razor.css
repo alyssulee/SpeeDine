@@ -285,7 +285,7 @@ input[type="radio"]:active + .category {
 .accordion-button {
     width: 100%;
     padding: 0.5rem 1rem;
-    background: #FEF6DD;
+    background: #F4A0A0;
     border-radius: 1rem 1rem 0 0;
 }
 
