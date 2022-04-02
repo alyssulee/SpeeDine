@@ -1,5 +1,5 @@
 @page "/order" 
-
+@inject NavigationManager navigationManager
 @inject MenuRepository MenuRepo  
 
 <div class='Orders-screen'> 
@@ -33,9 +33,18 @@
                 </div> 
 </div>
 
-  <div class='Orders-screen'>
-        <h3> Ready to Pay?</h3>
-         </div> 
+    @* starting my bill screen from here, (SUVRAT). *@
+    <div class='bill_screen__container'>
+        <div>
+            <h3 style> Ready to Pay?</h3>
+        </div>
+        
+        <div class='how_to_pay__container'> 
+            <button class = 'entire_bill__button' @onclick=NavigateToEntireBill>Entire Bill</button>
+            <button class = 'split_bill__button' @onclick=NavigateToSplitBill>Split the Bill</button>
+        </div>
+        <br />
+    </div> 
 
 @code 
 {
@@ -56,6 +65,14 @@
     private void Showorder()
     {
         CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
+    }
+
+    private void NavigateToSplitBill() {
+        navigationManager.NavigateTo("/SplitBill");
+    }
+
+    private void NavigateToEntireBill() {
+        navigationManager.NavigateTo("/EntireBill");
     }
 
  }

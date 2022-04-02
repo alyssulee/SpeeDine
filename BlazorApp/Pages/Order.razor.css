@@ -95,3 +95,36 @@ h3 {
     height: 20%;
     border-radius: 0rem;
 }
+
+.bill_screen__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.how_to_pay__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+}
+
+.entire_bill__button, .split_bill__button {
+    display: block;
+    width: 100%;
+    border: none;
+    
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.entire_bill__button {
+    background-color: #95D48B;
+}
+
+.split_bill__button {
+    background-color: #A6AFFB;
+}
