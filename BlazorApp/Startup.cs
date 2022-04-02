@@ -35,8 +35,16 @@ namespace BlazorApp
 
             // Add dependencies
             services.AddSingleton<MenuRepository>();
-            services.AddSingleton<User>(new User(1, "Guest 1") );
+            var user1 = new User(1, "Guest 1");
+            var user2 = new User(2, "Guest 2");
+            services.AddSingleton<User>(user1);
+            List<User> users = new List<User> { user1, user2 };
+            services.AddSingleton<Table>(new Table(users));
 
+            var menuRepo = new MenuRepository();
+            var user2Food = new OrderItem(menuRepo.GetItemByID(7),1,OrderStatus.PendingOrder,null,null);
+            var user2Drink = new OrderItem(menuRepo.GetItemByID(29), 1, OrderStatus.PendingOrder, null, null);
+            user2.Cart = new List<OrderItem> { user2Food, user2Drink };
 
         }
 

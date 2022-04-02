@@ -13,6 +13,10 @@ namespace SpeeDine.Backend.Models
         {
             GuestList = new List<User>();
         }
+        public Table(List<User> userList)
+        {
+            GuestList = userList;
+        }
         
     }
 }
