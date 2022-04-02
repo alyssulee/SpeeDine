@@ -141,26 +141,24 @@
                     data-rotate="180deg"></span></span>
             }
         </button>
-        @*@if(ShowCartAccordion)*@
-        @*{*@
-            @if(User.Cart.Any())
+        @if(User.Cart.Any())
+        {
+            <ul class='accordion-list @(ShowCartAccordion ? "show" : "")'>
+            @foreach(var item in User.Cart)
             {
-                <ul class='accordion-list @(ShowCartAccordion ? "show" : "")'>
-                @foreach(var item in User.Cart)
-                {
-                    <li class='cart-item'>
-                        @item.MenuItem.Name
-                    </li>    
-                }
-                </ul>
+                <li class='cart-item d-flex justify-content-between'>
+                    <span>@item.MenuItem.Name</span>
+                    <span>x @item.Quantity</span>
+                </li>    
             }
-            else
-            {
-                <p class='accordion-list @(ShowCartAccordion ? "show" : "")'>
-                    Your cart is empty. Try adding items from the menu!
-                </p>               
-            }
-        @*}*@
+            </ul>
+        }
+        else
+        {
+            <p class='accordion-list @(ShowCartAccordion ? "show" : "")'>
+                Your cart is empty. Try adding items from the menu!
+            </p>               
+        }
     </div>
    
     
