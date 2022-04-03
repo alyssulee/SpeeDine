@@ -1,7 +1,10 @@
 @page "/cart"
 
 @inject IJSRuntime JsRuntime
-@inject MenuRepository MenuRepo 
+@inject MenuRepository MenuRepo
+@inject Table Table
+@inject User User
+
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
 
 <div class='menu'>
@@ -12,18 +15,22 @@
 
     @*Cart List*@
     <ul>
-            @foreach(var menuItem in displayMenuList)
+        @foreach(var user in Table.GuestList)   
+        {
+            @user.Name
+            @foreach(var orderItem in user.Cart)
             {
-                <li class='menu-item'>
+                  <li>@orderItem.MenuItem.Name, @orderItem.Quantity</li>
+/*                <li class='menu-item'>
                     <div class='menu-item-container'>
-                        <img src=@menuItem.ImgLink>
+                        <img src=@orderItem.MenuItem.ImgLink>
                         <div style='padding: 0.5rem; flex-grow: 1;'>
                              <div class='row'>
-                                <p style="font-weight:bold; margin-right:auto">@menuItem.Name</p>
-                                <p style="margin-left:auto">$@menuItem.Price</p>
+                                <p style="font-weight:bold; margin-right:auto">@orderItem.MenuItem.Name</p>
+                                <p style="margin-left:auto">$@orderItem.MenuItem.Price</p>
                             </div>
                             <div class='row'>
-                                <p>@menuItem.Description</p>
+                                <p>@orderItem.MenuItem.Description</p>
                             </div>
                              <div class='quantity-container'>
                                 <button class="quantity-button red-button" @onclick="decrement">-</button>
@@ -33,10 +40,11 @@
                         </div>
                     </div>
                     <div class='row'>
-                        <img class="pin-button" @onclick="@(() => { OpenFoodDetailsPage(menuItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
+                        <img class="pin-button" @onclick="@(() => { OpenFoodDetailsPage(orderItem.MenuItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
                     </div>
-                </li>
+                </li>*/
             }
+        }
     </ul>
 </div>
 
@@ -48,7 +56,8 @@
     // GUI Bindings
     public MenuCategory selectedCategory { get; set; }
     public List<MenuItem> displayMenuList = new List<MenuItem>();
-    private int numItems;
+    public List<User> users = new List<User>();
+    int numItems = 0;
 
     #endregion
 
