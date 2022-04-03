@@ -13,9 +13,8 @@
     <span class = 'second_line'>Multiple people can select the same item to split the cost.</span>
 
     <div class = 'item__container'>
-        @{ var x = 0; }
         @foreach(var cartItem in CartScreen) {
-            var item = cartItem;
+            var item = cartItem;        // do this to get the value properly
             <div class = 'dish_information__container' style = "@changeColor[item.Id]" @onclick = '() => customUserChangeMethod(item.Id)'>
                 <div class = 'dish_information__header'>
                     <span class = 'dish_name'>@cartItem.Name</span>
@@ -25,12 +24,11 @@
                     <span class = 'who_is_paying__text'>@User.Name is paying for this</span>
                 }
             </div>
-            x++;
         }
     </div>
     <div class = 'your_subtotal__container'>
         <span class = 'your_subtotal__text'>Your Subtotal</span>
-        <span class = 'amount__text'>@yourSubtotal</span>
+        <span class = 'amount__text'>$@yourSubtotal</span>
     </div>
     <button class = 'request_bill__container' disabled = '@IsDisabled' style = "@changeColorRequestBtn" @onclick = 'NavigateToThankyouPage'>
         <span class = 'request_bill__text'>REQUEST BILL</span>
