@@ -2,12 +2,14 @@
 @inject NavigationManager navigationManager
 @inject MenuRepository MenuRepo  
 
+<link rel="stylesheet" href="_content/Syncfusion.Blazor.Themes/bootstrap5.css">
+
 <div class='Orders-screen'> 
-
+@if(isEntireBillVisible==false){
     <h1>Orders</h1> 
-
-    <h2>YOU (Guest 1)</h2>
     
+        <h2>YOU (Guest 1)</h2>
+        
             @foreach(var cartItem in CartScreen)
             {
                 <div class='cartitem'>
@@ -28,23 +30,67 @@
                 </div>
 
             }
-                <div class='CalculateSubtotal'>
+            <div class='CalculateSubtotal'>
                      <p4>Subtotal</p4>
                 </div> 
+        }
+                
 </div>
 
     @* starting my bill screen from here, (SUVRAT). *@
-    <div class='bill_screen__container'>
-        <div>
-            <h3 style> Ready to Pay?</h3>
-        </div>
+    @if(!isEntireBillVisible) {
+        <div class='bill_screen__container'>
+            
+                <div>
+                    <h3 style> Ready to Pay?</h3>
+                </div>
         
-        <div class='how_to_pay__container'> 
-            <button class = 'entire_bill__button' @onclick=NavigateToEntireBill>Entire Bill</button>
-            <button class = 'split_bill__button' @onclick=NavigateToSplitBill>Split the Bill</button>
+            
+            
+            <div class='how_to_pay__container'> 
+                @if(!isEntireBillVisible){
+                    <button class = 'entire_bill__button' @onclick="ShowEntireBillPopup">Entire Bill</button>
+                }
+                
+
+                <button class = 'split_bill__button' @onclick=NavigateToSplitBill>Split the Bill</button>
+
+                
+            </div>
+            <br />
+        </div> 
+    }
+
+    @if(isEntireBillVisible){
+        <div class = 'entire_bill_popup__container'>
+            <i class="fa-regular fa-xmark-large"> </i>
+            <div class = 'entire_bill__text'>
+                YOUR BILL
+            </div>
+            <div class = 'entire_bill_items__container'>
+                <div class = 'item_names' style = 'overflow-y:scroll;'>
+                    @foreach(var cartItem in CartScreen) {
+                        @* Console.WriteLine(cartItem); *@
+                        <div class = 'item_description'>
+                            <h5>@cartItem.Name</h5>
+                        </div>
+                        <div class = 'item_price'>
+                            <h5>$@cartItem.Price</h5>
+                        </div>
+                    }
+                </div>
+                <div class = 'buttons'>
+                    <div class = 'subtotal__container'>
+                        <span class = 'subtotal_name'>Subtotal: </span>
+                        <span class = 'subtotal_total'>@totalCost()</span>
+                    </div>
+                    <button class = 'confirm_button'>Confirm</button>       @* Add the functionality to this button later*@
+                    <button class = 'go_back_button' @onclick = "revertBackToSite">Go Back</button>       
+                </div>
+                
+            </div>
         </div>
-        <br />
-    </div> 
+    }
 
 @code 
 {
@@ -54,6 +100,16 @@
     public MenuCategory selectedCategory { get; set; }
     public List<MenuItem> CartScreen = new List<MenuItem>();
 
+    double total = 0.0;
+
+    double totalCost() {
+        total = 0.0;        // so that if you go back again the price resets.
+        foreach(var cartItem in CartScreen) {
+            total+=cartItem.Price;
+        }
+        Console.WriteLine(total);
+        return total;
+    }
 
     protected override void OnInitialized()
     {
@@ -62,17 +118,24 @@
 
     }
 
+    void revertBackToSite() {
+        isEntireBillVisible = false;
+        StateHasChanged();
+    }
+
     private void Showorder()
     {
         CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
     }
 
     private void NavigateToSplitBill() {
-        navigationManager.NavigateTo("/SplitBill");
+        navigationManager.NavigateTo("/order/SplitBill");
     }
 
-    private void NavigateToEntireBill() {
-        navigationManager.NavigateTo("/EntireBill");
+    bool isEntireBillVisible = false;
+    void ShowEntireBillPopup() {
+        isEntireBillVisible = true;
+        StateHasChanged();
     }
 
  }

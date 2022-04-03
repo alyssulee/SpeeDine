@@ -1,9 +1,82 @@
-@page "/SplitBill" 
+@page "/order/SplitBill" 
 @inject NavigationManager navigationManager
 @inject MenuRepository MenuRepo  
+@inject User User
 
-<h1> hello this is split bill</h1>
+<div class = 'overall__container'>
+    <div class = 'header__container'>
+        <span class = 'go_back__text' @onclick = 'NavigateToOrder'>Go back</span>
+        <h3 class = 'splitbill__text'>Split Bill</h3>
+    </div>
+    
+    <span class = 'first_line'>Tap items to add and remove it from your bill.</span>
+    <span class = 'second_line'>Multiple people can select the same item to split the cost.</span>
+
+    <div class = 'item__container'>
+        @{ var x = 0; }
+        @foreach(var cartItem in CartScreen) {
+            var item = cartItem;
+            <div class = 'dish_information__container' @onclick = '() => customUserChangeMethod(item.Id)'>
+                <div class = 'dish_information__header'>
+                    <span class = 'dish_name'>@cartItem.Name</span>
+                    <span class = 'dish_price'>@cartItem.Price</span>
+                </div>
+                @if(!customUserPaying[item.Id]){
+                    <span class = 'who_is_paying__text'>@User.Name is paying for this</span>
+                }
+            </div>
+            x++;
+        }
+    </div>
+</div>
 
 @code {
+    List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+
+    public MenuCategory selectedCategory { get; set; }
+
+    List<MenuItem> CartScreen = new List<MenuItem>();
     
+    int total_dishes = 0;           //will be later used for the clicking on the dish purpose
+
+    bool isUserNameDisplaying = false;
+
+
+    void customUserChangeMethod(int x) {
+        Console.WriteLine(x);
+        if(!customUserPaying[x])
+            customUserPaying[x] = true;
+        else customUserPaying[x] = false;
+        StateHasChanged();
+    }
+
+    void changeUserNameBooleanToTrue(int x) {
+        if(!isUserNameDisplaying)
+            isUserNameDisplaying = true;
+        else 
+            isUserNameDisplaying = false;
+        StateHasChanged();   
+    }
+
+    void NavigateToOrder() {
+        navigationManager.NavigateTo("/order");
+    }
+    bool[] customUserPaying;
+
+    protected override void OnInitialized()
+    {
+        selectedCategory = MenuCategory.Dinner;
+        Showorder();
+        foreach(var cartItem in CartScreen) {
+            total_dishes+=1;
+        }
+        customUserPaying = new bool[total_dishes];      // all will be false
+        StateHasChanged();
+    }
+
+    private void Showorder()
+    {
+        CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
+    }
+
 }
