@@ -16,7 +16,7 @@
         @{ var x = 0; }
         @foreach(var cartItem in CartScreen) {
             var item = cartItem;
-            <div class = 'dish_information__container' @onclick = '() => customUserChangeMethod(item.Id)'>
+            <div class = 'dish_information__container' style = "@changeColor[item.Id]" @onclick = '() => customUserChangeMethod(item.Id)'>
                 <div class = 'dish_information__header'>
                     <span class = 'dish_name'>@cartItem.Name</span>
                     <span class = 'dish_price'>@cartItem.Price</span>
@@ -28,34 +28,62 @@
             x++;
         }
     </div>
+    <div class = 'your_subtotal__container'>
+        <span class = 'your_subtotal__text'>Your Subtotal</span>
+        <span class = 'amount__text'>@yourSubtotal</span>
+    </div>
+    <button class = 'request_bill__container' disabled = '@IsDisabled' style = "@changeColorRequestBtn" @onclick = 'NavigateToThankyouPage'>
+        <span class = 'request_bill__text'>REQUEST BILL</span>
+    </button>
 </div>
 
 @code {
-    List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+   
 
+    protected bool IsDisabled {get; set;}
     public MenuCategory selectedCategory { get; set; }
 
     List<MenuItem> CartScreen = new List<MenuItem>();
     
     int total_dishes = 0;           //will be later used for the clicking on the dish purpose
 
-    bool isUserNameDisplaying = false;
+    double[] priceStorage;
 
+    string[] changeColor;
 
-    void customUserChangeMethod(int x) {
-        Console.WriteLine(x);
-        if(!customUserPaying[x])
-            customUserPaying[x] = true;
-        else customUserPaying[x] = false;
-        StateHasChanged();
+    string changeColorRequestBtn;
+
+    double constantSubtotal;
+
+    double yourSubtotal = 0.0;
+
+    void NavigateToThankyouPage(){
+        navigationManager.NavigateTo("/");      // change this once the thank you page is available.
     }
 
-    void changeUserNameBooleanToTrue(int x) {
-        if(!isUserNameDisplaying)
-            isUserNameDisplaying = true;
-        else 
-            isUserNameDisplaying = false;
-        StateHasChanged();   
+    void customUserChangeMethod(int x) {
+        //Console.WriteLine(x);
+        if(!customUserPaying[x]) {
+            customUserPaying[x] = true;
+            changeColor[x] = "background-color:rgb(218, 196, 196)";
+            @* subtracting this item from the subtotal now *@
+            yourSubtotal-=priceStorage[x];
+            if(yourSubtotal != constantSubtotal){
+                IsDisabled = true;
+                changeColorRequestBtn = "background-color:rgb(218, 196, 196)";
+            }
+        }
+            
+        else{
+            customUserPaying[x] = false;
+            changeColor[x] = "background-color:#F4A0A0";
+            yourSubtotal+=priceStorage[x];
+            if(yourSubtotal == constantSubtotal){
+                IsDisabled = false;
+                changeColorRequestBtn = "background-color:#F4A0A0";
+            }
+        }
+        StateHasChanged();
     }
 
     void NavigateToOrder() {
@@ -67,10 +95,20 @@
     {
         selectedCategory = MenuCategory.Dinner;
         Showorder();
+        priceStorage = new double[50];
         foreach(var cartItem in CartScreen) {
+            priceStorage[total_dishes] = cartItem.Price;
             total_dishes+=1;
+            yourSubtotal+=cartItem.Price;
         }
+        constantSubtotal = yourSubtotal;            //so that this doesnt change and we can use it for request bill checking
         customUserPaying = new bool[total_dishes];      // all will be false
+        changeColor = new String[total_dishes];
+        for(int i = 0; i<total_dishes; i++){
+            changeColor[i] = "background-color:#F4A0A0";
+        }
+
+        changeColorRequestBtn = "background-color:#F4A0A0";  //as initially all the dishes are selected
         StateHasChanged();
     }
 
