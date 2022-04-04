@@ -7,86 +7,156 @@
 
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
 
-<div class='menu'>
+<div class='cart'>
     <h1>Cart</h1>
 
-    <!-- Have to program this so that it iterates for each person -->
-    <h2>YOU (Guest 1)</h2>
-
-    @*Cart List*@
+    @*Cart*@
     <ul>
         @foreach(var user in Table.GuestList)   
         {
-            @user.Name
-            @foreach(var orderItem in user.Cart)
-            {
-                  <li>@orderItem.MenuItem.Name, @orderItem.Quantity</li>
-/*                <li class='menu-item'>
-                    <div class='menu-item-container'>
-                        <img src=@orderItem.MenuItem.ImgLink>
-                        <div style='padding: 0.5rem; flex-grow: 1;'>
-                             <div class='row'>
-                                <p style="font-weight:bold; margin-right:auto">@orderItem.MenuItem.Name</p>
-                                <p style="margin-left:auto">$@orderItem.MenuItem.Price</p>
-                            </div>
-                            <div class='row'>
-                                <p>@orderItem.MenuItem.Description</p>
-                            </div>
-                             <div class='quantity-container'>
-                                <button class="quantity-button red-button" @onclick="decrement">-</button>
-                                <input type="number" id="quantity-number" value="@numItems" />
-                                <button class="quantity-button red-button" @onclick="increment">+</button>
+            <li>
+                <div class='guest-name'>
+                    <b>@user.Name @SelectedUser(user)</b>
+                </div>
+                @foreach(var orderItem in user.Cart)
+                {
+                    <li class='cart-item'>
+                        <div class='cart-item-container'>
+                            <img src=@orderItem.MenuItem.ImgLink>
+                            <div style='padding: 0.5rem; flex-grow: 1;'>
+                                 <div class='row'>
+                                    <p style="font-weight:bold; margin-right:auto">@orderItem.MenuItem.Name</p>
+                                    <p style="margin-left:auto">$@orderItem.MenuItem.Price</p>
+                                </div>
+                                <div class='details'>
+                                    <span style="font-weight:bold">Side: </span>
+                                    <span body style="@StyleForSides(orderItem)">@SideChosen(orderItem)</span>
+                                </div>
+                                <div class='details'>
+                                    <span style="font-weight:bold">Special instructions: </span>
+                                    <span style="@StyleForInstructions(orderItem)">@InstructionGiven(orderItem)</span>
+                                </div>
+                                 <div class='quantity-container'>
+                                    <button class="quantity-button red-button" @onclick="@(() => { DecrementQuantity(orderItem);})">-</button>
+                                    <input type="number" id="quantity-number" value=@orderItem.Quantity />
+                                    <button class="quantity-button red-button" @onclick="@(() => { IncrementQuantity(orderItem);})">+</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class='row'>
-                        <img class="pin-button" @onclick="@(() => { OpenFoodDetailsPage(orderItem.MenuItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
-                    </div>
-                </li>*/
-            }
+                        <div class='row'>
+                            <img class="edit-button" @onclick="@(() => { OpenUpdateFoodDetailsPage(orderItem.MenuItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
+                        </div>
+                    </li>
+                }
+            </li>
         }
     </ul>
+</div>
+<div class='fixed-bottom'>
+    <button class='place-order-btn' @onclick="@(() => { PlaceOrder();})">
+        Place Table Order
+    </button>
 </div>
 
 @code 
 {
+    // TODO:
+    //  handle input from the Quantity text boxes
     #region Attributes
-    List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
 
     // GUI Bindings
-    public MenuCategory selectedCategory { get; set; }
-    public List<MenuItem> displayMenuList = new List<MenuItem>();
-    public List<User> users = new List<User>();
-    int numItems = 0;
 
     #endregion
 
     protected override void OnInitialized()
     {
-        selectedCategory = MenuCategory.Popular;
-        FilterMenu();
         base.OnInitialized();
     }
 
-    private void FilterMenu()
-    {
-        displayMenuList = MenuRepo.GetMenuByCategory(selectedCategory);
-    }
-
-    private void OpenFoodDetailsPage(MenuItem menuItem)
+    private void OpenUpdateFoodDetailsPage(MenuItem menuItem)
     {
         NavigationManager.NavigateTo($"menu/details/{menuItem.Id}");
     }
 
-    private void increment()
+    private string SelectedUser(User user)
     {
-        numItems = 0;
-        numItems++;
+        string selectedUser = "";
+        if (user.Id == 1) // hardcoded to Guest 1; fix this
+        {
+            selectedUser = "(YOU)";
+        }
+        return selectedUser;
     }
 
-    private void decrement()
+    private string SideChosen(OrderItem orderItem)
     {
-        numItems = 0;
-        numItems--;
+        string printSide = "No side chosen";
+        if (orderItem.Side != null)
+        {
+            printSide = orderItem.Side.Name;
+        }
+        return printSide;
+    }
+
+    private string InstructionGiven(OrderItem orderItem)
+    {
+        string printInstructions = "No special instructions provided";
+        if (orderItem.SpecialInstructions != null)
+        {
+            printInstructions = orderItem.SpecialInstructions;
+        }
+        return printInstructions;
+    }
+
+    private string StyleForSides(OrderItem orderItem)
+    {
+        string style = "";
+        if (orderItem.Side == null)
+        {
+            style = "font-style: italic";
+        }
+        return style;
+    }
+
+    private string StyleForInstructions(OrderItem orderItem)
+    {
+        string style = "";
+        if (orderItem.SpecialInstructions == null)
+        {
+            style = "font-style: italic";
+        }
+        return style;
+    }
+
+    private void IncrementQuantity(OrderItem item)
+    {
+        item.Quantity++;
+    }
+
+    private void DecrementQuantity(OrderItem item)
+    {
+        if (item.Quantity > 0)
+        {
+            item.Quantity--;
+        }
+        else
+        {
+            item.Quantity = 0;
+        }
+    }
+
+    private void PlaceOrder()
+    {
+        // for each user in the table...
+        for (int i=0; i<Table.GuestList.Capacity; i++)
+        {
+            // for each item in that user's Cart...
+            for (int j=0; j<Table.GuestList[i].Cart.Capacity; j++)
+            {
+                Table.GuestList[i].Orders.Add(Table.GuestList[i].Cart[j]);
+            }
+            
+        }
+        NavigationManager.NavigateTo($"menu");
     }
 }

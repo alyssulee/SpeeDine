@@ -41,8 +41,8 @@ namespace BlazorApp
             services.AddSingleton<Table>(table);
 
             var menuRepo = new MenuRepository();
-            var user2Food = new OrderItem(menuRepo.GetItemByID(7), 1, OrderStatus.PendingOrder, null, null);
-            var user2Drink = new OrderItem(menuRepo.GetItemByID(29), 1, OrderStatus.PendingOrder, null, null);
+            var user2Food = new OrderItem(menuRepo.GetItemByID(1), 1, OrderStatus.PendingOrder, null, null);
+            var user2Drink = new OrderItem(menuRepo.GetItemByID(2), 1, OrderStatus.PendingOrder, null, "Medium well, please");
             user2.Cart = new List<OrderItem> { user2Food, user2Drink };
 
         }
