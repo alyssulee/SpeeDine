@@ -1,9 +1,11 @@
 ﻿@inject NavigationManager NavigationManager
+@inject User User
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 
 
 <nav class="navbar navbar-fixed-top navbar-collapse" id="head-navbar">
+    <div class='guest-name'>@User.Name</div>
   <ul class="nav navbar-nav">
     <li>
         <a class="nav-item @GetActive("menu")" href="menu/Popular">
@@ -20,7 +22,7 @@
     <li>
         <a class="nav-item @GetActive("order")" href="order">
             <span class="iconify" data-icon="emojione-monotone:fork-and-knife-with-plate" data-width="30" data-height="30"></span>
-            Order
+            Ordered
         </a>
     </li>
     <li>

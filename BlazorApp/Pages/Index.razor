@@ -1,13 +1,14 @@
 @page "/"
 @layout Clear
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
+@inject User User
 
 <div class='welcome-screen' @onclick="@(() => { continueToMenu();})">
     <h1>Welcome to</h1>
     
     <img src="/images/Bizo.gif" asp-append-version="true"/>
     <h2>This device is</h2>
-    <h3>Device</h3>
+    <h3>@User.Name</h3>
 
     <p class="pulse">Tap anywhere to continue</p>
     <footer class="footer">
