@@ -17,14 +17,10 @@
                         <img src=@cartItem.ImgLink>
                         <div style='padding: 1rem; flex-grow: 2;'>
                               <div class='priceset'>
+                              <p style="font-weight:bold; margin-right:auto">@cartItem.Name</p>
                               <p style="margin-left:auto">$@cartItem.Price</p>
-                                 </div>
-                             <div class='itemselected'>
-                                <p style="font-weight:bold; margin-right:auto">@cartItem.Name</p>
-                                <p3> Delivered </p3>
-                              
-                            </div>
-                           
+                               </div>
+                            <p3> Delivered </p3> 
                         </div>
                     </div>
                 </div>
@@ -34,20 +30,21 @@
                 <div class = 'subtotal'>Subtotal: </div>
                  <div class = 'subtotal_cost'>@totalCost()</div>
                   
-                </div> 
-
-             <div class='table_total_container'>
-                   <div class = 'tabletotal'>Table Total: </div>
-                   <div class = 'table_cost'> @totalCost()</div>
-                </div>
-
+                </div>       
         }
 
                 
 </div>
 
     @* starting my bill screen from here, (SUVRAT). *@
+    @* made a few changes in the beginning, (Shafin). *@
     @if(!isEntireBillVisible) {
+
+       <div class='table_total_container'>
+                   <div class = 'tabletotal'>Table Total: </div>
+                   <div class = 'table_cost'> @totalCost()</div>
+       </div>
+
         <div class='bill_screen__container'>
             
                 <div>
