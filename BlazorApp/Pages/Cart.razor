@@ -83,7 +83,7 @@
 
     private void OpenUpdateFoodDetailsPage(MenuItem menuItem)
     {
-        NavigationManager.NavigateTo($"menu/details/{menuItem.Id}");
+        NavigationManager.NavigateTo($"menu/details/{menuItem.Id}"); // this address is wrong
     }
 
     private bool CartEmpty()
@@ -209,6 +209,6 @@
             }
             
         }
-        NavigationManager.NavigateTo($"menu");
+        NavigationManager.NavigateTo($"menu/Popular");
     }
 }

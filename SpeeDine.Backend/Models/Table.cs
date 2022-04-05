@@ -17,10 +17,6 @@ namespace SpeeDine.Backend.Models
         {
             GuestList = userList;
         }
-        public Table(List<User> userList)
-        {
-            GuestList = userList;
-        }
         
     }
 }

@@ -127,8 +127,9 @@
 
     private async Task UpdateCart()
     {
+        Random randomNum = new Random();
         int index = User.Cart.FindIndex(item => item == CartItem);
-        OrderItem newOrderItem = new OrderItem(FoodItem, SelectedQuantity, OrderStatus.PendingOrder, SelectedSide, SpecialInstructions);
+        OrderItem newOrderItem = new OrderItem(randomNum.Next(),FoodItem, SelectedQuantity, OrderStatus.PendingOrder, SelectedSide, SpecialInstructions);
         User.Cart[index] = newOrderItem;
         await ToggleTransition();
         NavigateBack();
@@ -137,7 +138,8 @@
 
     private async Task AddToCart()
     {
-        OrderItem orderItem = new OrderItem(FoodItem, SelectedQuantity, OrderStatus.PendingOrder, SelectedSide, SpecialInstructions);
+        Random randomNum = new Random();
+        OrderItem orderItem = new OrderItem(randomNum.Next(),FoodItem, SelectedQuantity, OrderStatus.PendingOrder, SelectedSide, SpecialInstructions);
         User.Cart.Add(orderItem);
         Console.WriteLine($"AddToCart {orderItem}");
         await ToggleTransition();
