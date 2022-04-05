@@ -31,7 +31,6 @@ namespace BlazorApp
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddBlazoredToast();
 
             // Add dependencies
             services.AddSingleton<MenuRepository>();
@@ -39,11 +38,12 @@ namespace BlazorApp
             var user2 = new User(2, "Guest 2");
             services.AddSingleton<User>(user1);
             List<User> users = new List<User> { user1, user2 };
-            services.AddSingleton<Table>(new Table(users));
+            var table = new Table(users);
+            services.AddSingleton<Table>(table);
 
             var menuRepo = new MenuRepository();
-            var user2Food = new OrderItem(menuRepo.GetItemByID(7),1,OrderStatus.PendingOrder,null,null);
-            var user2Drink = new OrderItem(menuRepo.GetItemByID(29), 1, OrderStatus.PendingOrder, null, null);
+            var user2Food = new OrderItem(1,menuRepo.GetItemByID(1), 2, OrderStatus.PendingOrder, null, null);
+            var user2Drink = new OrderItem(2,menuRepo.GetItemByID(2), 1, OrderStatus.PendingOrder, null, "Medium well, please");
             user2.Cart = new List<OrderItem> { user2Food, user2Drink };
 
         }
