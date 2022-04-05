@@ -149,12 +149,42 @@ ul {
         font-size: 30px;
     }
 
-/*Food details*/
+/*Food details Popup*/
 .black-overlay-popup {
     background: #00000080;
     position: fixed;
     bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: 200;
 }
+
+.food-details-popup {
+    overflow-y: auto;
+    height: 90%;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    padding: 1rem;
+    background: #FFFAEA;
+    z-index: 10000;
+    border-radius: 1rem 1rem 0 0;
+    animation: .7s slide-up;
+    margin-top: 0%;
+    width: 100vw;
+}
+
+@keyframes slide-up {
+    from {
+        height: 0%;
+    }
+
+    to {
+        height: 90%;
+    }
+}
+
 
 @media screen and (min-width:768px) {
     ::-webkit-scrollbar {

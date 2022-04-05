@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <div class='row'>
-                                <img class="edit-button" @onclick="@(() => { OpenUpdateFoodDetailsPage(orderItem.MenuItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
+                                <img class="edit-button" @onclick="@(() => { OpenUpdateFoodDetailsPage(orderItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
                             </div>
                         </li>
                     }
@@ -67,12 +67,28 @@
     </button>
 </div>
 
+
+@*Food Details*@
+@if(ShowUpdateFoodDetails)
+{
+    <div class='food-details-popup'>
+        <FoodDetails CartItem=@SelectedCartItem 
+                    NavigateBack=@CloseFoodDetailsPage           
+                    Update="true"
+                    FromPage='Cart'/>
+    </div>
+    <div class='black-overlay-popup' @onclick="@(() => {ShowUpdateFoodDetails=false;})"></div>
+}
+
 @code 
 {
     #region Attributes
 
     // GUI Bindings
     int updatedQuantity;
+
+    bool ShowUpdateFoodDetails= false;
+    OrderItem SelectedCartItem { get; set; }    
 
     #endregion
 
@@ -84,6 +100,20 @@
     private void OpenUpdateFoodDetailsPage(MenuItem menuItem)
     {
         NavigationManager.NavigateTo($"menu/details/{menuItem.Id}"); // this address is wrong
+    }
+
+
+    /* Food Details */
+    public void OpenUpdateFoodDetailsPage(OrderItem item)
+    {
+        ShowUpdateFoodDetails = true;
+        SelectedCartItem = item;
+    }
+
+    private void CloseFoodDetailsPage()
+    {
+        ShowUpdateFoodDetails = false;
+        StateHasChanged();
     }
 
     private bool CartEmpty()

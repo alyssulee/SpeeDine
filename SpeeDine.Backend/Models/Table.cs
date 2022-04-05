@@ -9,10 +9,7 @@ namespace SpeeDine.Backend.Models
     public class Table
     {
         public List<User> GuestList { get; set; }
-        public Table()
-        {
 
-        }
         public Table(List<User> userList)
         {
             GuestList = userList;
