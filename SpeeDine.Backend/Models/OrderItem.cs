@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SpeeDine.Backend.Models
 {
-    public record OrderItem(MenuItem MenuItem, int Quantity, OrderStatus OrderStatus, MenuSide? Side, string SpecialInstructions) 
+    public record OrderItem(int Id, MenuItem MenuItem, int Quantity, OrderStatus OrderStatus, MenuSide? Side, string SpecialInstructions) 
     {
-        public int Quantity { get; set; } = default!;
+        public int Quantity { get; set; } = Quantity;
     };
 
     public enum OrderStatus

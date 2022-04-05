@@ -13,6 +13,20 @@ h1 {
     align-self: flex-end;
 }
 
+.remove-btn {
+    max-width: 5rem;
+    height: auto;
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    float: right;
+    font-size: 25px;
+    transition: all .2s ease;
+}
+    .remove-btn:active {
+        transform: scale(0.92);
+    }
+
 .quantity-container {
     margin: 0 auto;
     text-align: center;
@@ -69,10 +83,16 @@ input[type="number"] {
     padding: 2rem 1rem;
     background: #F4A0A0;
     transition: all .2s ease;
+    font-weight: bold;
 }
     .place-order-btn:active {
         transform: scale(0.92);
         background: #de6f6f;
+    }
+
+    .place-order-btn:disabled {
+        filter: brightness(0.8);
+        /*opacity: 0.;*/
     }
 
 .cart {
@@ -114,7 +134,22 @@ ul {
     margin-right: 0.5rem;
 }
 
-/*Food details Popup*/
+/* Empty screen */
+.empty {
+    text-align: center;
+    color: #575757;
+}
+
+    .empty.centered {
+        position: absolute;
+        top: 40vh;
+    }
+
+    .empty span {
+        font-size: 30px;
+    }
+
+/*Food details*/
 .black-overlay-popup {
     background: #00000080;
     position: fixed;

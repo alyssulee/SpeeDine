@@ -11,60 +11,64 @@
     <h1>Cart</h1>
 
     @*Cart*@
-    <ul>
-        @foreach(var user in Table.GuestList)   
-        {
-            <li>
-                <div class='guest-name'>
-                    <b>@user.Name @SelectedUser(user)</b>
-                </div>
-                @foreach(var orderItem in user.Cart)
-                {
-                    <li class='cart-item'>
-                        <div class='cart-item-container'>
-                            <img src=@orderItem.MenuItem.ImgLink>
-                            <div style='padding: 0.5rem; flex-grow: 1;'>
-                                 <div class='row'>
-                                    <p style="font-weight:bold; margin-right:auto">@orderItem.MenuItem.Name</p>
-                                    <p style="margin-left:auto">$@orderItem.MenuItem.Price</p>
-                                </div>
-                                <div class='details'>
-                                    <span style="font-weight:bold">Side: </span>
-                                    <span body style="@StyleForSides(orderItem)">@SideChosen(orderItem)</span>
-                                </div>
-                                <div class='details'>
-                                    <span style="font-weight:bold">Special instructions: </span>
-                                    <span style="@StyleForInstructions(orderItem)">@InstructionGiven(orderItem)</span>
-                                </div>
-                                 <div class='quantity-container'>
-                                    <button class="quantity-button red-button" disabled=@IsDecreaseButtonDisabled(orderItem) @onclick="@(() => { DecrementQuantity(orderItem);})">-</button>
-                                    <input type="number" @bind-value=@orderItem.Quantity />
-                                    <button class="quantity-button red-button" @onclick="@(() => { IncrementQuantity(orderItem);})">+</button>
-                                    <p>@orderItem.Quantity</p>
+    @if (!CartEmpty()) {
+        <ul>
+            @foreach(var user in Table.GuestList)   
+            {
+                <li>
+                    <div class='guest-name'>
+                        <b>@user.Name @SelectedUser(user)</b>
+                    </div>
+                    @foreach(var orderItem in user.Cart)
+                    {
+                        <li class='cart-item'>
+                            <button class="remove-btn" @onclick="@(() => { RemoveItem(user,orderItem);})">x</button>
+                            <div class='cart-item-container'>
+                                <img src=@orderItem.MenuItem.ImgLink>
+                                <div style='padding: 0.5rem; flex-grow: 1;'>
+                                     <div class='row'>
+                                        <p style="font-weight:bold; margin-right:auto; position: relative">@orderItem.MenuItem.Name ($@string.Format("{0:N2}", @TotalPrice(orderItem)))</p>
+                                    </div>
+                                    <div class='details'>
+                                        <span style="font-weight:bold">Side: </span>
+                                        <span body style="@StyleForSides(orderItem)">@SideChosen(orderItem)</span>
+                                    </div>
+                                    <div class='details'>
+                                        <span style="font-weight:bold">Special instructions: </span>
+                                        <span style="@StyleForInstructions(orderItem)">@InstructionGiven(orderItem)</span>
+                                    </div>
+                                     <div class='quantity-container'>
+                                        <button class="quantity-button red-button" disabled=@IsDecreaseButtonDisabled(orderItem) @onclick="@(() => { DecrementQuantity(orderItem);})">-</button>
+                                        <input type="number" value=@orderItem.Quantity />
+                                        <button class="quantity-button red-button" @onclick="@(() => { IncrementQuantity(orderItem);})">+</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class='row'>
-                            <img class="edit-button" @onclick="@(() => { OpenUpdateFoodDetailsPage(orderItem.MenuItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
-                        </div>
-                    </li>
-                }
-            </li>
-        }
-    </ul>
+                            <div class='row'>
+                                <img class="edit-button" @onclick="@(() => { OpenUpdateFoodDetailsPage(orderItem.MenuItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
+                            </div>
+                        </li>
+                    }
+                </li>
+            }
+        </ul>
+    }
+    @*Empty Page*@
+    else {
+        <div class='empty centered'>
+            <span>Your table's cart is empty. Try adding items from the menu!</span>
+        </div>
+    }
+
 </div>
 <div class='fixed-bottom'>
-    <button class='place-order-btn' @onclick="@(() => { PlaceOrder();})">
+    <button class='place-order-btn' disabled=@CartEmpty() @onclick="@(() => { PlaceOrder();})">
         Place Table Order
     </button>
 </div>
 
 @code 
 {
-    // TODO:
-    //  handle input from the Quantity text boxes
-    //  empty cart screen
-    //  x button
     #region Attributes
 
     // GUI Bindings
@@ -80,6 +84,30 @@
     private void OpenUpdateFoodDetailsPage(MenuItem menuItem)
     {
         NavigationManager.NavigateTo($"menu/details/{menuItem.Id}");
+    }
+
+    private bool CartEmpty()
+    {
+        foreach (var guest in Table.GuestList.ToList())
+        {
+            if (guest.Cart.Count > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void RemoveItem(User user, OrderItem item)
+    {
+        foreach (var cartItem in user.Cart.ToList())
+        {
+            if (cartItem.Id == item.Id)
+            {
+                //var itemToRemove = user.Cart.Single(r => r.Id == item.Id);
+                //user.Cart.Remove(itemToRemove);
+                user.Cart.Remove(cartItem);
+            }
+        }
     }
 
     private string SelectedUser(User user)
@@ -132,6 +160,11 @@
         return style;
     }
 
+    private double TotalPrice(OrderItem orderItem)
+    {
+        return orderItem.MenuItem.Price * orderItem.Quantity;
+    }
+
     private bool IsDecreaseButtonDisabled(OrderItem item)
     {
         return item.Quantity <= 1;
@@ -166,12 +199,13 @@
     private void PlaceOrder()
     {
         // for each user in the table...
-        for (int i=0; i<Table.GuestList.Capacity; i++)
+        foreach (var guest in Table.GuestList.ToList())
         {
             // for each item in that user's Cart...
-            for (int j=0; j<Table.GuestList[i].Cart.Capacity; j++)
+            foreach (var cartItem in guest.Cart.ToList())
             {
-                Table.GuestList[i].Orders.Add(Table.GuestList[i].Cart[j]);
+                guest.Orders.Add(cartItem);
+                RemoveItem(guest, cartItem);
             }
             
         }
