@@ -37,9 +37,10 @@
                                     <span style="@StyleForInstructions(orderItem)">@InstructionGiven(orderItem)</span>
                                 </div>
                                  <div class='quantity-container'>
-                                    <button class="quantity-button red-button" @onclick="@(() => { DecrementQuantity(orderItem);})">-</button>
-                                    <input type="number" id="quantity-number" value=@orderItem.Quantity />
+                                    <button class="quantity-button red-button" disabled=@IsDecreaseButtonDisabled(orderItem) @onclick="@(() => { DecrementQuantity(orderItem);})">-</button>
+                                    <input type="number" @bind-value=@orderItem.Quantity />
                                     <button class="quantity-button red-button" @onclick="@(() => { IncrementQuantity(orderItem);})">+</button>
+                                    <p>@orderItem.Quantity</p>
                                 </div>
                             </div>
                         </div>
@@ -62,9 +63,12 @@
 {
     // TODO:
     //  handle input from the Quantity text boxes
+    //  empty cart screen
+    //  x button
     #region Attributes
 
     // GUI Bindings
+    int updatedQuantity;
 
     #endregion
 
@@ -128,6 +132,11 @@
         return style;
     }
 
+    private bool IsDecreaseButtonDisabled(OrderItem item)
+    {
+        return item.Quantity <= 1;
+    }
+
     private void IncrementQuantity(OrderItem item)
     {
         item.Quantity++;
@@ -135,13 +144,22 @@
 
     private void DecrementQuantity(OrderItem item)
     {
-        if (item.Quantity > 0)
+        if (item.Quantity > 1)
         {
             item.Quantity--;
         }
         else
         {
-            item.Quantity = 0;
+            item.Quantity = 1;
+        }
+    }
+
+    private void WriteQuantity(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        int newValue = (int)args.Value;
+        if (newValue >= 0)
+        {
+            updatedQuantity = newValue;
         }
     }
 
