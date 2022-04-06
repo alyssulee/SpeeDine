@@ -4,6 +4,7 @@
 @inject MenuRepository MenuRepo
 @inject Table Table
 @inject User User
+@inject IModalService Modal
 
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
 
@@ -22,7 +23,7 @@
                     @foreach(var orderItem in user.Cart)
                     {
                         <li class='cart-item'>
-                            <button class="remove-btn" @onclick="@(() => { RemoveItem(user,orderItem);})">x</button>
+                            <button class="remove-btn" @onclick="@(() => { DeleteConfirm(user,orderItem);})">x</button>
                             <div class='cart-item-container'>
                                 <img src=@orderItem.MenuItem.ImgLink>
                                 <div style='padding: 0.5rem; flex-grow: 1;'>
@@ -62,7 +63,7 @@
 
 </div>
 <div class='fixed-bottom'>
-    <button class='place-order-btn' disabled=@CartEmpty() @onclick="@(() => { PlaceOrder();})">
+    <button class='place-order-btn' disabled=@CartEmpty() @onclick="@(() => { ConfirmOrder();})">
         Place Table Order
     </button>
 </div>
@@ -131,11 +132,15 @@
     {
         foreach (var cartItem in user.Cart.ToList())
         {
+            
             if (cartItem.Id == item.Id)
             {
+                
                 //var itemToRemove = user.Cart.Single(r => r.Id == item.Id);
                 //user.Cart.Remove(itemToRemove);
                 user.Cart.Remove(cartItem);
+               
+
             }
         }
     }
@@ -225,20 +230,63 @@
             updatedQuantity = newValue;
         }
     }
+    async void ConfirmOrder(){
+        var options = new ModalOptions()
+        {
+            HideCloseButton = true
+        };
+        var orderModal = Modal.Show<Yes_No>("Would you like to place your order now?", options);
+        var result = await orderModal.Result;
+        if (!result.Cancelled)
+        {
+           PlaceOrder();
+        if (isAlcoholic){
+           AlcoholicModal();
+    }
+        else{
+    Modal.Show<TextOnlyModal>("Order up! Your order has been placed and will arrive shortly.");
+    }
+        }
+    }
+    async void DeleteConfirm(User user, OrderItem item){
+    var options = new ModalOptions()
+        {
+            HideCloseButton = true
+        };
+        var deleteModal = Modal.Show<DeleteModal>("Would you like to delete this?", options);
+        var result = await deleteModal.Result;
+        if (!result.Cancelled)
+        {
+           RemoveItem(user, item);
+           StateHasChanged();
+        }
+    }
 
-    private void PlaceOrder()
+    bool isAlcoholic = false;
+    public void PlaceOrder()
     {
+          
         // for each user in the table...
         foreach (var guest in Table.GuestList.ToList())
         {
             // for each item in that user's Cart...
             foreach (var cartItem in guest.Cart.ToList())
             {
+            if(cartItem.MenuItem.isAlcoholic)
+                {
+                    isAlcoholic = true;
+                }
                 guest.Orders.Add(cartItem);
                 RemoveItem(guest, cartItem);
             }
             
         }
+    
         NavigationManager.NavigateTo($"menu/Popular");
     }
+    async void AlcoholicModal(){
+        Modal.Show<Help>("The order you placed contains an alcoholic item(s). Please have your ID ready so the waiter can verify your age.");
+        
+    }
+
 }

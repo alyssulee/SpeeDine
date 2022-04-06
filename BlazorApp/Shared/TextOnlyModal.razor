@@ -1,0 +1,13 @@
+
+@inject IModalService ModalService
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+   async Task OK(){
+
+        await BlazoredModal.CloseAsync();
+    }
+    
+
+}

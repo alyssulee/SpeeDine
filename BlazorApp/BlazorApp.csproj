@@ -15,6 +15,7 @@
     <ProjectReference Include="..\SpeeDine.Backend\SpeeDine.Backend.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="blazored.modal" Version="6.0.1" />
     <PackageReference Include="Blazored.Toast" Version="3.2.2" />
   </ItemGroup>
 

@@ -1,0 +1,20 @@
+@inject IModalService ModalService
+
+<div>
+    <button @onclick="Yes" class="btn btn-primary">Yes</button>
+    <button @onclick="No" class="btn btn-outline-danger ">No</button>
+
+</div>
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+   async Task Yes(){
+        
+        await BlazoredModal.CloseAsync();
+
+    }
+    
+    async Task No() => await BlazoredModal.CancelAsync();
+
+}

@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 @inject User User
+@inject IModalService Modal
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -26,13 +27,13 @@
         </a>
     </li>
     <li>
-        <a class="nav-item @GetActive("callWaiter")" href="callWaiter" >
+        <a class="nav-item @GetActive("callWaiter")" @onclick="@(()=> ShowWaiter())" >
             <span class="iconify" data-icon="charm:person" data-width="30" data-height="30"></span>
             Call Waiter
         </a>
     </li>
     <li>
-        <a class="nav-item @GetActive("help")" href="help" >
+        <a class="nav-item @GetActive("help")" @onclick="@(()=> ShowHelp())" >
              <span class="iconify" data-icon="bx:help-circle" data-width="30" data-height="30"></span>
             Help
         </a>
@@ -63,5 +64,31 @@
     string GetActive(string href, NavLinkMatch navLinkMatch = NavLinkMatch.Prefix)
     {
         return IsActive(href, navLinkMatch) ? "active" : "";
+    }
+private void ShowWaiter(){
+var options = new ModalOptions()
+        {
+            HideCloseButton = true
+        };
+Modal.Show<Call_Waiter>("Would you like to call the waiter?", options);
+}
+
+    private void ShowHelp(){
+        if(NavigationManager.ToBaseRelativePath(NavigationManager.Uri) == "cart"){
+        Modal.Show<Help>("Cart Help: Edit the item details by tapping the pencil icon. Tap the “x” to remove it from the order. Once ready, tap “Place Table Order” to place the order.");
+        
+        }
+    if(NavigationManager.ToBaseRelativePath(NavigationManager.Uri) == "menu/Popular"){
+        Modal.Show<Help>("Menu Help: Click on a food item to see its details and add it to the cart. Select a category to browse specific menu categories. Choose the filter icon to filter for dietary restrictions.");
+        
+        }
+    if(NavigationManager.ToBaseRelativePath(NavigationManager.Uri) == "order"){
+        Modal.Show<Help>("Ordered Help: Here you can look at your orders and decide whether you would like to pay the entire bill or split it. The subtotal does not include  tax or tip.");
+        
+        }
+     if(NavigationManager.ToBaseRelativePath(NavigationManager.Uri) == "splitbill"){
+        Modal.Show<Help>("Split Bill Help: You cannot modify which items other guests are paying for. The “Request Bill” button is not clickable until all items are selected.");
+        
+        }
     }
 }

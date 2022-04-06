@@ -12,6 +12,7 @@ using BlazorApp.Data;
 using SpeeDine.Backend.Repositories;
 using SpeeDine.Backend.Models;
 using Blazored.Toast;
+using Blazored.Modal;
 
 namespace BlazorApp
 {
@@ -32,6 +33,7 @@ namespace BlazorApp
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddBlazoredToast();
+            services.AddBlazoredModal();
 
             // Add dependencies
             services.AddSingleton<MenuRepository>();

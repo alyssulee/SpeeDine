@@ -120,7 +120,7 @@ button:focus {
     background: #FFFAEA;
     margin-top: -1.1rem;
     height: 5rem;
-    z-index: 104;
+    z-index: 99;
 }
 
 .left-arrow, .right-arrow {
@@ -271,7 +271,7 @@ input[type="radio"]:active + .category {
     -webkit-box-shadow: rgb(14 30 37 / 22%) 0px 2px 4px 0px, rgb(14 30 37 / 22%) 0px 2px 16px 0px;
     box-shadow: rgb(14 30 37 / 22%) 0px 2px 4px 0px, rgb(14 30 37 / 22%) 0px 2px 16px 0px;
     padding: 0;
-    z-index: 100;
+    z-index: 99;
     border-radius: 1rem 1rem 0 0;
     transition: all 1s ease;
 }

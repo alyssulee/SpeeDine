@@ -84,6 +84,7 @@ input[type="number"] {
     background: #F4A0A0;
     transition: all .2s ease;
     font-weight: bold;
+    z-index: 1;
 }
     .place-order-btn:active {
         transform: scale(0.92);

@@ -1,0 +1,17 @@
+@inject IModalService ModalService
+
+<div>
+    <button @onclick="OK" class="btn btn-primary">OK</button>
+
+</div>
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+   async Task OK(){
+
+        await BlazoredModal.CloseAsync();
+    }
+    
+
+}

@@ -1,0 +1,25 @@
+
+@inject IModalService ModalService
+<div>
+    <button @onclick="Cancelled" class="btn btn-outline-danger ">Cancel Call Waiter</button>
+    <button @onclick="Close" class="btn btn-primary">Close Popup</button>
+
+</div>
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    
+    async Task Cancelled(){
+var options = new ModalOptions()
+        {
+            HideCloseButton = false
+        };
+    ModalService.Show<TextOnlyModal>("Call Waiter Cancelled.", options);
+    await BlazoredModal.CancelAsync();}
+    async Task Close(){
+
+    await BlazoredModal.CancelAsync();}
+
+}
