@@ -272,20 +272,20 @@ namespace SpeeDine.Backend.Repositories
 
             Menu.Add(new MenuItem(IdCounter++, "Moscow Mule", "Smirnoff vodka, ginger and fresh lime", 11.75, "https://d35y74nlubkiek.cloudfront.net/d7818dcf-39a8-4656-a42c-2f727f12ccd8",
                new List<MenuCategory> { MenuCategory.Drinks },
-               new List<MenuTag> { MenuTag.PeanutFree }, null));
+               new List<MenuTag> { MenuTag.PeanutFree }, null, true));
           
             Menu.Add(new MenuItem(IdCounter++, "White Negroni", "Tanqueray gin, St Germain Elderflower, Dolin dry vermouth, Yellow Chartruese, and Lemon oil - 2.5oz", 14.25, "	https://d35y74nlubkiek.cloudfront.net/e5882808-6e47-4530-83f4-5c678ce9ff9e",
              new List<MenuCategory> { MenuCategory.Drinks },
-             new List<MenuTag> { MenuTag.PeanutFree }, null));
+             new List<MenuTag> { MenuTag.PeanutFree }, null, true));
 
             Menu.Add(new MenuItem(IdCounter++, "Margarita", "olmeca, cointreau, agave, lemon, lime", 10.25, "https://www.thespruceeats.com/thmb/FjeGodPqSKCTiodzzURclGz9Jag=/3200x2136/filters:fill(auto,1)/fresh-margarita-cocktail-recipe-759317-step-05-dae71772c4304cf7911489a1c7d219ab.jpg",
             new List<MenuCategory> { MenuCategory.Drinks },
-            new List<MenuTag> { MenuTag.PeanutFree }, null));
+            new List<MenuTag> { MenuTag.PeanutFree }, null, true));
 
             Menu.Add(new MenuItem(IdCounter++, "Mojito", "havana club, lemon, lime, mint, soda", 10.25,
                 "https://cookieandkate.com/images/2020/08/best-mojito-recipe-2.jpg",
            new List<MenuCategory> { MenuCategory.Drinks },
-           new List<MenuTag> { MenuTag.PeanutFree }, null));
+           new List<MenuTag> { MenuTag.PeanutFree }, null, true));
         }
 
         #endregion

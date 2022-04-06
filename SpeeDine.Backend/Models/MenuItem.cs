@@ -41,7 +41,7 @@ namespace SpeeDine.Backend.Models
         }
     }
 
-    public record MenuItem (int Id, string Name, string Description, double Price, string ImgLink, List<MenuCategory> Categories, List<MenuTag> ?Tags, List<MenuSide>? Sides);
+    public record MenuItem (int Id, string Name, string Description, double Price, string ImgLink, List<MenuCategory> Categories, List<MenuTag> ?Tags, List<MenuSide>? Sides, bool isAlcoholic = false);
     public record MenuSide (string Name, double ExtraCost);
 
    
