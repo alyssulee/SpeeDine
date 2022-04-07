@@ -1,0 +1,250 @@
+h1 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 4rem;
+    text-align: center;
+    line-height: 5px;
+}
+
+h2 {
+    font-style: normal;
+    font-weight: 350;
+    font-size: 2.5rem;
+    line-height: 46px;
+    text-align: left;
+    
+}
+
+p3 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 20px;
+    color: #00FF00;
+    margin: 0;
+    flex-wrap: nowrap;
+}
+
+p4 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 20px;
+    margin: 0;
+    flex-wrap: nowrap;
+}
+
+h3 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+    line-height: 20px;
+}
+
+
+
+.category {
+    padding: 0.5rem 1rem;
+    margin: 0 auto;
+    margin: 1rem .5rem;
+    background: #F4A0A0;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+
+
+.cartitem img {
+    height: auto;
+    margin: 0 auto;
+    width: 40%;
+    border: 1px black;
+    border-style: solid solid;
+    margin-right: 0.5rem;
+}
+
+.cart-display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+
+
+
+.cartitem {
+    background: #F5DC6E;
+    padding-top: 3rem;
+    padding-bottom: 0rem;
+    padding-left: 2rem;
+    height: 30%;
+    min-height: 15vh;
+}
+
+.priceset {
+    margin: 0;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    display: flex;
+    font-weight: 600;
+    flex-direction: row;
+}
+
+.CalculateSubtotal {
+    padding-top: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 2rem;
+    padding-right: 2rem;
+    height: 20%;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    margin: 0px 0px 60px 0px;
+    background: #ffc34d;
+}
+
+.table_total_container {
+    position: sticky;
+    bottom: 12rem;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 600;
+    font-size: 2.5rem;
+    border: 1px black;
+    display: flex;
+    border-style: solid none;
+    padding-top: 1.5rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #cccccc;
+}
+
+.bill_screen__container {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #EF8A8A;
+}
+
+.how_to_pay__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    background-color: #EF8A8A;
+}
+
+.entire_bill__button, .split_bill__button {
+    display: block;
+    width: 100%;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.entire_bill__button {
+    background-color: #95D48B;
+}
+
+.split_bill__button {
+    background-color: #A6AFFB;
+}
+
+.entire_bill_popup__container {
+    position: block;
+    /* top: 50%;
+    left: 50%; */
+    margin-top: 30%;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 5% 10%;
+    background-color: #F2E0C4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.entire_bill__text {
+    padding-top: 10%;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+    align-items: center;
+}
+
+.entire_bill_items__container {
+    background-color: white;
+    border-radius: 20px;
+}
+
+.item_names {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    max-block-size: 200px;
+    overflow: scroll;
+    padding: 5%;
+}
+
+.item_price {
+    margin-left: 3%;
+    padding-right: 5px;
+}
+
+.item_description {
+    padding-left: 5px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.subtotal__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5% 10%;
+    background-color: #F2E0C4;
+    border-radius: 2px;
+    margin: 7% 5%;
+}
+
+.confirm_button {
+    background-color: #95D48B;
+    display: block;
+    width: 90%;
+    border: none;
+    margin-left: 5%;
+    padding: 2% 5%;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.go_back_button {
+    background-color: rgb(241, 189, 189);
+    display: block;
+    width: 90%;
+    border: none;
+    padding: 2% 5%;
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-bottom: 10%;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
