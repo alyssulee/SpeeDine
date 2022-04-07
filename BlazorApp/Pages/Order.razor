@@ -1,6 +1,147 @@
-@page "/order"
-<h1> This is the order page </h1>
+@page "/order" 
+@inject NavigationManager navigationManager
+@inject MenuRepository MenuRepo  
 
-@code {
+<link rel="stylesheet" href="_content/Syncfusion.Blazor.Themes/bootstrap5.css">
+
+<div class='Orders-screen'> 
+@if(isEntireBillVisible==false){
+    <h1>Orders</h1> 
     
-}
+        <h2>YOU (Guest 1)</h2>
+        
+            @foreach(var cartItem in CartScreen)
+            {
+                <div class='cartitem'>
+                    <div class='cart-display'>
+                        <img src=@cartItem.ImgLink>
+                        <div style='padding: 1rem; flex-grow: 2;'>
+                              <div class='priceset'>
+                              <p style="font-weight:bold; margin-right:auto">@cartItem.Name</p>
+                              <p style="margin-left:auto">$@cartItem.Price</p>
+                               </div>
+                            <p3> Delivered </p3> 
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <div class='CalculateSubtotal'>
+                <div class = 'subtotal'>Subtotal: </div>
+                 <div class = 'subtotal_cost'>@totalCost()</div>
+                  
+                </div>       
+        }
+
+                
+</div>
+
+    @* starting my bill screen from here, (SUVRAT). *@
+    @* made a few changes in the beginning, (Shafin). *@
+    @if(!isEntireBillVisible) {
+
+       <div class='table_total_container'>
+                   <div class = 'tabletotal'>Table Total: </div>
+                   <div class = 'table_cost'> @totalCost()</div>
+       </div>
+
+        <div class='bill_screen__container'>
+            
+                <div>
+                    <h3 style> Ready to Pay?</h3>
+                </div>
+        
+            
+            
+            <div class='how_to_pay__container'> 
+                @if(!isEntireBillVisible){
+                    <button class = 'entire_bill__button' @onclick="ShowEntireBillPopup">Entire Bill</button>
+                }
+                
+
+                <button class = 'split_bill__button' @onclick=NavigateToSplitBill>Split the Bill</button>
+
+                
+            </div>
+            <br />
+        </div> 
+    }
+
+    @if(isEntireBillVisible){
+        <div class = 'entire_bill_popup__container'>
+            <i class="fa-regular fa-xmark-large"> </i>
+            <div class = 'entire_bill__text'>
+                YOUR BILL
+            </div>
+            <div class = 'entire_bill_items__container'>
+                <div class = 'item_names' style = 'overflow-y:scroll;'>
+                    @foreach(var cartItem in CartScreen) {
+                        @* Console.WriteLine(cartItem); *@
+                        <div class = 'item_description'>
+                            <h5>@cartItem.Name</h5>
+                        </div>
+                        <div class = 'item_price'>
+                            <h5>$@cartItem.Price</h5>
+                        </div>
+                    }
+                </div>
+                <div class = 'buttons'>
+                    <div class = 'subtotal__container'>
+                        <span class = 'subtotal_name'>Subtotal: </span>
+                        <span class = 'subtotal_total'>@totalCost()</span>
+                    </div>
+                    <button class = 'confirm_button'>Confirm</button>       @* Add the functionality to this button later*@
+                    <button class = 'go_back_button' @onclick = "revertBackToSite">Go Back</button>       
+                </div>
+                
+            </div>
+        </div>
+    }
+
+@code 
+{
+
+   List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+
+    public MenuCategory selectedCategory { get; set; }
+    public List<MenuItem> CartScreen = new List<MenuItem>();
+
+    double total = 0.0;
+
+    double totalCost() {
+        total = 0.0;        // so that if you go back again the price resets.
+        foreach(var cartItem in CartScreen) {
+            total+=cartItem.Price;
+        }
+        Console.WriteLine(total);
+        return total;
+    }
+
+    protected override void OnInitialized()
+    {
+        selectedCategory = MenuCategory.Dinner;
+        Showorder();
+
+    }
+
+    void revertBackToSite() {
+        isEntireBillVisible = false;
+        StateHasChanged();
+    }
+
+    private void Showorder()
+    {
+        CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
+    }
+
+    private void NavigateToSplitBill() {
+        navigationManager.NavigateTo("/order/SplitBill");
+    }
+
+    bool isEntireBillVisible = false;
+    void ShowEntireBillPopup() {
+        isEntireBillVisible = true;
+        StateHasChanged();
+    }
+
+ }
