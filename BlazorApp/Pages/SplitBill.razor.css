@@ -1,0 +1,91 @@
+.overall__container {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    font-size:large;
+}
+
+h3 {
+    font-size: 3.5rem;
+    font-weight: 700;
+}
+
+.splitbill__text {
+    margin-right: 31%;
+
+}
+
+.first_line, .second_line {
+    color: grey;
+    font-size: larger;
+}
+
+.header__container {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.item__container {
+    background-color: white;
+    margin-top: 4%;
+    display:block;
+    max-height: 370px;
+    margin-left: 7%;
+    margin-right: 7%;
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow-y:scroll;
+}
+
+.dish_information__container {
+    display: flex;
+    flex-direction: column;
+  /* #F4A0A0 background-color: #F4A0A0; */
+    margin: 5% 5%;
+    border-radius: 20px;
+    padding: 2%;
+}
+
+.dish_information__header {
+    font-weight: 600;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+}
+
+.dish_name {
+    padding-left:2%;
+    text-align: left;
+}
+
+.your_subtotal__container {
+    margin-top: 2%;
+    padding: 5% 5%;
+    font-size: larger;
+    border: 1px black;
+    border-style: solid none;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.request_bill__container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 3%;
+    width: 100%;
+    font-size: 40px;
+    font-weight: 300;
+    background-color: #EF8A8A;
+}
+
+/* .request_bill__text {
+    margin-top: 8%;
+    margin-bottom: 8%;
+    
+    
+} */
