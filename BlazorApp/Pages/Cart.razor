@@ -14,16 +14,19 @@
     @*Cart*@
     @if (!CartEmpty()) {
         <ul>
-            @foreach(var user in Table.GuestList)   
+            @foreach(var user in Table.GuestList) // for each user in table...
             {
                 <li>
                     <div class='guest-name'>
                         <b>@user.Name @SelectedUser(user)</b>
                     </div>
-                    @foreach(var orderItem in user.Cart)
+                    @foreach(var orderItem in user.Cart) // for each item in user's cart...
                     {
                         <li class='cart-item'>
-                            <button class="remove-btn" @onclick="@(() => { DeleteConfirm(user,orderItem);})">x</button>
+                            @if(user.Id == 1) // if user is singleton (hard-coded)
+                            {
+                                <button class="remove-btn" @onclick="@(() => { DeleteConfirm(user,orderItem);})">x</button>
+                            }
                             <div class='cart-item-container'>
                                 <img src=@orderItem.MenuItem.ImgLink>
                                 <div style='padding: 0.5rem; flex-grow: 1;'>
@@ -32,22 +35,35 @@
                                     </div>
                                     <div class='details'>
                                         <span style="font-weight:bold">Side: </span>
-                                        <span body style="@StyleForSides(orderItem)">@SideChosen(orderItem)</span>
+                                        <span style="@StyleForSides(orderItem)">@SideChosen(orderItem)</span>
                                     </div>
                                     <div class='details'>
                                         <span style="font-weight:bold">Special instructions: </span>
                                         <span style="@StyleForInstructions(orderItem)">@InstructionGiven(orderItem)</span>
                                     </div>
-                                     <div class='quantity-container'>
-                                        <button class="quantity-button red-button" disabled=@IsDecreaseButtonDisabled(orderItem) @onclick="@(() => { DecrementQuantity(orderItem);})">-</button>
-                                        <input type="number" value=@orderItem.Quantity />
-                                        <button class="quantity-button red-button" @onclick="@(() => { IncrementQuantity(orderItem);})">+</button>
-                                    </div>
+                                    @if(user.Id != 1) // if user isn't singleton (hard-coded)
+                                    {
+                                        <div class='details'>
+                                            <span style="font-weight:bold">Number of items in cart: </span>
+                                            <span>@orderItem.Quantity</span>
+                                        </div>
+                                    }
+                                    else // if user is singleton (hard-coded)
+                                    {
+                                        <div class='quantity-container'>
+                                            <button class="quantity-button red-button" disabled=@IsDecrementDisabled(orderItem) @onclick="@(() => { DecrementQuantity(orderItem);})">-</button>
+                                            <input type="number" value=@orderItem.Quantity />
+                                            <button class="quantity-button red-button" @onclick="@(() => { IncrementQuantity(orderItem);})">+</button>
+                                        </div>
+                                    }
                                 </div>
                             </div>
-                            <div class='row'>
-                                <img class="edit-button" @onclick="@(() => { OpenUpdateFoodDetailsPage(orderItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
-                            </div>
+                            @if(user.Id == 1) // if user is singleton (hard-coded)
+                            {
+                                <div class='row'>
+                                    <img class="edit-button" @onclick="@(() => { OpenUpdateFoodDetailsPage(orderItem);})" align="right" src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_960_720.png">
+                                </div>
+                            }
                         </li>
                     }
                 </li>
@@ -60,7 +76,6 @@
             <span>Your table's cart is empty. Try adding items from the menu!</span>
         </div>
     }
-
 </div>
 <div class='fixed-bottom'>
     <button class='place-order-btn' disabled=@CartEmpty() @onclick="@(() => { ConfirmOrder();})">
@@ -89,6 +104,7 @@
     int updatedQuantity;
 
     bool ShowUpdateFoodDetails= false;
+    bool isAlcoholic = false;
     OrderItem SelectedCartItem { get; set; }    
 
     #endregion
@@ -132,14 +148,11 @@
     {
         foreach (var cartItem in user.Cart.ToList())
         {
-            
+
             if (cartItem.Id == item.Id)
             {
-                
-                //var itemToRemove = user.Cart.Single(r => r.Id == item.Id);
-                //user.Cart.Remove(itemToRemove);
                 user.Cart.Remove(cartItem);
-               
+
 
             }
         }
@@ -148,7 +161,7 @@
     private string SelectedUser(User user)
     {
         string selectedUser = "";
-        if (user.Id == 1) // hardcoded to Guest 1; fix this
+        if (user.Id == 1) // hardcoded to Guest 1
         {
             selectedUser = "(YOU)";
         }
@@ -200,7 +213,7 @@
         return orderItem.MenuItem.Price * orderItem.Quantity;
     }
 
-    private bool IsDecreaseButtonDisabled(OrderItem item)
+    private bool IsDecrementDisabled(OrderItem item)
     {
         return item.Quantity <= 1;
     }
@@ -230,7 +243,8 @@
             updatedQuantity = newValue;
         }
     }
-    async void ConfirmOrder(){
+    async void ConfirmOrder()
+    {
         var options = new ModalOptions()
         {
             HideCloseButton = true
@@ -239,17 +253,21 @@
         var result = await orderModal.Result;
         if (!result.Cancelled)
         {
-           PlaceOrder();
-        if (isAlcoholic){
-           AlcoholicModal();
-    }
-        else{
-    Modal.Show<TextOnlyModal>("Order up! Your order has been placed and will arrive shortly.");
-    }
+            PlaceOrder();
+            if (isAlcoholic)
+            {
+               AlcoholicModal();
+            }
+            else
+            {
+                Modal.Show<TextOnlyModal>("Order up! Your order has been placed and will arrive shortly.");
+            }
         }
     }
-    async void DeleteConfirm(User user, OrderItem item){
-    var options = new ModalOptions()
+
+    async void DeleteConfirm(User user, OrderItem item)
+    {
+        var options = new ModalOptions()
         {
             HideCloseButton = true
         };
@@ -257,12 +275,11 @@
         var result = await deleteModal.Result;
         if (!result.Cancelled)
         {
-           RemoveItem(user, item);
-           StateHasChanged();
+            RemoveItem(user, item);
+            StateHasChanged();
         }
     }
 
-    bool isAlcoholic = false;
     public void PlaceOrder()
     {
           
@@ -272,7 +289,7 @@
             // for each item in that user's Cart...
             foreach (var cartItem in guest.Cart.ToList())
             {
-            if(cartItem.MenuItem.isAlcoholic)
+                if(cartItem.MenuItem.isAlcoholic)
                 {
                     isAlcoholic = true;
                 }
@@ -281,12 +298,12 @@
             }
             
         }
-    
         NavigationManager.NavigateTo($"menu/Popular");
     }
-    async void AlcoholicModal(){
-        Modal.Show<Help>("The order you placed contains an alcoholic item(s). Please have your ID ready so the waiter can verify your age.");
-        
+
+    async void AlcoholicModal()
+    {
+        Modal.Show<Help>("The order you placed contains an alcoholic item(s). Please have your ID ready so the waiter can verify your age.");   
     }
 
 }
