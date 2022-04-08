@@ -5,6 +5,18 @@ h1 {
     text-align: center;
 }
 
+.cart {
+    padding-top: 0;
+    padding-bottom: 100px;
+}
+
+.guest-name {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+
 .edit-button {
     max-width: 3.5rem;
     height: auto;
@@ -69,9 +81,7 @@ input[type="number"] {
     font-weight: bold;
 }
 
-.guest-name {
-    font-size: 25px;
-}
+
 
 .details {
     background: #F5DC6E;
@@ -96,10 +106,7 @@ input[type="number"] {
         /*opacity: 0.;*/
     }
 
-.cart {
-    padding-top: 0;
-    padding-bottom: 100px;
-}
+
 
 ul {
     padding: 0;

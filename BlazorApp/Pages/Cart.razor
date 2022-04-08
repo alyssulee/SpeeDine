@@ -18,7 +18,11 @@
             {
                 <li>
                     <div class='guest-name'>
-                        <b>@user.Name @SelectedUser(user)</b>
+                        <span>@user.Name</span>
+                        @if (user.Id == 1)
+                        {
+                            <span> (YOU)</span>
+                        }
                     </div>
                     @foreach(var orderItem in user.Cart) // for each item in user's cart...
                     {
@@ -158,16 +162,6 @@
         }
     }
 
-    private string SelectedUser(User user)
-    {
-        string selectedUser = "";
-        if (user.Id == 1) // hardcoded to Guest 1
-        {
-            selectedUser = "(YOU)";
-        }
-        return selectedUser;
-    }
-
     private string SideChosen(OrderItem orderItem)
     {
         string printSide = "No side chosen";
@@ -256,7 +250,7 @@
             PlaceOrder();
             if (isAlcoholic)
             {
-               AlcoholicModal();
+                AlcoholicModal();
             }
             else
             {
@@ -282,7 +276,7 @@
 
     public void PlaceOrder()
     {
-          
+
         // for each user in the table...
         foreach (var guest in Table.GuestList.ToList())
         {
@@ -293,6 +287,7 @@
                 {
                     isAlcoholic = true;
                 }
+                cartItem.OrderStatus = OrderStatus.Waiting;
                 guest.Orders.Add(cartItem);
                 RemoveItem(guest, cartItem);
             }

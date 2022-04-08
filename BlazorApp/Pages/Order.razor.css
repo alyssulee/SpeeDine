@@ -1,9 +1,11 @@
+.Orders-screen {
+    padding-top: 0;
+    padding-bottom: 175px;
+}
+
 h1 {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 4rem;
+    margin-top: 0;
     text-align: center;
-    line-height: 5px;
 }
 
 h2 {
@@ -13,6 +15,11 @@ h2 {
     line-height: 46px;
     text-align: left;
     
+}
+
+.guest-name {
+    font-size: 25px;
+    font-weight: bold;
 }
 
 p3 {
@@ -42,7 +49,9 @@ h3 {
     line-height: 20px;
 }
 
-
+.details {
+    background: #F5DC6E;
+}
 
 .category {
     padding: 0.5rem 1rem;
@@ -110,7 +119,6 @@ h3 {
 .table_total_container {
     position: sticky;
     bottom: 12rem;
-    font-family: "Times New Roman", Times, serif;
     font-weight: 600;
     font-size: 2.5rem;
     border: 1px black;
@@ -248,3 +256,18 @@ h3 {
     cursor: pointer;
     text-align: center;
 }
+
+/* Empty screen */
+.empty {
+    text-align: center;
+    color: #575757;
+}
+
+    .empty.centered {
+        position: absolute;
+        top: 40vh;
+    }
+
+    .empty span {
+        font-size: 30px;
+    }

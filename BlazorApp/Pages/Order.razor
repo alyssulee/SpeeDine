@@ -1,147 +1,258 @@
 @page "/order" 
 @inject NavigationManager navigationManager
 @inject MenuRepository MenuRepo  
+@inject Table Table
+@inject User User
 
 <link rel="stylesheet" href="_content/Syncfusion.Blazor.Themes/bootstrap5.css">
 
 <div class='Orders-screen'> 
-@if(isEntireBillVisible==false){
-    <h1>Orders</h1> 
     
-        <h2>YOU (Guest 1)</h2>
+    <h1>Orders</h1>
+
+    @*Non-empty Orders page*@
+    @if (!OrdersEmpty())
+    {
+        @if(!isEntireBillVisible) // when looking at regular Orders screen
+        {
         
-            @foreach(var cartItem in CartScreen)
+            @foreach(var user in Table.GuestList) // for each user in table...
             {
-                <div class='cartitem'>
-                    <div class='cart-display'>
-                        <img src=@cartItem.ImgLink>
-                        <div style='padding: 1rem; flex-grow: 2;'>
-                              <div class='priceset'>
-                              <p style="font-weight:bold; margin-right:auto">@cartItem.Name</p>
-                              <p style="margin-left:auto">$@cartItem.Price</p>
-                               </div>
-                            <p3> Delivered </p3> 
-                        </div>
-                    </div>
-                </div>
-
-            }
-            <div class='CalculateSubtotal'>
-                <div class = 'subtotal'>Subtotal: </div>
-                 <div class = 'subtotal_cost'>@totalCost()</div>
-                  
-                </div>       
-        }
-
-                
-</div>
-
-    @* starting my bill screen from here, (SUVRAT). *@
-    @* made a few changes in the beginning, (Shafin). *@
-    @if(!isEntireBillVisible) {
-
-       <div class='table_total_container'>
-                   <div class = 'tabletotal'>Table Total: </div>
-                   <div class = 'table_cost'> @totalCost()</div>
-       </div>
-
-        <div class='bill_screen__container'>
-            
-                <div>
-                    <h3 style> Ready to Pay?</h3>
-                </div>
-        
-            
-            
-            <div class='how_to_pay__container'> 
-                @if(!isEntireBillVisible){
-                    <button class = 'entire_bill__button' @onclick="ShowEntireBillPopup">Entire Bill</button>
-                }
-                
-
-                <button class = 'split_bill__button' @onclick=NavigateToSplitBill>Split the Bill</button>
-
-                
-            </div>
-            <br />
-        </div> 
-    }
-
-    @if(isEntireBillVisible){
-        <div class = 'entire_bill_popup__container'>
-            <i class="fa-regular fa-xmark-large"> </i>
-            <div class = 'entire_bill__text'>
-                YOUR BILL
-            </div>
-            <div class = 'entire_bill_items__container'>
-                <div class = 'item_names' style = 'overflow-y:scroll;'>
-                    @foreach(var cartItem in CartScreen) {
-                        @* Console.WriteLine(cartItem); *@
-                        <div class = 'item_description'>
-                            <h5>@cartItem.Name</h5>
-                        </div>
-                        <div class = 'item_price'>
-                            <h5>$@cartItem.Price</h5>
-                        </div>
+                <div class='guest-name'>
+                    <span>@user.Name</span>
+                    @if (user.Id == 1) // if user is singleton (hard-coded)
+                    {
+                        <span> (YOU)</span>
                     }
                 </div>
-                <div class = 'buttons'>
-                    <div class = 'subtotal__container'>
-                        <span class = 'subtotal_name'>Subtotal: </span>
-                        <span class = 'subtotal_total'>@totalCost()</span>
+                @foreach(var orderItem in user.Orders)
+                {
+                    @for (var num = 0; num < orderItem.Quantity; num++) // should be two different entries for one item
+                    {
+                        <div class='cartitem'>
+                            <div class='cart-display'>
+                                <img src=@orderItem.MenuItem.ImgLink>
+                                <div style='padding: 1rem; flex-grow: 2;'>
+                                <div class='priceset'>
+                                    <p style="font-weight:bold; margin-right:auto; position: relative">@orderItem.MenuItem.Name ($@string.Format("{0:N2}", @orderItem.MenuItem.Price))</p>
+                                </div>
+                                <div class='details'>
+                                    <span style="font-weight:bold">Side: </span>
+                                    <span style="@StyleForSides(orderItem)">@SideChosen(orderItem)</span>
+                                </div>
+                                <div class='details'>
+                                    <span style="font-weight:bold">Special instructions: </span>
+                                    <span style="@StyleForInstructions(orderItem)">@InstructionGiven(orderItem)</span>
+                                </div>
+                                <b style=@StyleForOrderItem(orderItem)> @orderItem.OrderStatus </b>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                if (user.Orders.Count > 0)
+                {
+                    <div class='CalculateSubtotal'>
+                        <div class = 'subtotal'>Subtotal: </div>
+                            <div class = 'subtotal_cost'>$@string.Format("{0:N2}", @TotalCost(user))</div>
                     </div>
-                    <button class = 'confirm_button'>Confirm</button>       @* Add the functionality to this button later*@
-                    <button class = 'go_back_button' @onclick = "revertBackToSite">Go Back</button>       
-                </div>
-                
+                }
+            }
+
+            @* starting my bill screen from here, (SUVRAT). *@
+            @* made a few changes in the beginning, (Shafin). *@
+            <div class='fixed-bottom'>
+                <div class='table_total_container'>
+                    <div class = 'tabletotal'>Table Total: </div>
+                    <div class = 'table_cost'>$@string.Format("{0:N2}", @TableCost())</div> 
+               </div>
+                <div class='bill_screen__container'>
+                    <div>
+                        <h3> Ready to Pay?</h3>
+                    </div>
+                    <div class='how_to_pay__container'> 
+                        @if(!isEntireBillVisible){
+                            <button class = 'entire_bill__button' @onclick="ShowEntireBillPopup">Entire Bill</button>
+                        }
+                        <button class = 'split_bill__button' @onclick=NavigateToSplitBill>Split the Bill</button>
+                    </div>
+                    <br>
+                </div> 
             </div>
+        }
+
+        @if(isEntireBillVisible){ // when Entire Bill button is pressed
+            <div class = 'entire_bill_popup__container'>
+                <i class="fa-regular fa-xmark-large"> </i>
+                <div class = 'entire_bill__text'>
+                    YOUR TABLE'S BILL
+                </div>
+                <div class = 'entire_bill_items__container'>
+                    <div class = 'item_names' style = 'overflow-y:scroll;'>
+                        @foreach(var user in Table.GuestList)
+                        {
+                            @foreach(var orderItem in user.Orders) 
+                            {
+                                @for (var num = 0; num < orderItem.Quantity; num++)
+                                {
+                                    <div class = 'item_description'>
+                                        <h5>@orderItem.MenuItem.Name</h5>
+                                    </div>
+                                    <div class = 'item_price'>
+                                        <h5>$@orderItem.MenuItem.Price</h5>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                    <div class = 'buttons'>
+                        <div class = 'subtotal__container'>
+                            <span class = 'subtotal_name'>Subtotal: </span>
+                            <span class = 'subtotal_total'>$@string.Format("{0:N2}", @TableCost())</span>
+                        </div>
+                        @* Add the pop-up to Confirm button pls!*@
+                        <button class = 'confirm_button' @onclick="PayEntireBill">Confirm</button>       
+                        <button class = 'go_back_button' @onclick = "revertBackToSite">Go Back</button>       
+                    </div>
+                </div>
+            </div>
+        }
+    }  
+    @*Empty Page*@
+    else {
+        <div class='empty centered'>
+            <span>No orders placed yet. Make sure to place your order in the cart!</span>
         </div>
     }
+</div>
 
 @code 
 {
 
-   List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
+    List<MenuCategory> categories = Enum.GetValues(typeof(MenuCategory)).Cast<MenuCategory>().ToList();
 
     public MenuCategory selectedCategory { get; set; }
     public List<MenuItem> CartScreen = new List<MenuItem>();
 
     double total = 0.0;
-
-    double totalCost() {
-        total = 0.0;        // so that if you go back again the price resets.
-        foreach(var cartItem in CartScreen) {
-            total+=cartItem.Price;
-        }
-        Console.WriteLine(total);
-        return total;
-    }
+    bool isEntireBillVisible = false;
 
     protected override void OnInitialized()
     {
-        selectedCategory = MenuCategory.Dinner;
-        Showorder();
-
+        base.OnInitialized();
     }
 
-    void revertBackToSite() {
+    private double TotalItemPrice(OrderItem item)
+    {
+        return item.MenuItem.Price * item.Quantity;
+    }
+
+    private double TotalCost(User user) 
+    {
+        total = 0.0;    // so that if you go back again the price resets.
+        foreach(var cartItem in user.Orders) {
+            total+=cartItem.MenuItem.Price*cartItem.Quantity;
+        }
+        return total;
+    }
+
+    private double TableCost()
+    {
+        total = 0.0;
+        foreach(var user in Table.GuestList)
+        {
+            foreach(var cartItem in user.Orders) {
+                total+=cartItem.MenuItem.Price*cartItem.Quantity;
+            }
+        }
+        return total;
+    }
+
+    private bool OrdersEmpty()
+    {
+        foreach (var guest in Table.GuestList.ToList())
+        {
+            if (guest.Orders.Count > 0) {
+                return false;
+            }
+        }
+        return true;    
+    }
+
+    private string StyleForOrderItem(OrderItem item)
+    {
+        string style = "";
+        if (item.OrderStatus  == OrderStatus.Waiting)
+        {
+            style = "color: #CA2121; font-size: 15px;";
+        }
+        else
+        {
+            style = "color: #0B8A08; font-size: 15px;";
+        }
+        return style;
+    }
+
+    private string StyleForSides(OrderItem orderItem)
+    {
+        string style = "";
+        if (orderItem.Side == null)
+        {
+            style = "font-style: italic";
+        }
+        return style;
+    }
+
+    private string StyleForInstructions(OrderItem orderItem)
+    {
+        string style = "";
+        if (orderItem.SpecialInstructions == null)
+        {
+            style = "font-style: italic";
+        }
+        return style;
+    }
+
+    private string SideChosen(OrderItem orderItem)
+    {
+        string printSide = "No side chosen";
+        if (orderItem.Side != null)
+        {
+            printSide = orderItem.Side.Name;
+        }
+        return printSide;
+    }
+
+    private string InstructionGiven(OrderItem orderItem)
+    {
+        string printInstructions = "No special instructions provided";
+        if (orderItem.SpecialInstructions != null)
+        {
+            printInstructions = orderItem.SpecialInstructions;
+        }
+        return printInstructions;
+    }
+
+    private void revertBackToSite() 
+    {
         isEntireBillVisible = false;
         StateHasChanged();
     }
 
-    private void Showorder()
+    private void NavigateToSplitBill() 
     {
-        CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
-    }
-
-    private void NavigateToSplitBill() {
         navigationManager.NavigateTo("/order/SplitBill");
     }
 
-    bool isEntireBillVisible = false;
-    void ShowEntireBillPopup() {
+    private void ShowEntireBillPopup() 
+    {
         isEntireBillVisible = true;
         StateHasChanged();
+    }
+
+    private void PayEntireBill()
+    {
+        // "Bill OK! The waiter will arrive shortly to receive your payment." pop-up
     }
 
  }
