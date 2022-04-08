@@ -5,7 +5,11 @@
 
 <div class = 'overall__container'>
     <div class = 'header__container'>
-        <span class = 'go_back__text' @onclick = 'NavigateToOrder'>Go back</span>
+        <button @onclick = 'NavigateToOrder'>
+             <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
+            <span class = 'go_back__text'>Back to Ordered</span>
+        </button>
+        
         <h3 class = 'splitbill__text'>Split Bill</h3>
     </div>
     
