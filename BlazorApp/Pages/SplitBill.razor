@@ -34,7 +34,7 @@
             <span class = 'amount__text'>$@yourSubtotal</span>
         </div>
         <button class = 'red-button request-bill-button' disabled = '@IsDisabled' style = "@changeColorRequestBtn" @onclick = 'NavigateToThankyouPage'>
-        Request Bill
+            <span>Request Bill</span>
         </button>
     </div>
 
@@ -67,12 +67,12 @@
         //Console.WriteLine(x);
         if(!customUserPaying[x]) {
             customUserPaying[x] = true;
-            changeColor[x] = "background-color:rgb(218, 196, 196)";
+            changeColor[x] = "background-color: #C1C1C1";
             @* subtracting this item from the subtotal now *@
             yourSubtotal-=priceStorage[x];
             if(yourSubtotal != constantSubtotal){
                 IsDisabled = true;
-                changeColorRequestBtn = "background-color:rgb(218, 196, 196)";
+                changeColorRequestBtn = "filter: brightness(0.8);";
             }
         }
             
@@ -82,7 +82,7 @@
             yourSubtotal+=priceStorage[x];
             if(yourSubtotal == constantSubtotal){
                 IsDisabled = false;
-                changeColorRequestBtn = "background-color:#F4A0A0";
+                changeColorRequestBtn = "filter: brightness(1);";
             }
         }
         StateHasChanged();
