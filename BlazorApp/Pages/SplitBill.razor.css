@@ -4,7 +4,6 @@
     justify-content: center;
     justify-items: center;
     text-align: center;
-    font-size:large;
 }
 
 h3 {
@@ -19,7 +18,7 @@ h3 {
 
 .first_line, .second_line {
     color: grey;
-    font-size: larger;
+    font-size: medium;
 }
 
 .header__container {
@@ -31,22 +30,24 @@ h3 {
 .item__container {
     background-color: white;
     margin-top: 4%;
-    display:block;
-    max-height: 370px;
+    display: block;
+    max-height: 50vh;
     margin-left: 7%;
     margin-right: 7%;
     border: 1px solid black;
     border-radius: 10px;
-    overflow-y:scroll;
+    overflow-y: scroll;
+    margin-bottom: 20vh;
 }
 
 .dish_information__container {
     display: flex;
     flex-direction: column;
-  /* #F4A0A0 background-color: #F4A0A0; */
+    /* #F4A0A0 background-color: #F4A0A0; */
     margin: 5% 5%;
     border-radius: 20px;
     padding: 2%;
+    min-height: 3.5em;
 }
 
 .dish_information__header {
@@ -62,14 +63,20 @@ h3 {
 
 .your_subtotal__container {
     margin-top: 2%;
-    padding: 5% 5%;
-    font-size: larger;
+    padding: 0.5em;
+    /*font-size: larger;*/
     border: 1px black;
     border-style: solid none;
     background-color: white;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+
+/* Fixed bottom */
+.fixed-bottom {
+    padding: 0rem .5rem;
+    max-height: 15vh;
 }
 
 .request_bill__container {
@@ -81,6 +88,14 @@ h3 {
     font-size: 40px;
     font-weight: 300;
     background-color: #EF8A8A;
+}
+
+.request-bill-button {
+    margin: .5rem 0;
+    border-radius: 1rem;
+    min-height: 5rem;
+    background: #F4A0A0;
+    width: 100%;
 }
 
 /* .request_bill__text {

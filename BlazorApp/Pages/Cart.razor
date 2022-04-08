@@ -82,7 +82,7 @@
     }
 </div>
 <div class='fixed-bottom'>
-    <button class='place-order-btn' disabled=@CartEmpty() @onclick="@(() => { ConfirmOrder();})">
+    <button class='place-order-btn red-button' disabled=@CartEmpty() @onclick="@(() => { ConfirmOrder();})">
         Place Table Order
     </button>
 </div>
@@ -239,6 +239,7 @@
     }
     async void ConfirmOrder()
     {
+        await ToggleTransition();
         var options = new ModalOptions()
         {
             HideCloseButton = true
@@ -257,6 +258,11 @@
                 Modal.Show<TextOnlyModal>("Order up! Your order has been placed and will arrive shortly.");
             }
         }
+    }
+
+    public async Task ToggleTransition()
+    {
+        await Task.Delay(200);
     }
 
     async void DeleteConfirm(User user, OrderItem item)

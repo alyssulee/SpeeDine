@@ -18,7 +18,7 @@
             <div class = 'dish_information__container' style = "@changeColor[item.Id]" @onclick = '() => customUserChangeMethod(item.Id)'>
                 <div class = 'dish_information__header'>
                     <span class = 'dish_name'>@cartItem.Name</span>
-                    <span class = 'dish_price'>@cartItem.Price</span>
+                    <span class = 'dish_price'>$@string.Format("{0:N2}", cartItem.Price)</span>
                 </div>
                 @if(!customUserPaying[item.Id]){
                     <span class = 'who_is_paying__text'>@User.Name is paying for this</span>
@@ -26,23 +26,26 @@
             </div>
         }
     </div>
-    <div class = 'your_subtotal__container'>
-        <span class = 'your_subtotal__text'>Your Subtotal</span>
-        <span class = 'amount__text'>$@yourSubtotal</span>
-    </div>
-    <button class = 'request_bill__container' disabled = '@IsDisabled' style = "@changeColorRequestBtn" @onclick = 'NavigateToThankyouPage'>
-        <span class = 'request_bill__text'>REQUEST BILL</span>
-    </button>
 </div>
 
+    <div class='fixed-bottom'>
+        <div class = 'your_subtotal__container'>
+            <span class = 'your_subtotal__text'>Your Subtotal</span>
+            <span class = 'amount__text'>$@yourSubtotal</span>
+        </div>
+        <button class = 'red-button request-bill-button' disabled = '@IsDisabled' style = "@changeColorRequestBtn" @onclick = 'NavigateToThankyouPage'>
+        Request Bill
+        </button>
+    </div>
+
 @code {
-   
+
 
     protected bool IsDisabled {get; set;}
     public MenuCategory selectedCategory { get; set; }
 
     List<MenuItem> CartScreen = new List<MenuItem>();
-    
+
     int total_dishes = 0;           //will be later used for the clicking on the dish purpose
 
     double[] priceStorage;
@@ -55,7 +58,8 @@
 
     double yourSubtotal = 0.0;
 
-    void NavigateToThankyouPage(){
+    async void NavigateToThankyouPage(){
+        await ToggleTransition();
         navigationManager.NavigateTo("/");      // change this once the thank you page is available.
     }
 
@@ -113,6 +117,11 @@
     private void Showorder()
     {
         CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
+    }
+
+    public async Task ToggleTransition()
+    {
+        await Task.Delay(300);
     }
 
 }

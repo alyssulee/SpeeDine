@@ -88,24 +88,13 @@ input[type="number"] {
 }
 
 .place-order-btn {
-    font-size: 30px;
-    width: 100%;
-    padding: 2rem 1rem;
+    margin: .5rem 0;
+    border-radius: 1rem;
+    min-height: 5rem;
     background: #F4A0A0;
-    transition: all .2s ease;
-    font-weight: bold;
-    z-index: 1;
+    width: 100%;
+    position: relative;
 }
-    .place-order-btn:active {
-        transform: scale(0.92);
-        background: #de6f6f;
-    }
-
-    .place-order-btn:disabled {
-        filter: brightness(0.8);
-        /*opacity: 0.;*/
-    }
-
 
 
 ul {

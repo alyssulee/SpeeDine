@@ -14,7 +14,7 @@
         <img src=@FoodItem.ImgLink>
         <div class='header'>
             <h3 class='font-weight-bold'>@FoodItem.Name</h3>
-            <h4 class='font-weight-bold'>$@FoodItem.Price</h4>
+            <h4 class='font-weight-bold'>$@string.Format("{0:N2}", FoodItem.Price)</h4>
         </div>
 
         <p>@FoodItem.Description</p>
