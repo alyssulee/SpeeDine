@@ -1,4 +1,5 @@
-@page "/order/EntireBill"
+@page "/order/{NavigateFrom}/Billing"
+@*Go to Either /order/EntireBill/Billing or /order/SplitBill/Billing*@
 
 @inject NavigationManager navigationManager
 @inject MenuRepository MenuRepo  
@@ -8,8 +9,17 @@
 
 <button @onclick=revertBackToSite>
     <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
-    Back to Ordered
+    Back to 
+    @if(NavigateFrom.Equals(SplitBillString))
+    {
+        <span>Split Bill</span>
+    }
+    else
+    {
+        <span>Ordered</span>
+    }
 </button>
+
 <div class='wizard'>
     <span>
         <div class='active'>1</div>
@@ -30,9 +40,9 @@
     <h1> Your Bill</h1>
     <div class = 'entire_bill_items__container'>
         <div class = 'item_names' style = 'overflow-y:scroll;'>
-            @foreach(var user in Table.GuestList)
+            @if(NavigateFrom.Equals(SplitBillString))
             {
-                @foreach(var orderItem in user.Orders) 
+                @foreach(var orderItem in User.Bill)
                 {
                     @for (var num = 0; num < orderItem.Quantity; num++)
                     {
@@ -42,6 +52,24 @@
                         <div class = 'item_price'>
                             <h5>$@string.Format("{0:N2}", @orderItem.MenuItem.Price)</h5>
                         </div>
+                    }
+                }
+            }
+            else
+            {
+                 @foreach(var user in Table.GuestList)
+                {
+                    @foreach(var orderItem in user.Orders) 
+                    {
+                        @for (var num = 0; num < orderItem.Quantity; num++)
+                        {
+                            <div class = 'item_description'>
+                                <h5>@orderItem.MenuItem.Name</h5>
+                            </div>
+                            <div class = 'item_price'>
+                                <h5>$@string.Format("{0:N2}", @orderItem.MenuItem.Price)</h5>
+                            </div>
+                        }
                     }
                 }
             }
@@ -60,21 +88,42 @@
 
 
 @code {
+    [Parameter]
+    public string NavigateFrom { get; set; }
+    string SplitBillString = "SplitBill";
+    string EntireBillString = "EntireBill";
+
     double total;
     private double TableCost()
     {
         total = 0.0;
-        foreach(var user in Table.GuestList)
+        if(NavigateFrom.Equals(SplitBillString))
         {
-            foreach(var cartItem in user.Orders) {
-                total+=cartItem.MenuItem.Price*cartItem.Quantity;
+            // TODO: CalculateBillSubtotal
+            total = User.CalculateOrdersSubTotal();
+        }
+        else
+        {
+            foreach(var user in Table.GuestList)
+            {
+                foreach(var cartItem in user.Orders) {
+                    total+=cartItem.MenuItem.Price*cartItem.Quantity;
+                }
             }
         }
+
         return total;
     }
 
     private void revertBackToSite() {
-        navigationManager.NavigateTo("/order");
+        if(NavigateFrom.Equals(SplitBillString))
+        {
+            navigationManager.NavigateTo("/order/SplitBill");
+        }
+        else
+        {
+            navigationManager.NavigateTo("/order");
+        }
     }
 
 
