@@ -16,7 +16,7 @@ p {
      width: auto!important; 
     height: 100%;
     margin: 10px;
-    z-index: 100;
+    z-index: 10;
 }
 
 /* Fixed bottom */

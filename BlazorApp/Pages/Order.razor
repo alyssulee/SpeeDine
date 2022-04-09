@@ -33,14 +33,20 @@
                                 <div class='priceset'>
                                     <p style="font-weight:bold; margin-right:auto; position: relative">@orderItem.MenuItem.Name ($@string.Format("{0:N2}", @orderItem.MenuItem.Price))</p>
                                 </div>
-                                <div class='details'>
+                                @if (orderItem.Side != null)
+                                {
+                                   <div class='details'>
                                     <span style="font-weight:bold">Side: </span>
                                     <span style="@StyleForSides(orderItem)">@SideChosen(orderItem)</span>
-                                </div>
-                                <div class='details'>
-                                    <span style="font-weight:bold">Special instructions: </span>
-                                    <span style="@StyleForInstructions(orderItem)">@InstructionGiven(orderItem)</span>
-                                </div>
+                                </div> 
+                                }                                
+                                 @if(orderItem.SpecialInstructions != null)
+                                {
+                                    <div class='details'>
+                                        <span style="font-weight:bold">Special instructions: </span>
+                                        <span style="@StyleForInstructions(orderItem)">@InstructionGiven(orderItem)</span>
+                                    </div>
+                                }
                                 <b style=@StyleForOrderItem(orderItem)> @orderItem.OrderStatus </b>
                                 </div>
                             </div>
