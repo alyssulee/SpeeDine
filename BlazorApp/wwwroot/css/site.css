@@ -37,7 +37,7 @@ button {
     font-size: large;
 }
 
-    .red-button:active {
+    .red-button:enabled:active {
         transform: scale(0.92);
         background: #de6f6f;
     }
