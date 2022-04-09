@@ -1,6 +1,7 @@
+
 .Orders-screen {
     padding-top: 0;
-    padding-bottom: 175px;
+    padding-bottom: 120px;
 }
 
 h1 {
@@ -13,7 +14,6 @@ h2 {
     font-size: 2.5rem;
     line-height: 46px;
     text-align: left;
-    
 }
 
 .guest-name {
@@ -43,7 +43,8 @@ p4 {
 h3 {
     font-style: normal;
     font-weight: 600;
-    font-size: 2rem;
+    padding-top: 0;
+    font-size: 1.75rem;
     text-align: center;
     line-height: 20px;
 }
@@ -116,14 +117,18 @@ h3 {
 }
 
 .table_total_container {
-    position: sticky;
-    bottom: 12rem;
+    position: fixed;
+    right: 0rem;
+    left: 0rem;
+    bottom: 9.5rem;
     font-weight: 600;
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     border: 1px black;
+    width: 100%;
     display: flex;
     border-style: solid none;
-    padding-top: 1.5rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
@@ -131,13 +136,18 @@ h3 {
 }
 
 .bill_screen__container {
-    position: sticky;
+    display: block;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    height: 9.5rem;
     display: flex;
+    font-size: 1.75rem;
+    padding: 0px 0px;
     flex-direction: column;
-    justify-content: space-around;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
     align-items: center;
     background-color: #EF8A8A;
 }
@@ -153,12 +163,16 @@ h3 {
     display: block;
     width: 100%;
     border: none;
-    padding: 14px 28px;
+    bottom: 0px;
+    top: 0px;
+    padding: 6px 28px;
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
     text-align: center;
 }
+
+
 
 .entire_bill__button {
     background-color: #95D48B;
