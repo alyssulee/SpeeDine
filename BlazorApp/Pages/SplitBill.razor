@@ -1,6 +1,7 @@
 @page "/order/SplitBill" 
 @inject NavigationManager navigationManager
 @inject MenuRepository MenuRepo  
+@inject Table Table
 @inject User User
 
 <div class = 'overall__container'>
@@ -17,17 +18,32 @@
     <span class = 'second_line'>Multiple people can select the same item to split the cost.</span>
 
     <div class = 'item__container'>
-        @foreach(var cartItem in CartScreen) {
-            var item = cartItem;        // do this to get the value properly
-            <div class = 'dish_information__container' style = "@changeColor[item.Id]" @onclick = '() => customUserChangeMethod(item.Id)'>
-                <div class = 'dish_information__header'>
-                    <span class = 'dish_name'>@cartItem.Name</span>
-                    <span class = 'dish_price'>$@string.Format("{0:N2}", cartItem.Price)</span>
-                </div>
-                @if(!customUserPaying[item.Id]){
-                    <span class = 'who_is_paying__text'>@User.Name is paying for this</span>
+        @{
+            int counter = 0;
+            int userValue = 0;
+            @foreach(var user in Table.GuestList) {
+                @* <h1>@user.Name</h1> *@
+                @foreach(var orderItem in user.Orders) {
+                    @for(var num = 0; num < orderItem.Quantity; num++) {
+                        var localItem = counter;        // do this to get the value properly *@
+                        var localUserValue = userValue;
+                        @* Console.WriteLine(localItem);
+                        Console.WriteLine("\n"); *@
+                        <div class = 'dish_information__container' style = "@changeColor[localItem]" @onclick = '() => customUserChangeMethod(localItem, localUserValue)' >
+                            <div class = 'dish_information__header'>
+                                <span class = 'dish_name'>@orderItem.MenuItem.Name</span>
+                                <span class = 'dish_price'>$@string.Format("{0:N2}", @orderItem.MenuItem.Price)</span>
+                            </div>
+                            @if(!customUserPaying[localItem]){
+                                <span class = 'who_is_paying__text'>@user.Name is paying for this</span>
+                            }
+                        </div>
+                        counter = counter + 1;
+                     
+                    } 
                 }
-            </div>
+                userValue++;
+            }
         }
     </div>
 </div>
@@ -64,12 +80,12 @@
 
     async void NavigateToThankyouPage(){
         await ToggleTransition();
-        navigationManager.NavigateTo("/");      // change this once the thank you page is available.
+        navigationManager.NavigateTo("/thanks");      
     }
 
-    void customUserChangeMethod(int x) {
+    void customUserChangeMethod(int x, int userValue) {
         //Console.WriteLine(x);
-        if(!customUserPaying[x]) {
+        if(!customUserPaying[x] && userValue == 0) {
             customUserPaying[x] = true;
             changeColor[x] = "background-color: #C1C1C1";
             @* subtracting this item from the subtotal now *@
@@ -80,7 +96,7 @@
             }
         }
             
-        else{
+        else if(customUserPaying[x] && userValue == 0){
             customUserPaying[x] = false;
             changeColor[x] = "background-color:#F4A0A0";
             yourSubtotal+=priceStorage[x];
@@ -102,11 +118,18 @@
         selectedCategory = MenuCategory.Dinner;
         Showorder();
         priceStorage = new double[50];
-        foreach(var cartItem in CartScreen) {
-            priceStorage[total_dishes] = cartItem.Price;
-            total_dishes+=1;
-            yourSubtotal+=cartItem.Price;
+        foreach(var user in Table.GuestList){
+            foreach(var orderItem in user.Orders) {
+                @for(var num = 0; num < orderItem.Quantity; num++) {
+                    priceStorage[total_dishes] = orderItem.MenuItem.Price;
+                    total_dishes+=1;
+                    yourSubtotal+=orderItem.MenuItem.Price;
+                }
+            }
         }
+        
+        @* Console.WriteLine("you are caljasj ");
+        Console.WriteLine(total_dishes); *@
         constantSubtotal = yourSubtotal;            //so that this doesnt change and we can use it for request bill checking
         customUserPaying = new bool[total_dishes];      // all will be false
         changeColor = new String[total_dishes];

@@ -7,15 +7,12 @@
 <link rel="stylesheet" href="_content/Syncfusion.Blazor.Themes/bootstrap5.css">
 
 <div class='Orders-screen'> 
-    
-    <h1>Orders</h1>
-
     @*Non-empty Orders page*@
     @if (!OrdersEmpty())
     {
-        @if(!isEntireBillVisible) // when looking at regular Orders screen
-        {
-        
+        @* @if(!isEntireBillVisible) // when looking at regular Orders screen
+        { *@
+            <h1>Orders</h1>
             @foreach(var user in Table.GuestList) // for each user in table...
             {
                 <div class='guest-name'>
@@ -71,53 +68,13 @@
                         <h3> Ready to Pay?</h3>
                     </div>
                     <div class='how_to_pay__container'> 
-                        @if(!isEntireBillVisible){
-                            <button class = 'entire_bill__button' @onclick="ShowEntireBillPopup">Entire Bill</button>
-                        }
+                        <button class = 'entire_bill__button' @onclick=NavigateToEntireBill>Entire Bill</button>
                         <button class = 'split_bill__button' @onclick=NavigateToSplitBill>Split the Bill</button>
                     </div>
                     <br>
                 </div> 
             </div>
         }
-
-        @if(isEntireBillVisible){ // when Entire Bill button is pressed
-            <div class = 'entire_bill_popup__container'>
-                <i class="fa-regular fa-xmark-large"> </i>
-                <div class = 'entire_bill__text'>
-                    YOUR TABLE'S BILL
-                </div>
-                <div class = 'entire_bill_items__container'>
-                    <div class = 'item_names' style = 'overflow-y:scroll;'>
-                        @foreach(var user in Table.GuestList)
-                        {
-                            @foreach(var orderItem in user.Orders) 
-                            {
-                                @for (var num = 0; num < orderItem.Quantity; num++)
-                                {
-                                    <div class = 'item_description'>
-                                        <h5>@orderItem.MenuItem.Name</h5>
-                                    </div>
-                                    <div class = 'item_price'>
-                                        <h5>$@orderItem.MenuItem.Price</h5>
-                                    </div>
-                                }
-                            }
-                        }
-                    </div>
-                    <div class = 'buttons'>
-                        <div class = 'subtotal__container'>
-                            <span class = 'subtotal_name'>Subtotal: </span>
-                            <span class = 'subtotal_total'>$@string.Format("{0:N2}", @TableCost())</span>
-                        </div>
-                        @* Add the pop-up to Confirm button pls!*@
-                        <button class = 'confirm_button' @onclick="PayEntireBill">Confirm</button>       
-                        <button class = 'go_back_button' @onclick = "revertBackToSite">Go Back</button>       
-                    </div>
-                </div>
-            </div>
-        }
-    }  
     @*Empty Page*@
     else {
         <div class='empty centered'>
@@ -135,16 +92,10 @@
     public List<MenuItem> CartScreen = new List<MenuItem>();
 
     double total = 0.0;
-    bool isEntireBillVisible = false;
-
+    
     protected override void OnInitialized()
     {
         base.OnInitialized();
-    }
-
-    private double TotalItemPrice(OrderItem item)
-    {
-        return item.MenuItem.Price * item.Quantity;
     }
 
     private double TotalCost(User user) 
@@ -155,6 +106,8 @@
         }
         return total;
     }
+
+    
 
     private double TableCost()
     {
@@ -233,26 +186,13 @@
         return printInstructions;
     }
 
-    private void revertBackToSite() 
-    {
-        isEntireBillVisible = false;
-        StateHasChanged();
+    private void NavigateToEntireBill() {
+        navigationManager.NavigateTo("/order/EntireBill");
     }
 
     private void NavigateToSplitBill() 
     {
         navigationManager.NavigateTo("/order/SplitBill");
-    }
-
-    private void ShowEntireBillPopup() 
-    {
-        isEntireBillVisible = true;
-        StateHasChanged();
-    }
-
-    private void PayEntireBill()
-    {
-        // "Bill OK! The waiter will arrive shortly to receive your payment." pop-up
     }
 
  }

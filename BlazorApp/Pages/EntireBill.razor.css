@@ -1,0 +1,83 @@
+
+.entire_bill_popup__container {
+    position: block;
+    padding: 5% 5%;
+    background-color: #F2E0C4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.entire_bill__text {
+    padding-top: 3%;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 3.4rem;
+    text-align: center;
+    align-items: center;
+}
+
+.entire_bill_items__container {
+    background-color: white;
+    border-radius: 20px;
+}
+
+.item_names {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    max-block-size: 380px;
+    overflow: scroll;
+    padding: 5%;
+}
+
+.item_price {
+    margin-left: 3%;
+    padding-right: 5px;
+}
+
+.item_description {
+    padding-left: 5px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.subtotal__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5% 10%;
+    background-color: #F2E0C4;
+    border-radius: 2px;
+    margin: 7% 5%;
+}
+
+.confirm_button {
+    background-color: #95D48B;
+    display: block;
+    width: 90%;
+    border: none;
+    margin-left: 5%;
+    padding: 2% 5%;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.go_back_button {
+    background-color: rgb(241, 189, 189);
+    display: block;
+    width: 90%;
+    border: none;
+    padding: 2% 5%;
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-bottom: 10%;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
