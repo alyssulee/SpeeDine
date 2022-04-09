@@ -4,6 +4,10 @@
 @inject User User
 @inject Table Table
 
+<button @onclick = 'NavigateToOrder'>
+    <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
+    <span class = 'go_back__text'>Back to Ordered</span>
+</button>
 <div class = 'overall__container'>
 
     <div class='wizard'>
@@ -25,12 +29,8 @@
         </span>
         <div class="line"></div>
     </div>
+    <h1>Split Bill</h1>
 
-    <div class = 'header__container'>
-        <span class = 'go_back__text' @onclick = 'NavigateToOrder'>Go back</span>
-        <h3 class = 'splitbill__text'>Split Bill</h3>
-    </div>
-    
     <span class = 'first_line'>Tap items to add and remove it from your bill.</span>
     <span class = 'second_line'>Multiple people can select the same item to split the cost.</span>
 
@@ -65,15 +65,15 @@
     </div>
 </div>
 
-    <div class='fixed-bottom'>
-        <div class = 'your_subtotal__container'>
-            <span class = 'your_subtotal__text'>Your Subtotal</span>
-            <span class = 'amount__text'>$@string.Format("{0:N2}", @yourSubtotal)</span>
-        </div>
-        <button class = 'red-button request-bill-button' disabled = '@IsDisabled' style = "@changeColorRequestBtn" @onclick = 'NavigateToThankyouPage'>
-            <span>Request Bill</span>
-        </button>
+<div class='fixed-bottom'>
+    <div class = 'your_subtotal__container'>
+        <span class = 'your_subtotal__text'>Your Subtotal</span>
+        <span class = 'amount__text'>$@string.Format("{0:N2}", @yourSubtotal)</span>
     </div>
+    <button class = 'red-button request-bill-button' disabled = '@IsDisabled' style = "@changeColorRequestBtn" @onclick = 'NavigateToBilling'>
+        <span>Request Bill</span>
+    </button>
+</div>
 
 @code {
 
@@ -97,9 +97,9 @@
 
     double yourSubtotal = 0.0;
 
-    async void NavigateToThankyouPage(){
-        //await ToggleTransition();
-        navigationManager.NavigateTo("/thanks");        
+    async void NavigateToBilling(){
+        await ToggleTransition();
+        navigationManager.NavigateTo("/order/SplitBill/Billing");        
     }
 
     void customUserChangeMethod(int x, int userValue) {
@@ -111,7 +111,7 @@
             yourSubtotal-=priceStorage[x];
             if(yourSubtotal != constantSubtotal){
                 IsDisabled = true;
-                changeColorRequestBtn = "background-color:rgb(218, 196, 196)";
+                changeColorRequestBtn = "filter: brightness(0.8);";
             }
         }
             
@@ -121,7 +121,7 @@
             yourSubtotal+=priceStorage[x];
             if(yourSubtotal == constantSubtotal){
                 IsDisabled = false;
-                changeColorRequestBtn = "background-color:#F4A0A0";
+                changeColorRequestBtn = "filter: brightness(1);";
             }
         }
         StateHasChanged();
@@ -158,4 +158,8 @@
         CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
     }
 
+    public async Task ToggleTransition()
+    {
+        await Task.Delay(300);
+    }
 }
