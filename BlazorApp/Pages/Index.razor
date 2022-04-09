@@ -3,14 +3,28 @@
 @inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
 @inject User User
 
-<div class='welcome-screen' @onclick="@(() => { continueToMenu();})">
+<div class='welcome-screen'>
     <h1>Welcome to</h1>
     
     <img src="/images/Bizo.gif" asp-append-version="true"/>
-    <h2>This device is</h2>
-    <h3>@User.Name</h3>
+    
 
-    <p class="pulse">Tap anywhere to continue</p>
+    @*Leave a Review*@
+    <div>
+        <h4>Please input your name to get started</h4>
+        <textarea id="name-field" name="name-field" 
+                cols="10" rows="1" 
+                @bind="@Username"
+                placeholder="Name"></textarea>
+    </div>  
+    @*<h2>This device is</h2>
+    <h3>@User.Name</h3>*@
+     @*Submit*@
+    <div>
+         <button class='submit' @onclick = "@(() => { continueToMenu();})">Continue to Menu</button>
+    </div>
+   
+
     <footer class="footer">
         Powered by SpeeDine 
     </footer>
@@ -19,8 +33,12 @@
 
 @code 
 {
+public string Username { get; set; }
+
     private void continueToMenu()
-    {
+    {   
+        User.Name = Username;
         NavigationManager.NavigateTo("/menu/Popular", true);
     }
+
 }
