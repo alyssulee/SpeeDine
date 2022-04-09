@@ -1,3 +1,7 @@
+h1 {
+    text-align: center;
+}
+
 .overall__container {
     display:flex;
     flex-direction: column;
