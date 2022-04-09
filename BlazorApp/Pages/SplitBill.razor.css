@@ -10,6 +10,8 @@ h1 {
     text-align: center;
 }
 
+/* Wizard */
+
 .wizard {
     width: 100%;
     margin-top: -15px;
@@ -29,11 +31,12 @@ h1 {
 }
 
 .shape {
+    font-size: 20px;
     text-align: center;
     font-weight: bold;
     background-color: #B9B9B9;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     color: black;
     border-radius: 50%;
     padding: 15px 20px;
@@ -43,14 +46,18 @@ h1 {
     margin-bottom: 1px;
     z-index: 2;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .active {
+    font-size: 20px;
     text-align: center;
     font-weight: bold;
     background-color: #F4A0A0;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     color: black;
     border-radius: 50%;
     padding: 15px 20px;
@@ -60,6 +67,9 @@ h1 {
     margin-bottom: 1px;
     z-index: 2;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h3 {
@@ -108,13 +118,18 @@ h3 {
 
 .dish_information__header {
     font-weight: 600;
-    display: grid;
+    /*display: grid;*/
     grid-template-columns: 4fr 1fr;
 }
 
 .dish_name {
     padding-left:2%;
     text-align: left;
+}
+
+.dish_price {
+    padding-left: 2%;
+    text-align: right;
 }
 
 .your_subtotal__container {

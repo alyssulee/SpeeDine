@@ -1,6 +1,46 @@
-﻿@page "/review"
+﻿@page "/order/{NavigateFrom}/Review"
 @layout Clear
 @inject NavigationManager NavigationManager
+
+@if (NavigateFrom == "SplitBill") {
+    <div class='wizard'>
+        <span>
+            <div class='shape'>1</div>
+            <div>Split Bill</div>
+        </span>
+        <span>
+            <div class='shape'>2</div>
+            <div>Billing</div>
+        </span>
+        <span>
+            <div class='shape'>3</div>
+            <div>Payment</div>
+        </span>
+        <span>
+            <div class='active'>4</div>
+            <div style='font-weight:bold'>Review</div>
+        </span>
+        <div class="line-split"></div>
+    </div>  
+}
+else
+{
+    <div class='wizard'>
+        <span>
+            <div class='shape'>1</div>
+            <div>Billing</div>
+        </span>
+        <span>
+            <div class='shape'>2</div>
+            <div>Payment</div>
+        </span>
+        <span>
+            <div class='active'>3</div>
+            <div style='font-weight:bold'>Review</div>
+        </span>
+        <div class="line-entire"></div>
+    </div>  
+}
 
 
 <div class='body'>
@@ -49,6 +89,8 @@
 
 
 @code {
+    [Parameter]
+        public string NavigateFrom { get; set; }
 
     public async Task SubmitReview()
     {

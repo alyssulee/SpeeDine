@@ -10,6 +10,7 @@ namespace SpeeDine.Backend.Models
     {
         public int Quantity { get; set; } = Quantity;
         public OrderStatus OrderStatus { get; set; } = OrderStatus;
+        public MenuItem MenuItem { get; set; } = MenuItem;
     };
 
     public enum OrderStatus

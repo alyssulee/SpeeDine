@@ -82,3 +82,73 @@ button:focus {
     box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 22%) 0px 2px 16px 0px;
     padding: .5rem 1rem;
 }
+
+/* Wizard */
+
+.wizard {
+    width: 100%;
+    margin-top: -15px;
+    margin-bottom: -50px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.line-entire {
+    width: 145px;
+    height: 47px;
+    border-bottom: 5px solid black;
+    position: absolute;
+    z-index: 1;
+}
+
+.line-split {
+    width: 300px;
+    height: 47px;
+    border-bottom: 5px solid black;
+    position: absolute;
+    z-index: 1;
+}
+
+.shape {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #B9B9B9;
+    width: 40px;
+    height: 40px;
+    color: black;
+    border-radius: 50%;
+    padding: 15px 20px;
+    margin: 20px;
+    border-style: solid;
+    border-color: black;
+    margin-bottom: 1px;
+    z-index: 2;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #F4A0A0;
+    width: 40px;
+    height: 40px;
+    color: black;
+    border-radius: 50%;
+    padding: 15px 20px;
+    margin: 20px;
+    border-style: solid;
+    border-color: black;
+    margin-bottom: 1px;
+    z-index: 2;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

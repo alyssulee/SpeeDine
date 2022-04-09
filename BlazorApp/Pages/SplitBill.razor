@@ -35,32 +35,28 @@
     <span class = 'second_line'>Multiple people can select the same item to split the cost.</span>
 
     <div class = 'item__container'>
-        @{
-            int counter = 0;
-            int userValue = 0;
-            @foreach(var user in Table.GuestList) {
-                @* <h1>@user.Name</h1> *@
-                @foreach(var orderItem in user.Orders) {
-                    @for(var num = 0; num < orderItem.Quantity; num++) {
-                        var localItem = counter;        // do this to get the value properly *@
-                        var localUserValue = userValue;
-                        @* Console.WriteLine(localItem);
-                        Console.WriteLine("\n"); *@
-                        <div class = 'dish_information__container' style = "@changeColor[localItem]" @onclick = '() => customUserChangeMethod(localItem, localUserValue)' >
-                            <div class = 'dish_information__header'>
-                                <span class = 'dish_name'>@orderItem.MenuItem.Name</span>
-                                <span class = 'dish_price'>$@string.Format("{0:N2}", @orderItem.MenuItem.Price)</span>
-                            </div>
-                            @if(!customUserPaying[localItem]){
-                                <span class = 'who_is_paying__text'>@user.Name is paying for this</span>
+        @foreach(var billItem in @bill) 
+        {
+            <div class = 'dish_information__container' style='@ColorPerUser(billItem)' @onclick = '() => ItemClicked(billItem)' >
+                <div class = 'dish_information__header'>
+                    <span class = 'dish_name'>@billItem.TableItem.MenuItem.Name</span>
+                    <span class = 'dish_price'>$@string.Format("{0:N2}", @billItem.TableItem.MenuItem.Price)</span>
+                    @if (billItem.Payer.Count == 1)
+                    {
+                        <div class = 'who_is_paying__text'>@billItem.Payer[0].Name is paying for this</div>
+                    }
+                    else if (billItem.Payer.Count > 1)
+                    {
+                        <div>
+                            @foreach(var payer in billItem.Payer)
+                            {
+                                <span>@payer.Name, </span>
                             }
+                            <span>are sharing this</span>
                         </div>
-                        counter = counter + 1;
-                     
-                    } 
-                }
-                userValue++;
-            }
+                    }
+                </div>
+            </div>
         }
     </div>
 </div>
@@ -68,94 +64,170 @@
     <div class='fixed-bottom'>
         <div class = 'your_subtotal__container'>
             <span class = 'your_subtotal__text'>Your Subtotal</span>
-            <span class = 'amount__text'>$@string.Format("{0:N2}", @yourSubtotal)</span>
+            <span class = 'amount__text'>$@string.Format("{0:N2}", @CalculateSubtotal())</span>
         </div>
-        <button class = 'red-button request-bill-button' disabled = '@IsDisabled' style = "@changeColorRequestBtn" @onclick = 'NavigateToThankyouPage'>
+        <button class = 'red-button request-bill-button' disabled=@AllItemsChosen() style = "@changeColorRequestBtn" @onclick = 'NavigateToThankyouPage'>
             <span>Request Bill</span>
         </button>
     </div>
 
 @code {
 
-
-    protected bool IsDisabled {get; set;}
-    public MenuCategory selectedCategory { get; set; }
-
-    List<MenuItem> CartScreen = new List<MenuItem>();
-
-    int total_dishes = 0;           //will be later used for the clicking on the dish purpose
-
-    double[] priceStorage;
-
-    string[] changeColor;
-
-    bool[] customUserPaying;
+    List<BillItem> bill = new List<BillItem>();
 
     string changeColorRequestBtn;
-
-    double constantSubtotal;
-
-    double yourSubtotal = 0.0;
 
     async void NavigateToThankyouPage(){
         //await ToggleTransition();
         navigationManager.NavigateTo("/thanks");        
     }
 
-    void customUserChangeMethod(int x, int userValue) {
-        //Console.WriteLine(x);
-        if(!customUserPaying[x] && userValue == 0) {
-            customUserPaying[x] = true;
-            changeColor[x] = "background-color: #C1C1C1";
-            @* subtracting this item from the subtotal now *@
-            yourSubtotal-=priceStorage[x];
-            if(yourSubtotal != constantSubtotal){
-                IsDisabled = true;
-                changeColorRequestBtn = "background-color:rgb(218, 196, 196)";
+    private string ColorPerUser(BillItem billItem)
+    {
+        // yellow if item is shared
+        if (billItem.Payer.Count > 1)
+        {
+            return "background-color: #a8c987";
+        }
+        else if (billItem.Payer.Count == 0)
+        {
+            return "background-color: grey";
+        }
+        // if item isn't shared, it's another color
+        else
+        {
+            if (billItem.Payer[0].Id == 1)
+            {
+                return "background-color: #d96fa0";
+            }
+            else if (billItem.Payer[0].Id == 2)
+            {
+                return "background-color: #66b9cc";
+            }
+            else if (billItem.Payer[0].Id == 3)
+            {
+                return "background-color: #f5d96e";
+            }
+            else if (billItem.Payer[0].Id == 4)
+            {
+                return "background-color: silver";
+            }
+            else if (billItem.Payer[0].Id == 5)
+            {
+                return "background-color: orange";
+            }
+            else
+            {
+                return "background-color: lime";
             }
         }
-            
-        else{
-            customUserPaying[x] = false;
-            changeColor[x] = "background-color:#F4A0A0";
-            yourSubtotal+=priceStorage[x];
-            if(yourSubtotal == constantSubtotal){
-                IsDisabled = false;
-                changeColorRequestBtn = "background-color:#F4A0A0";
-            }
+    }
+
+    private void ItemClicked(BillItem billItem)
+    {
+
+        // if user is already paying for it --> unselect item
+        // if clicks item they're not paying for --> share item
+        // if clicks item they're sharing --> unshare item
+
+        User thisUser = billItem.Payer.Find(c => c.Id == 1);
+
+        // user1 is not paying for item yet
+        if (thisUser == null)
+        {
+            billItem.Payer.Add(Table.GuestList[0]);
         }
+        // user1 is already paying for item
+        else
+        {
+            billItem.Payer.Remove(Table.GuestList[0]);
+        }
+
+        CreateUserBill();
+
         StateHasChanged();
+    }
+
+    private void CreateUserBill()
+    {
+        foreach(var user in Table.GuestList)
+        {
+            user.Bill = new List<OrderItem>();
+        }
+
+        foreach (var billItem in bill)
+        {
+            if (billItem.Payer.Count == 1)
+            {
+                User payingUser = billItem.Payer.Find(c => c.Id == billItem.Payer[0].Id);
+                payingUser.Bill.Add(billItem.TableItem);
+            }
+            else
+            {
+                double newPrice = billItem.TableItem.MenuItem.Price / billItem.Payer.Count;
+                MenuItem copyItem = new MenuItem(billItem.TableItem.MenuItem.Id, billItem.TableItem.MenuItem.Name, billItem.TableItem.MenuItem.Description, newPrice, billItem.TableItem.MenuItem.ImgLink, billItem.TableItem.MenuItem.Categories, billItem.TableItem.MenuItem.Tags, billItem.TableItem.MenuItem.Sides, billItem.TableItem.MenuItem.isAlcoholic);
+                OrderItem copyOrder = new OrderItem(billItem.TableItem.Id, copyItem, billItem.TableItem.Quantity, billItem.TableItem.OrderStatus, billItem.TableItem.Side, billItem.TableItem.SpecialInstructions);
+
+                foreach (var payingUser in billItem.Payer)
+                {
+                    payingUser.Bill.Add(copyOrder);
+                }
+            }
+        }
+        // look thru all BillItems
+        // if Payer.Count > 1, split cost of OrderItem in half, place it in 
+        // if Payer.Count == 1, put Order
+    }
+
+    private double CalculateSubtotal()
+    {
+        double subtotal = 0.0;
+
+        // just for user 1?
+        foreach (var item in Table.GuestList[0].Bill)
+        {
+            subtotal = subtotal + item.MenuItem.Price;
+        }
+
+        return subtotal;
+    }
+
+    private bool AllItemsChosen()
+    {
+        foreach (var billItem in bill)
+        {
+            if (billItem.Payer.Count == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     void NavigateToOrder() {
         navigationManager.NavigateTo("/order");
     }
-    
+
+    private void CreateBill()
+    {
+        // for each user in the table...
+        foreach (var guest in Table.GuestList.ToList())
+        {
+            // for each item in that user's Orders...
+            foreach (var orderItem in guest.Orders.ToList())
+            {
+                for (int i=0; i<orderItem.Quantity; i++)
+                {
+                    var billItem = new BillItem(orderItem, guest);
+                    bill.Add(billItem);
+                }
+            }
+            //RemoveItem(guest, orderItem);
+        }
+    }
 
     protected override void OnInitialized()
     {
-        selectedCategory = MenuCategory.Dinner;
-        Showorder();
-        priceStorage = new double[50];
-        foreach(var cartItem in CartScreen) {
-            priceStorage[total_dishes] = cartItem.Price;
-            total_dishes+=1;
-            yourSubtotal+=cartItem.Price;
-        }
-        constantSubtotal = yourSubtotal;            //so that this doesnt change and we can use it for request bill checking
-        customUserPaying = new bool[total_dishes];      // all will be false
-        changeColor = new String[total_dishes];
-        for(int i = 0; i<total_dishes; i++){
-            changeColor[i] = "background-color:#F4A0A0";
-        }
-
-        changeColorRequestBtn = "background-color:#F4A0A0";  //as initially all the dishes are selected
-        StateHasChanged();
-    }
-
-    private void Showorder()
-    {
-        CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
+        CreateBill();
     }
 
 }
