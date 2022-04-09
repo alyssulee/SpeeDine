@@ -78,6 +78,7 @@
     else {
         <div class='empty centered'>
             <span class="iconify" data-icon="bi:cart-x" data-width="150" data-height="150"></span>
+            <br/><br/>
             <span>Your table's cart is empty. Try adding items from the menu!</span>
         </div>
     }
@@ -300,7 +301,7 @@
             }
             
         }
-        NavigationManager.NavigateTo($"menu/Popular");
+        NavigationManager.NavigateTo($"/order");
     }
 
     async void AlcoholicModal()
