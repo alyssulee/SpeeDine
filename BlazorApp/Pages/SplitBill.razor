@@ -66,7 +66,7 @@
             <span class = 'your_subtotal__text'>Your Subtotal</span>
             <span class = 'amount__text'>$@string.Format("{0:N2}", @CalculateSubtotal())</span>
         </div>
-        <button class = 'red-button request-bill-button' disabled=@AllItemsChosen() style = "@changeColorRequestBtn" @onclick = 'NavigateToThankyouPage'>
+        <button class = 'red-button request-bill-button' disabled=@AllItemsChosen() style = "@changeColorRequestBtn" @onclick = 'NavigateToBilling'>
             <span>Request Bill</span>
         </button>
     </div>
@@ -77,9 +77,9 @@
 
     string changeColorRequestBtn;
 
-    async void NavigateToThankyouPage(){
-        //await ToggleTransition();
-        navigationManager.NavigateTo("/thanks");        
+    async void NavigateToBilling(){
+        await ToggleTransition();
+        navigationManager.NavigateTo("/order/SplitBill/Billing");        
     }
 
     private string ColorPerUser(BillItem billItem)
@@ -228,6 +228,7 @@
     protected override void OnInitialized()
     {
         CreateBill();
+        CreateUserBill();
     }
 
     public async Task ToggleTransition()

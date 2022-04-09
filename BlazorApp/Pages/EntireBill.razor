@@ -44,15 +44,12 @@
             {
                 @foreach(var orderItem in User.Bill)
                 {
-                    @for (var num = 0; num < orderItem.Quantity; num++)
-                    {
-                        <div class = 'item_description'>
-                            <h5>@orderItem.MenuItem.Name</h5>
-                        </div>
-                        <div class = 'item_price'>
-                            <h5>$@string.Format("{0:N2}", @orderItem.MenuItem.Price)</h5>
-                        </div>
-                    }
+                    <div class = 'item_description'>
+                        <h5>@orderItem.MenuItem.Name</h5>
+                    </div>
+                    <div class = 'item_price'>
+                        <h5>$@string.Format("{0:N2}", @orderItem.MenuItem.Price)</h5>
+                    </div>
                 }
             }
             else
@@ -99,8 +96,10 @@
         total = 0.0;
         if(NavigateFrom.Equals(SplitBillString))
         {
-            // TODO: CalculateBillSubtotal
-            total = User.CalculateOrdersSubTotal();
+            // only done for User 1
+            foreach(var cartItem in Table.GuestList[0].Bill) {
+                total+=cartItem.MenuItem.Price;
+            }
         }
         else
         {

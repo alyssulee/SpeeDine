@@ -148,6 +148,7 @@ h1 {
     border-style: solid;
     border-color: black;
     margin-bottom: 1px;
+    z-index: 2;
     position: relative;
     display: flex;
     justify-content: center;
