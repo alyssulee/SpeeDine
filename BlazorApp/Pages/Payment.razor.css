@@ -1,0 +1,17 @@
+﻿h1 {
+    text-align: center;
+}
+
+.empty {
+    text-align: center;
+    color: #575757;
+}
+
+    .empty.centered {
+        position: absolute;
+        top: 20vh;
+    }
+
+    .empty span {
+        font-size: 30px;
+    }

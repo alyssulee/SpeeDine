@@ -4,12 +4,15 @@
 @inject MenuRepository MenuRepo  
 @inject Table Table
 @inject User User
+@inject IModalService Modal
 
+<button @onclick=revertBackToSite>
+    <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
+    Back to Ordered
+</button>
 <div class = 'entire_bill_popup__container'>
     <i class="fa-regular fa-xmark-large"> </i>
-    <div class = 'entire_bill__text'>
-        YOUR TABLE'S BILL
-    </div>
+    <h1> Your Bill</h1>
     <div class = 'entire_bill_items__container'>
         <div class = 'item_names' style = 'overflow-y:scroll;'>
             @foreach(var user in Table.GuestList)
@@ -22,7 +25,7 @@
                             <h5>@orderItem.MenuItem.Name</h5>
                         </div>
                         <div class = 'item_price'>
-                            <h5>$@orderItem.MenuItem.Price</h5>
+                            <h5>$@string.Format("{0:N2}", @orderItem.MenuItem.Price)</h5>
                         </div>
                     }
                 }
@@ -33,12 +36,13 @@
                 <span class = 'subtotal_name'>Subtotal: </span>
                 <span class = 'subtotal_total'>$@string.Format("{0:N2}", @TableCost())</span>
             </div>
-            @* Add the pop-up to Confirm button pls!*@
-            <button class = 'confirm_button'>Confirm</button>       
-            <button class = 'go_back_button' @onclick = "revertBackToSite">Go Back</button>       
+             
         </div>
     </div>
+     @* Add the pop-up to Confirm button pls!*@
+            <button class = 'confirm_button' @onclick='ProceedToPayment'>Proceed To Payment</button>     
 </div>
+
 
 @code {
     double total;
@@ -56,5 +60,17 @@
 
     private void revertBackToSite() {
         navigationManager.NavigateTo("/order");
+    }
+
+
+    private async void ProceedToPayment()
+    {
+        await ToggleTransition();
+        navigationManager.NavigateTo("/order/Payment");
+    }
+
+    private async Task ToggleTransition()
+    {
+        await Task.Delay(300);
     }
 }

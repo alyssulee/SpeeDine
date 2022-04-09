@@ -1,0 +1,31 @@
+﻿@page "/order/Payment"
+
+@inject NavigationManager navigationManager
+
+<div @onclick='GoToReview'>
+    <button @onclick=BackToOrder>
+    <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
+    Back to Ordered
+</button>
+
+<h1>Payment</h1>
+<div class='empty'>
+    <span class="iconify" data-icon="bx:money-withdraw" data-width="150" data-height="150"></span>
+    <br/><br/>
+    <span>The waiter will arrive shortly to receive your payment.</span>
+</div>
+
+
+</div>
+
+@code {
+    private void BackToOrder()
+    {
+        navigationManager.NavigateTo("/order");
+    }
+
+    private void GoToReview()
+    {
+        navigationManager.NavigateTo("/Review");
+    }
+}
