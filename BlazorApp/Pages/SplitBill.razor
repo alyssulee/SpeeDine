@@ -80,7 +80,7 @@
 
     async void NavigateToThankyouPage(){
         await ToggleTransition();
-        navigationManager.NavigateTo("/thanks");      
+        navigationManager.NavigateTo("/thanks");        
     }
 
     void customUserChangeMethod(int x, int userValue) {
@@ -118,14 +118,25 @@
         selectedCategory = MenuCategory.Dinner;
         Showorder();
         priceStorage = new double[50];
+        int userValue = 0;
         foreach(var user in Table.GuestList){
+            
             foreach(var orderItem in user.Orders) {
                 @for(var num = 0; num < orderItem.Quantity; num++) {
-                    priceStorage[total_dishes] = orderItem.MenuItem.Price;
+                    if(userValue == 0){
+                        priceStorage[total_dishes] = orderItem.MenuItem.Price;
+                        yourSubtotal+=orderItem.MenuItem.Price;
+                    }
+                    
                     total_dishes+=1;
-                    yourSubtotal+=orderItem.MenuItem.Price;
+                    //Console.WriteLine("value of userValue: " + userValue);
+                    
+                        
                 }
+               
             }
+            userValue++;
+            
         }
         
         @* Console.WriteLine("you are caljasj ");
