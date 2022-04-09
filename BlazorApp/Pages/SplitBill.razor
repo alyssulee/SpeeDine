@@ -2,6 +2,7 @@
 @inject NavigationManager navigationManager
 @inject MenuRepository MenuRepo  
 @inject User User
+@inject Table Table
 
 <div class = 'overall__container'>
 
@@ -29,7 +30,6 @@
         <span class = 'go_back__text' @onclick = 'NavigateToOrder'>Go back</span>
         <h3 class = 'splitbill__text'>Split Bill</h3>
     </div>
-    <h1>Split Bill</h1>
     
     <span class = 'first_line'>Tap items to add and remove it from your bill.</span>
     <span class = 'second_line'>Multiple people can select the same item to split the cost.</span>
@@ -89,6 +89,8 @@
 
     string[] changeColor;
 
+    bool[] customUserPaying;
+
     string changeColorRequestBtn;
 
     double constantSubtotal;
@@ -96,7 +98,7 @@
     double yourSubtotal = 0.0;
 
     async void NavigateToThankyouPage(){
-        await ToggleTransition();
+        //await ToggleTransition();
         navigationManager.NavigateTo("/thanks");        
     }
 
@@ -128,7 +130,7 @@
     void NavigateToOrder() {
         navigationManager.NavigateTo("/order");
     }
-    bool[] customUserPaying;
+    
 
     protected override void OnInitialized()
     {
