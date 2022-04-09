@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="_content/Syncfusion.Blazor.Themes/bootstrap5.css">
 
 <div class='Orders-screen'> 
+    
+    <h1>Ordered</h1>
+
     @*Non-empty Orders page*@
     @if (!OrdersEmpty())
     {
@@ -81,6 +84,59 @@
                 </div> 
             </div>
         }
+
+        @if(isEntireBillVisible){ // when Entire Bill button is pressed
+            <div class='wizard'>
+                <span>
+                    <div class='active'>1</div>
+                    <div style='font-weight:bold'>Billing</div>
+                </span>
+                <span>
+                    <div class='shape'>2</div>
+                    <div>Payment</div>
+                </span>
+                <span>
+                    <div class='shape'>3</div>
+                    <div>Review</div>
+                </span>
+                <div class="line"></div>
+            </div>
+            <div class = 'entire_bill_popup__container'>
+                <i class="fa-regular fa-xmark-large"> </i>
+                <div class = 'entire_bill__text'>
+                    YOUR TABLE'S BILL
+                </div>
+                <div class = 'entire_bill_items__container'>
+                    <div class = 'item_names' style = 'overflow-y:scroll;'>
+                        @foreach(var user in Table.GuestList)
+                        {
+                            @foreach(var orderItem in user.Orders) 
+                            {
+                                @for (var num = 0; num < orderItem.Quantity; num++)
+                                {
+                                    <div class = 'item_description'>
+                                        <h5>@orderItem.MenuItem.Name</h5>
+                                    </div>
+                                    <div class = 'item_price'>
+                                        <h5>$@orderItem.MenuItem.Price</h5>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                    <div class = 'buttons'>
+                        <div class = 'subtotal__container'>
+                            <span class = 'subtotal_name'>Subtotal: </span>
+                            <span class = 'subtotal_total'>$@string.Format("{0:N2}", @TableCost())</span>
+                        </div>
+                        @* Add the pop-up to Confirm button pls!*@
+                        <button class = 'confirm_button' @onclick="PayEntireBill">Confirm</button>       
+                        <button class = 'go_back_button' @onclick = "revertBackToSite">Go Back</button>       
+                    </div>
+                </div>
+            </div>
+        }
+    }  
     @*Empty Page*@
     else {
         <div class='empty centered'>

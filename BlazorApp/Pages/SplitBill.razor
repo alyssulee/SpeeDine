@@ -1,14 +1,34 @@
 @page "/order/SplitBill" 
 @inject NavigationManager navigationManager
 @inject MenuRepository MenuRepo  
-@inject Table Table
 @inject User User
 
- <button @onclick = 'NavigateToOrder'>
-             <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
-            <span class = 'go_back__text'>Back to Ordered</span>
-        </button>
 <div class = 'overall__container'>
+
+    <div class='wizard'>
+        <span>
+            <div class='active'>1</div>
+            <div style='font-weight:bold'>Split Bill</div>
+        </span>
+        <span>
+            <div class='shape'>2</div>
+            <div>Billing</div>
+        </span>
+        <span>
+            <div class='shape'>3</div>
+            <div>Payment</div>
+        </span>
+        <span>
+            <div class='shape'>4</div>
+            <div>Review</div>
+        </span>
+        <div class="line"></div>
+    </div>
+
+    <div class = 'header__container'>
+        <span class = 'go_back__text' @onclick = 'NavigateToOrder'>Go back</span>
+        <h3 class = 'splitbill__text'>Split Bill</h3>
+    </div>
     <h1>Split Bill</h1>
     
     <span class = 'first_line'>Tap items to add and remove it from your bill.</span>
@@ -89,17 +109,17 @@
             yourSubtotal-=priceStorage[x];
             if(yourSubtotal != constantSubtotal){
                 IsDisabled = true;
-                changeColorRequestBtn = "filter: brightness(0.8);";
+                changeColorRequestBtn = "background-color:rgb(218, 196, 196)";
             }
         }
             
-        else if(customUserPaying[x] && userValue == 0){
+        else{
             customUserPaying[x] = false;
             changeColor[x] = "background-color:#F4A0A0";
             yourSubtotal+=priceStorage[x];
             if(yourSubtotal == constantSubtotal){
                 IsDisabled = false;
-                changeColorRequestBtn = "filter: brightness(1);";
+                changeColorRequestBtn = "background-color:#F4A0A0";
             }
         }
         StateHasChanged();
@@ -115,29 +135,11 @@
         selectedCategory = MenuCategory.Dinner;
         Showorder();
         priceStorage = new double[50];
-        int userValue = 0;
-        foreach(var user in Table.GuestList){
-            
-            foreach(var orderItem in user.Orders) {
-                @for(var num = 0; num < orderItem.Quantity; num++) {
-                    if(userValue == 0){
-                        priceStorage[total_dishes] = orderItem.MenuItem.Price;
-                        yourSubtotal+=orderItem.MenuItem.Price;
-                    }
-                    
-                    total_dishes+=1;
-                    //Console.WriteLine("value of userValue: " + userValue);
-                    
-                        
-                }
-               
-            }
-            userValue++;
-            
+        foreach(var cartItem in CartScreen) {
+            priceStorage[total_dishes] = cartItem.Price;
+            total_dishes+=1;
+            yourSubtotal+=cartItem.Price;
         }
-        
-        @* Console.WriteLine("you are caljasj ");
-        Console.WriteLine(total_dishes); *@
         constantSubtotal = yourSubtotal;            //so that this doesnt change and we can use it for request bill checking
         customUserPaying = new bool[total_dishes];      // all will be false
         changeColor = new String[total_dishes];
@@ -152,11 +154,6 @@
     private void Showorder()
     {
         CartScreen = MenuRepo.GetMenuByCategory(selectedCategory);
-    }
-
-    public async Task ToggleTransition()
-    {
-        await Task.Delay(300);
     }
 
 }
