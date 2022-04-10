@@ -4,7 +4,7 @@
 
 <button @onclick=BackToOrder>
     <span class="iconify" data-icon="ep:back" data-width="40" data-height="40"></span>
-    Back to Ordered
+    Back to Billing
 </button>
 
 @if (NavigateFrom == "SplitBill") {
@@ -63,7 +63,7 @@ else {
 
     private void BackToOrder()
     {
-        navigationManager.NavigateTo("/order");
+        navigationManager.NavigateTo($"/order/{NavigateFrom}/Billing");
     }
 
     private void GoToReview()

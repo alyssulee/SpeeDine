@@ -154,3 +154,11 @@ h1 {
     justify-content: center;
     align-items: center;
 }
+
+.line-split {
+    width: 300px;
+    height: 47px;
+    border-bottom: 5px solid black;
+    position: absolute;
+    z-index: 1;
+}
