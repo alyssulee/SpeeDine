@@ -11,11 +11,16 @@
 
     @*Leave a Review*@
     <div>
-        <h4>Please input your name to get started</h4>
+        <h4>Please enter your name to get started</h4>
+      
         <textarea id="name-field" name="name-field" 
                 cols="10" rows="1" 
                 @bind="@Username"
                 placeholder="Name"></textarea>
+        @if(ShowError)
+        {
+            <h5 class='error'>* A name is required to continue</h5>
+        }
     </div>  
     @*<h2>This device is</h2>
     <h3>@User.Name</h3>*@
@@ -33,12 +38,21 @@
 
 @code 
 {
-public string Username { get; set; }
+    public string Username { get; set; }
+    public bool ShowError = false;
 
     private void continueToMenu()
     {   
-        User.Name = Username;
-        NavigationManager.NavigateTo("/menu/Popular", true);
+        if(String.IsNullOrEmpty(Username))
+        {
+            ShowError = true;
+        }
+        else
+        {
+            ShowError = false;
+            User.Name = Username;
+            NavigationManager.NavigateTo("/menu/Popular", true);
+        }
     }
 
 }

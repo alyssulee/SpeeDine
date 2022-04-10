@@ -31,6 +31,14 @@ h4 {
 
 }
 
+.error {
+    text-align: center;
+    font-size: small;
+    padding: 0;
+    margin: 0;
+    color: #cc0000;
+}
+
 p {
     font-family: 'Prociono';
     font-style: normal;
