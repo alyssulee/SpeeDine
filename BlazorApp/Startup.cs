@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BlazorApp.Data;
 using SpeeDine.Backend.Repositories;
 using SpeeDine.Backend.Models;
 using Blazored.Toast;
@@ -31,7 +30,6 @@ namespace BlazorApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddBlazoredToast();
             services.AddBlazoredModal();
 
