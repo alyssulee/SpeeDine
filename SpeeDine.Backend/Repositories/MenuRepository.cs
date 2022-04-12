@@ -183,7 +183,7 @@ namespace SpeeDine.Backend.Repositories
         {
             Menu.Add(new MenuItem(IdCounter++, "Fish and Chips", "golden ale battered ling cod, tartar sauce, grilled lemon, pub chips", 13.75,
               "https://static.toiimg.com/thumb/59736398.cms?width=1200&height=900",
-            new List<MenuCategory> { MenuCategory.Lunch, MenuCategory.Popular },
+            new List<MenuCategory> { MenuCategory.Lunch, MenuCategory.Popular , MenuCategory.Dinner },
             new List<MenuTag> { MenuTag.PeanutFree },
             new List<MenuSide>
             {
