@@ -10,6 +10,13 @@
 ## Set-up
 Please ensure that your version of Visual Studio 2022 has the "ASP.NET and web development" package and can run .NET 5. 
 
+## How to Run
+1. Open the solution in Visual Studio
+2. In the terminal, navigate to the BlazorApp directory using `cd ./BlazorApp`
+3. Run the app using `dotnet watch`
+4. The BlazorApp will open in your browser: `http://localhost:5000/` 
+
+
 ## What is SpeeDine?
 SpeeDine is a restaurant ordering web application designed for mobile devices. Restaurant can use the SpeeDine website to give its patrons a fast, efficient, and fun dining experience! Instead of using paper menus and having to order through a waiter, guests can use SpeeDine to control the ordering process in the palm on their hands! To access SpeeDine, guests can simply scan the QR code at their table on their own devices. Each device will be tied to that specific guest and to that specific table. SpeeDine gives patrons the ability to look through the menu, order items, split the bill, request payment, call the waiter, and more! 
 
