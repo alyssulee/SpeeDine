@@ -108,7 +108,7 @@ If you choose to split the bill, this shows an interactive screen that allows th
 
 ### Billing of Split Bill, "/order/SplitBill/Billing"
 After splitting the bill, this screen will show the items that the guest on that device ordered, and the subtotal. Any items that were split will have a reduced cost. Once the guest is ready to pay, click "Proceed to Payment".
-#### Features in Entire Bill
+#### Features in Split Bill's Billing
 - There is a wizard at the top of the page that allows the guests to track which step they're on.
 - There's also a back button if the table decides they're not ready for the bill, or if they'd like to change how it's split instead.
 
