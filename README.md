@@ -8,7 +8,7 @@
 5. Suvrat Kumra (suvrat.kumra@ucalgary.ca, https://www.linkedin.com/in/suvrat-kumra-420017193/)
 
 ## Set-up
-Please ensure that your version of Visual Studio 2022 has the "ASP.NET and web development" package and can run .NET 5.
+Please ensure that your version of Visual Studio 2022 has the "ASP.NET and web development" package and can run .NET 5. 
 
 ## What is SpeeDine?
 SpeeDine is a restaurant ordering web application designed for mobile devices. Restaurant can use the SpeeDine website to give its patrons a fast, efficient, and fun dining experience! Instead of using paper menus and having to order through a waiter, guests can use SpeeDine to control the ordering process in the palm on their hands! To access SpeeDine, guests can simply scan the QR code at their table on their own devices. Each device will be tied to that specific guest and to that specific table. SpeeDine gives patrons the ability to look through the menu, order items, split the bill, request payment, call the waiter, and more! 
@@ -68,7 +68,7 @@ Use this feature to easily compare items on the menu by shortlisting them, regar
 4. If you'd like, enter any special instructions in the textbox.
 5. You can duplicate order (with that chosen side and the given instructions), increase the quantity using the "+" button. Similarly, you can decrease the quantity (to 1, minimum) by using the "-" button. 
 6. To add this item to the Cart, click the "Add to Cart" button. To instead cancel this entire process, scroll back up and click the "Back to Menu button". Either way, you'll be redirected back to the Menu page.
-8. If you added the item to the Cart, the "Cart" button at the bottom of the menu page should say "Cart (1)" now. Click it to see the item you ordered!
+7. If you added the item to the Cart, the "Cart" button at the bottom of the menu page should say "Cart (1)" now. Click it to see the item you ordered!
 
 ### Cart, "/cart"
 Click the Cart button in the navigation bar to navigate to the Cart page, after placing your items in the Cart.
@@ -79,6 +79,7 @@ Click the "Place Table Order" button to send the order to the kitchen whenever t
 - Click the "x" on the top-right corner to remove it from the Cart. Note that if that this deletes any additional quantities of this item.
 - Click the pencil icon on the bottom-right corner to edit the item. This will pull up the screen that allows you to choose the item's side and special instructions.
 - Click the "-" and "+" buttons to decrease and increase the duplicates of this item in the Cart, respectively. You cannot have less than 1 of the item.
+- When placing an order that contains alcohol, there will be a message that appears alerting the guest that their ID will be checked.
 
 ### Ordered, "/order"
 Click the Ordered button in the navigation bar to navigate to the Ordered page, after ordering your items. Once everyone is ready for the bill, there are two options: to ask for a single bill (if one person is paying), or to split the bill between guests.
@@ -119,7 +120,7 @@ This is a simple screen that tells the guest(s) that the waiter is on their way 
 After payment, the waiter will navigate the guests' devices to the Review page. Here, the guests can easily leave feedback by selecting a smiley face and leaving a message. Guests can click "Submit" without entering anything if they'd like to skip this.
 
 ### Thank You, "/thanks"
-A ncie thank-you page to thank the guest for dining with us and using SpeeDine!
+A nice thank-you page to thank the guest for dining with us and using SpeeDine!
 
 (Instructions for README)
 What cases/functions were implemented? What data should be entered at which times? To ensure that we don't miss any of the best features of your system you should word your instructions as an exact walkthrough of what should be typed and what controls should be set to what values. Everything must run from the installation directory (Hint: use App. Path. This means that you should use relative rather than absolute paths.
