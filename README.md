@@ -72,7 +72,7 @@ Use this feature to easily compare items on the menu by shortlisting them, regar
 
 ### Cart, "/cart"
 Click the Cart button in the navigation bar to navigate to the Cart page, after placing your items in the Cart.
-Click the "Place Table Order" button to send the order to the kitchen whenever the table is ready. Note that several orders can be placed throughout the night, so it doesn't matter if someone forgets to order something!
+Click the "Place Table Order" button to send the order to the kitchen whenever the table is ready. Note that several orders can be placed throughout your time there, so it doesn't matter if someone forgets to order something!
 #### Features in the Cart
 - Your items and the other guests' items are shown. When other guests at the table add their items to the Cart, it updates automatically.
 - Only your items can be removed/modified.
@@ -81,6 +81,45 @@ Click the "Place Table Order" button to send the order to the kitchen whenever t
 - Click the "-" and "+" buttons to decrease and increase the duplicates of this item in the Cart, respectively. You cannot have less than 1 of the item.
 
 ### Ordered, "/order"
+Click the Ordered button in the navigation bar to navigate to the Ordered page, after ordering your items. Once everyone is ready for the bill, there are two options: to ask for a single bill (if one person is paying), or to split the bill between guests.
+#### Features in Ordered
+- You can see your table's orders and their statuses (Pending Order, Waiting, Delivered). Immediately after being ordered, each item has the "Waiting" status. After the item arrives at the table, it changes to the "Delivered" status. 
+- Each guest has a subtotal based on the items they ordered from their device. (However, this is not necessarily how much the guest will pay. Due to the billing features, this can change.)
+- There's a table total at the bottom of the page.
+
+### Entire Bill, "/order/EntireBill/Billing"
+If you choose a single bill, this screen will show the items everyone ordered (grouped together), and the subtotal. It should be the same as the Table Total in the Ordered page. Once the table is ready to pay, click "Proceed to Payment".
+#### Features in Entire Bill
+- There is a wizard at the top of the page that allows the guests to track which step they're on.
+- There's also a back button if the table decides they're not ready for the bill, or if they'd like to split it instead.
+
+### Split Bill, "/order/SplitBill"
+If you choose to split the bill, this shows an interactive screen that allows the guests to choose what to pay for, based on the items. When guests interact with it, it updates automatically on the other devices.
+#### How to use Split Bill functionality
+- By default, the guests will be paying for the items they ordered from their devices.
+- Guests can unselect items if they don't want to pay for them. However, the app will not allow them to proceed unless every item is paid for by somebody.
+- Guests split the cost of an item when several guests click on one item. This will be signified by the text on the item and the background color changing.
+- The subtotal at the bottom updates whenever a guest selects/de-selects an item.
+#### Other features in Split Bill
+- There is a wizard at the top of the page that allows the guests to track which step they're on.
+- There's also a back button if the table decides they're not ready for the bill, or if they'd like only a single bill instead.
+- Pro-tip: to evenly split the entire bill amongst everyone, have every guest at the table select every item.
+
+
+### Billing of Split Bill, "/order/SplitBill/Billing"
+After splitting the bill, this screen will show the items that the guest on that device ordered, and the subtotal. Any items that were split will have a reduced cost. Once the guest is ready to pay, click "Proceed to Payment".
+#### Features in Entire Bill
+- There is a wizard at the top of the page that allows the guests to track which step they're on.
+- There's also a back button if the table decides they're not ready for the bill, or if they'd like to change how it's split instead.
+
+### Payment, "/order/.../Payment"
+This is a simple screen that tells the guest(s) that the waiter is on their way with the bill(s) to receive the payment.
+
+### Review, "/order/.../Review"
+After payment, the waiter will navigate the guests' devices to the Review page. Here, the guests can easily leave feedback by selecting a smiley face and leaving a message. Guests can click "Submit" without entering anything if they'd like to skip this.
+
+### Thank You, "/thanks"
+A ncie thank-you page to thank the guest for dining with us and using SpeeDine!
 
 (Instructions for README)
 What cases/functions were implemented? What data should be entered at which times? To ensure that we don't miss any of the best features of your system you should word your instructions as an exact walkthrough of what should be typed and what controls should be set to what values. Everything must run from the installation directory (Hint: use App. Path. This means that you should use relative rather than absolute paths.
