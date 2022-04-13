@@ -24,6 +24,7 @@ SpeeDine is a web application that a restaurant can use to give its patrons an f
 - Easily choose a side and make a special request when ordering
 - Edit menu items already added to the Cart
 - Instantly place orders
+- Place several orders in one sitting without having to wait for a waiter
 - View the status of orders (Pending Order, Waiting, Delivered)
 - Call the waiter for any help at all!
 - Ability to choose between requesting the entire bill or splitting it amongst guests
@@ -31,12 +32,22 @@ SpeeDine is a web application that a restaurant can use to give its patrons an f
 - Convenient review screen that allows guests to share their thoughts while allowing the restaurant to gain feedback on their services
 
 ## Walkthrough
+As with most ordering systems (e.g., Amazon, Uber Eats), the natural flow of our app is:
+1. From the Welcome screen, enter your name.
+2. From the Menu screen, place items in the Cart.
+3. From the Cart screen, order the items.
+4. From the Ordered screen, look at your orders and then choose how to split the bill (if at all).
+5. Payment happens (separate from the app).
+6. Opportunity for guest to give feedback.
+Proceed below for detailed instructions!
+
 ### Welcome screen, "/"
 1. Enter your name into the text box to get started.
 2. Click "Continue to Menu".
+
 ### Menu, "/menu/Popular"
-1. You're automatically redirected to the Menu. Note that you're under the "Menu" section in the navigation bar.
-2. In the menu, you're automatically redirected to the "Popular" section. Feel free to navigate through the categories at the top (left to right scrolling).
+From the Welcome screen, you're automatically redirected to the Menu. Note that you're under the "Menu" section in the navigation bar.
+In the menu, you're automatically redirected to the "Popular" section. Feel free to navigate through the categories at the top (left to right scrolling).
 #### Using "Sort by Diet" feature
 Use this feature to easily find foods that fit your diet.
 1. Click the filter icon next to "Sort By Diet".
@@ -58,6 +69,18 @@ Use this feature to easily compare items on the menu by shortlisting them, regar
 5. You can duplicate order (with that chosen side and the given instructions), increase the quantity using the "+" button. Similarly, you can decrease the quantity (to 1, minimum) by using the "-" button. 
 6. To add this item to the Cart, click the "Add to Cart" button. To instead cancel this entire process, scroll back up and click the "Back to Menu button". Either way, you'll be redirected back to the Menu page.
 8. If you added the item to the Cart, the "Cart" button at the bottom of the menu page should say "Cart (1)" now. Click it to see the item you ordered!
+
+### Cart, "/cart"
+Click the Cart button in the navigation bar to navigate to the Cart page, after placing your items in the Cart.
+Click the "Place Table Order" button to send the order to the kitchen whenever the table is ready. Note that several orders can be placed throughout the night, so it doesn't matter if someone forgets to order something!
+#### Features in the Cart
+- Your items and the other guests' items are shown. When other guests at the table add their items to the Cart, it updates automatically.
+- Only your items can be removed/modified.
+- Click the "x" on the top-right corner to remove it from the Cart. Note that if that this deletes any additional quantities of this item.
+- Click the pencil icon on the bottom-right corner to edit the item. This will pull up the screen that allows you to choose the item's side and special instructions.
+- Click the "-" and "+" buttons to decrease and increase the duplicates of this item in the Cart, respectively. You cannot have less than 1 of the item.
+
+### Ordered, "/order"
 
 (Instructions for README)
 What cases/functions were implemented? What data should be entered at which times? To ensure that we don't miss any of the best features of your system you should word your instructions as an exact walkthrough of what should be typed and what controls should be set to what values. Everything must run from the installation directory (Hint: use App. Path. This means that you should use relative rather than absolute paths.
