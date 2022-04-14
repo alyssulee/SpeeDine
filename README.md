@@ -128,6 +128,3 @@ After payment, the waiter will navigate the guests' devices to the Review page. 
 
 ### Thank You, "/thanks"
 A nice thank-you page to thank the guest for dining with us and using SpeeDine!
-
-(Instructions for README)
-What cases/functions were implemented? What data should be entered at which times? To ensure that we don't miss any of the best features of your system you should word your instructions as an exact walkthrough of what should be typed and what controls should be set to what values. Everything must run from the installation directory (Hint: use App. Path. This means that you should use relative rather than absolute paths.
