@@ -15,6 +15,7 @@ Please ensure that your version of Visual Studio 2022 has the "ASP.NET and web d
 2. In the terminal, navigate to the BlazorApp directory using `cd ./BlazorApp`
 3. Run the app using `dotnet watch`
 4. The BlazorApp will open in your browser: `http://localhost:5000/` 
+5. Please use `Inspect` to ensure you're using the app with a mobile layout.
 
 
 ## What is SpeeDine?
